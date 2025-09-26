@@ -9,7 +9,8 @@
         href="#faq"
         class="font-medium underline">de oftest stillede spørgsmål</a
       >, eller er du blot nysgerrig, så ring endelig på
-      <a href="tel:+4541109940" class="font-medium underline">+45 41 10 99 40</a
+      <a href="tel:+4541109940" class="font-medium underline whitespace-nowrap"
+        >+45 41 10 99 40</a
       >, eller skriv en mail på
       <a href="mailto:info@delaneys.dk" class="font-medium underline"
         >info@delaneys.dk</a
