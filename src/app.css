@@ -1,0 +1,43 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
+
+@import "tailwindcss";
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+@theme {
+	--color-*: initial;
+
+	--color-raisin-black: hsla(244, 17%, 16%, 1);
+	--color-almond: hsla(32, 52%, 89%, 1);
+
+	--color-background-100: oklch(from var(--color-almond) calc(l + 0.15) c h);
+	--color-background-200: oklch(from var(--color-almond) l c h);
+	--color-background-300: oklch(from var(--color-almond) calc(l - 0.07) c h);
+
+	--color-border: oklch(from var(--color-almond) calc(l - 0.15) c h);
+
+	--color-text-dark: var(--color-raisin-black);
+	--color-text-light: oklch(from var(--color-almond) calc(l + 0.15) c h);
+
+	--font-serif: "Source Serif 4", serif;
+	--font-sans: "Poppins", sans-serif;
+
+	--font-heading: var(--font-serif);
+}
+
+@utility px-responsive {
+	@apply px-6 sm:px-8 md:px-16 lg:px-32 xl:px-64;
+}
+
+@utility font-bold-no-shift {
+	&::before {
+		display: block;
+		content: attr(title);
+		display: block;
+		font-weight: bold;
+		height: 0;
+		overflow: hidden;
+		visibility: hidden;
+	}
+}
