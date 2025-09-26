@@ -26,7 +26,7 @@
         En hjemmelig specialøl-bar i hjertet af Skibhuskvarteret. Kom og nyd en
         lækker øl med dine venner og bekendte.
       </p>
-      <div class="flex flex-col gap-4 w-full sm:flex-row">
+      <div class="flex flex-col-reverse gap-4 w-full sm:flex-row">
         <Button
           type="link"
           href="/om-os"
