@@ -12,7 +12,7 @@
 
 <div
   class:open
-  class="isolate z-50 group fixed top-0 left-0 h-svh w-full pointer-events-none"
+  class="isolate z-50 group fixed top-0 left-0 h-dvh w-full pointer-events-none"
 >
   <!-- BACKGROUND -->
   <div
@@ -23,7 +23,7 @@
     class="z-50 absolute bottom-0 left-0 w-full translate-y-full px-responsive transition-transform group-[.open]:translate-y-0"
   >
     <div
-      class="pointer-events-auto w-full bg-background-100 border border-border px-8 pt-8 pb-16 rounded-t-sm"
+      class="pointer-events-auto w-full bg-background-100 border border-border px-8 pt-8 pb-32 rounded-t-sm"
       use:clickOutside
       onclickoutside={onClose}
     >
