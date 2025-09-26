@@ -69,7 +69,7 @@
     {#if member.src}
       <img
         src={member.src}
-        alt={member.firstName}
+        alt={member.name}
         class="rounded-full h-48 w-48 object-cover"
       />
     {:else}
@@ -77,8 +77,7 @@
     {/if}
     <div class="flex flex-col items-center">
       <h3 class="font-heading font-bold mb-2">
-        {member.firstName}
-        {member.lastName}
+        {member.name}
       </h3>
       <span class="text-center text-text/75">{member.description}</span>
     </div>
