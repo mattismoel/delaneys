@@ -16,13 +16,11 @@
     />
     <div class="px-responsive w-full">
       <h1
-        class="text-text-light text-center text-5xl font-bold mb-8 font-heading max-w-xl leading-[1.2] sm:text-left md:text-7xl lg:text-8xl"
+        class="text-text-light text-5xl font-bold mb-8 font-heading max-w-xl leading-[1.2] md:text-7xl lg:text-8xl"
       >
         Delaney's&nbsp;Bar&nbsp;& Bottleshop
       </h1>
-      <p
-        class="text-text-light text-center mb-8 max-w-lg leading-loose sm:text-left"
-      >
+      <p class="text-text-light mb-8 max-w-lg leading-loose">
         En hjemmelig specialøl-bar i hjertet af Skibhuskvarteret. Kom og nyd en
         lækker øl med dine venner og bekendte.
       </p>
