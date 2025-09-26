@@ -92,7 +92,7 @@
           {name}
         </h3>
         <p
-          class="text-text-light transition-opacity delay-100 duration-500 md:opacity-0 group-hover:opacity-100"
+          class="text-text-light/80 transition-opacity delay-100 duration-500 md:opacity-0 group-hover:opacity-100"
         >
           {description}
         </p>
