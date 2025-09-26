@@ -66,7 +66,7 @@
       )}
       {@render eventEntry(
         "Ølsmagning",
-        "Kom og smag med på spændende special-øl fra alle verdens hjørner, såvel som det lokale.",
+        "Kom og vær med til, at smage nye spændende special-øl.",
         PourImage,
       )}
     </div>
