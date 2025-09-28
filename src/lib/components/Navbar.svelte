@@ -38,7 +38,7 @@
   <li class="group" class:active={page.url.pathname.includes(pathname)}>
     <a
       {title}
-      class="inline-block text-center entry px-4 font-bold-no-shift py-6 underline-offset-4 decoration-2 group-hover:underline group-[.active]:font-bold group-[.active]:underline"
+      class="inline-block text-center entry px-4 font-bold-no-shift py-6 underline-offset-4 decoration-2 group-first:pl-0 group-last:pr-0 group-hover:underline group-[.active]:font-bold group-[.active]:underline"
       href={pathname}>{title}</a
     >
   </li>
