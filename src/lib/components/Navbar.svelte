@@ -15,7 +15,7 @@
   class="bg-background-200 z-50 fixed w-full px-responsive flex justify-between items-center bg-background border-b border-border"
 >
   <a href="/" class="py-4">
-    <Logo class="fill-text" />
+    <Logo class="fill-text -translate-x-2" />
   </a>
   <ul class="hidden sm:flex">
     {@render entry("/menu", "Menu")}
