@@ -3,6 +3,7 @@
   import Button from "$lib/components/button/Button.svelte";
   import ChairsImage from "$lib/assets/bar-2.jpg";
   import PourImage from "$lib/assets/bar-3.jpg";
+  import EventEntry from "$lib/components/EventEntry.svelte";
 </script>
 
 <main class="min-h-svh">
@@ -59,44 +60,16 @@
     </div>
 
     <div class="flex flex-col gap-4 md:flex-row">
-      {@render eventEntry(
-        "Quiz",
-        "Hyggelige quiz-aftener, med temaer i øst og vest. Kom og vær med!",
-        ChairsImage,
-      )}
-      {@render eventEntry(
-        "Ølsmagning",
-        "Kom og vær med til, at smage nye spændende special-øl.",
-        PourImage,
-      )}
+      <EventEntry
+        title="Quiz"
+        description="Hyggelige quiz-aftener, med temaer i øst og vest. Kom og vær med!"
+        imgSrc={ChairsImage}
+      />
+      <EventEntry
+        title="Ølsmagning"
+        description="Kom og vær med til, at smage nye spændende special-øl."
+        imgSrc={PourImage}
+      />
     </div>
   </section>
 </main>
-
-{#snippet eventEntry(name: string, description: string, src: string)}
-  <div class="relative w-full group rounded-md overflow-hidden h-64 md:h-full">
-    <img
-      {src}
-      alt={name}
-      class="h-full w-full object-cover scale-105 transition-[scale] duration-800 group-hover:scale-100"
-    />
-    <div
-      class="absolute bottom-0 right-0 w-full h-48 bg-gradient-to-t from-[black] transition-[height]"
-    ></div>
-
-    <div class="absolute w-full bottom-0">
-      <div
-        class="absolute -translate-y-full md:-translate-y-20 p-6 transition-transform md:group-hover:-translate-y-full"
-      >
-        <h3 class="font-heading font-bold text-3xl text-text-light mb-4">
-          {name}
-        </h3>
-        <p
-          class="text-text-light/80 transition-opacity delay-100 duration-500 md:opacity-0 group-hover:opacity-100"
-        >
-          {description}
-        </p>
-      </div>
-    </div>
-  </div>
-{/snippet}
