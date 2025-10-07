@@ -1,0 +1,7 @@
+localhost {
+	reverse_proxy frontend:5173
+}
+
+api.localhost {
+	reverse_proxy backend:8080
+}
