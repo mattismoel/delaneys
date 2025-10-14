@@ -12,7 +12,7 @@ type Props = {
 const NavMenu = ({ entries, open, onSelect }: Props) => {
 	return (
 		<>
-			<div className={cn("z-15 fixed top-0 left-0 h-svh w-screen bg-[black] opacity-0 transition-opacity duration-1000", open && "opacity-50")} />
+			<div className={cn("z-15 fixed top-0 left-0 h-svh w-screen bg-[black] opacity-0 pointer-events-none transition-opacity duration-1000", open && "opacity-50")} />
 			<aside className={cn("z-15 fixed top-0 left-0 h-svh w-screen -translate-y-full transition-transform p-2", open && "translate-y-0")}>
 				<div className="h-full flex justify-center items-center bg-background-100 border border-border rounded-b-sm">
 					<ul className={cn("flex flex-col gap-3 items-center opacity-0 transition-opacity delay-100 duration-400", open && "opacity-100")}>
