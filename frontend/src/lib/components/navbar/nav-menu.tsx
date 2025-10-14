@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { cn } from "../../clsx";
 import { forwardRef, type HTMLAttributes } from "react";
 import type { NavEntry } from "./entry";
+import { cn } from "../../class";
 
 type Props = {
 	entries: NavEntry[]

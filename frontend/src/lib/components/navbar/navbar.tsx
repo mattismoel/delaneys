@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router"
-import { cn } from "@/lib/clsx";
 import { LuMenu } from "react-icons/lu"
 import Logo from "../logo";
 import type { NavEntry } from "./entry";
 import Entry from "./entry";
+import { cn } from "../../class";
 
 type Props = {
 	entries: NavEntry[]

@@ -22,18 +22,7 @@
 		"noUnusedParameters": true,
 		"erasableSyntaxOnly": true,
 		"noFallthroughCasesInSwitch": true,
-		"noUncheckedSideEffectImports": true,
-		"paths": {
-			"@/*": [
-				"./src/*"
-			],
-			"@components/*": [
-				"./src/lib/components/*"
-			],
-			"@assets/*": [
-				"./src/assets/*"
-			]
-		}
+		"noUncheckedSideEffectImports": true
 	},
 	"include": [
 		"vite.config.ts"

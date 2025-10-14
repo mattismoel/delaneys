@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "react";
-import { cn } from "../clsx";
+import { cn } from "../class";
 
 const Logo = ({ className }: HTMLAttributes<SVGElement>) => (
 	<svg

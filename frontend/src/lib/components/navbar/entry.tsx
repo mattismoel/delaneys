@@ -1,5 +1,5 @@
 import { Link, useRouterState, type LinkOptions } from "@tanstack/react-router"
-import { cn } from "@/lib/clsx";
+import { cn } from "../../class";
 
 export type NavEntry = {
 	to: LinkOptions["to"]

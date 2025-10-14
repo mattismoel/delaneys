@@ -1,4 +1,4 @@
-import KontrolRapport from "@assets/kontrol-rapport.gif";
+import KontrolRapport from "../../../assets/kontrol-rapport.gif";
 import { LuMail, LuMapPinHouse, LuPhone } from "react-icons/lu";
 import Logo from "../logo";
 import ContactEntry from "./contact-entry";

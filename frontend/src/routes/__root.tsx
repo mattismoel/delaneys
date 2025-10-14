@@ -1,9 +1,9 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router"
-import Navbar from "@components/navbar/navbar"
 import { useState } from "react"
 import Footer from "../lib/components/footer/footer"
-import NavMenu from "@/lib/components/navbar/nav-menu"
-import type { NavEntry } from "@/lib/components/navbar/entry"
+import type { NavEntry } from "../lib/components/navbar/entry"
+import Navbar from "../lib/components/navbar/navbar"
+import NavMenu from "../lib/components/navbar/nav-menu"
 
 const navEntries: NavEntry[] = [
 	{ to: "/menu", title: "Ølmenu" },
