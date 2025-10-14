@@ -10,21 +10,21 @@ services:
       - caddy_data:/data
       - caddy_config:/config
 
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./backend:/app
+      - /backend/node_modules
+
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
     volumes:
       - ./frontend/:/app
-    ports:
-      - 5173:5173
     command: sh -c "bun install && bun run dev"
-
-  backend:
-    image: cosmtrek/air
-    working_dir: /app
-    volumes:
-      - ./backend/:/app
 
 volumes:
   caddy_data:
