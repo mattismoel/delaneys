@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import Accordion from '../lib/components/accordion'
+import Map from '../lib/components/maps'
 
 export const Route = createFileRoute('/kontakt')({
 	component: RouteComponent,
@@ -46,14 +47,10 @@ function RouteComponent() {
 
 			<section>
 				<h1 className="font-heading font-bold text-2xl mb-4">Find os hér</h1>
-				<div className="w-full rounded-sm overflow-hidden border border-r-amber-900">
-					<iframe
-						title="Delaney's Bar & Bottleshop"
-						width="100%"
-						height="600"
-						src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Tolderlundsvej%2046+(Delaney's%20Bar%20&amp;%20Bottleshop)&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-					></iframe>
-				</div>
+				<Map opts={{
+					address: "Tolderlundsvej 46",
+					title: "Delaney's' Bar & Bottleshop",
+				}} />
 			</section>
 		</main>
 	)
