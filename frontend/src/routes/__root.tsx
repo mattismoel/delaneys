@@ -1,9 +1,14 @@
-import { createRootRoute, Outlet } from "@tanstack/react-router"
+import { createRootRouteWithContext, Outlet } from "@tanstack/react-router"
 import { useState } from "react"
 import Footer from "../lib/components/footer/footer"
+import type { QueryClient } from "@tanstack/react-query"
 import type { NavEntry } from "../lib/components/navbar/entry"
 import Navbar from "../lib/components/navbar/navbar"
 import NavMenu from "../lib/components/navbar/nav-menu"
+
+type RouterContext = {
+	queryClient: QueryClient
+}
 
 const navEntries: NavEntry[] = [
 	{ to: "/menu", title: "Ølmenu" },
@@ -26,4 +31,6 @@ const RootLayout = () => {
 	)
 }
 
-export const Route = createRootRoute({ component: RootLayout })
+export const Route = createRootRouteWithContext<RouterContext>()({
+	component: RootLayout,
+})
