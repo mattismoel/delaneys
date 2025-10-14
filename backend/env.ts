@@ -10,7 +10,7 @@ const envSchema = z.object({
 	]).default("development"),
 	PORT: z.coerce.number().positive().default(8080),
 	BASE_URL: z.url().nonempty(),
-	UNTAPPD_API_KEY: z.string().transform(key => btoa(key)),
+	UNTAPPD_API_ACCESS_TOKEN: z.string().transform(key => btoa(key)),
 	UNTAPPD_LOCATION_ID: z.coerce.number().int().nonnegative()
 })
 

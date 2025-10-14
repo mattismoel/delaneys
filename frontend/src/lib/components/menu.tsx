@@ -57,8 +57,8 @@ const Dispenser = () => {
 	return (
 		<div className="relative">
 			<div className="translate-y-full -bottom-2 w-full absolute">
-				<div className="absolute border h-(--dispenser-thickness) w-full bg-white rounded-xs hatch-h" />
-				<div className="absolute bg-white hatch-v border w-(--dispenser-thickness) h-20 rounded-t-xs left-1/2 -top-2 -translate-x-1/2" />
+				<div className="absolute border h-(--dispenser-thickness) w-full bg-background-200 rounded-xs hatch-h" />
+				<div className="absolute bg-background-200 hatch-v border w-(--dispenser-thickness) h-20 rounded-t-xs left-1/2 -top-2 -translate-x-1/2" />
 			</div>
 
 			<div className="flex gap-(--dispenser-thickness)">
@@ -79,8 +79,8 @@ type TapProps = HTMLAttributes<HTMLDivElement> & {
 const Tap = forwardRef<HTMLDivElement, TapProps>(({ active, ...rest }, ref) => (
 	<div ref={ref} {...rest} className="relative">
 		<div
-			className={cn("peer relative cursor-default group flex flex-col items-center justify-center h-14 aspect-square rounded-full border border-black border-dashed bg-white transition-colors",
-				"hover:bg-zinc-950 hover:text-zinc-50 hover:border-white hover:border-2 hover:font-bold hover:border-solid",
+			className={cn("peer relative cursor-default group flex flex-col items-center justify-center h-14 aspect-square rounded-full border border-raisin-black border-dashed bg-background-100 transition-colors",
+				"hover:bg-raisin-black hover:text-text-light hover:border-background-100 hover:border-2 hover:font-bold hover:border-solid",
 				active && "border-solid border-2 font-bold"
 			)}
 		>
@@ -91,17 +91,17 @@ const Tap = forwardRef<HTMLDivElement, TapProps>(({ active, ...rest }, ref) => (
 		<div
 			className={cn(
 				"absolute top-8 left-1/2 -translate-y-full -translate-x-1/2",
-				"-z-15 rounded-xs bg-black border w-4 h-12 transition-transform",
+				"-z-15 rounded-xs bg-raisin-black border w-4 h-12 transition-transform",
 				"peer-hover:-translate-y-[130%]",
 				active && "-translate-y-[130%]"
 			)}
 		/>
 
 		{/* LABEL HOLDER */}
-		<div className="-z-10 absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[80%] bg-white hatch-v border w-2.5 h-4"></div>
+		<div className="-z-10 absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[80%] bg-background-300 hatch-v border w-2.5 h-4"></div>
 
 		{/* TAP END */}
-		<div className="-z-10 absolute -bottom-16 left-1/2 -translate-x-1/2 rounded-b-xs bg-white hatch-v border w-2 h-4"></div>
+		<div className="-z-10 absolute -bottom-16 left-1/2 -translate-x-1/2 rounded-b-xs bg-background-300 hatch-v border w-2 h-4"></div>
 	</div>
 ))
 

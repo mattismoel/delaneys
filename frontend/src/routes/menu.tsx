@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { menuQueryOpts } from '../features/menu/query'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import Menu from '../lib/components/menu'
 import { useEffect, useState } from 'react'
+import { menuQueryOpts } from '../features/menu/query'
 import { useRandom } from '../lib/hooks/useRandom'
+import Menu from '../lib/components/menu'
 
 export const Route = createFileRoute('/menu')({
 	component: RouteComponent,
