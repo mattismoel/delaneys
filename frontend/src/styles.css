@@ -6,11 +6,13 @@
 	--checked-gradient: repeating-linear-gradient(-45deg,
 			transparent,
 			transparent 4px,
-			var(--color-raisin-black) 4px,
-			var(--color-raisin-black) 5px);
+			var(--color-border) 4px,
+			var(--color-border) 5px);
 
 	--dispenser-thickness: 2.5rem;
 	--dispenser-label-height: 8px;
+	--dispenser-border-width: 2px;
+
 	--font-sans: "Poppins", "sans-serif";
 	--font-mono: "IBM Plex Mono", "Poppins", "sans-serif";
 }
@@ -65,10 +67,10 @@
 		background: var(--checked-gradient);
 		position: absolute;
 		top: 0;
-		right: 0;
+		left: 0;
 		width: 25%;
 		height: 100%;
-		border-left: black solid 1px;
+		border-right: var(--color-border) solid 1px;
 	}
 }
 
@@ -80,7 +82,7 @@
 		right: 0;
 		width: 100%;
 		height: 25%;
-		border-top: black solid 1px;
+		border-top: var(--color-border) solid 1px;
 		background: var(--checked-gradient);
 	}
 }

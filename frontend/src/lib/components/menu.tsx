@@ -37,12 +37,21 @@ const Menu = ({ menu, activeBeer, onHover }: Props) => {
 			<div className="relative flex flex-col gap-8">
 				<Dispenser />
 
-				<div className="absolute -top-48 flex flex-col items-center translate-y-full text-zinc-950 w-full font-mono">
-					<p className="font-semibold text-xl inline-block min-h-[1em] mb-2">{activeBeer?.brewery}, {activeBeer?.name}</p>
-					<div>
-						<span>{activeBeer?.style} / {activeBeer?.abv.toFixed(1)}%</span>
+				{menu.beers.map((beer, i) => (
+					<div
+						className={cn(
+							"absolute -top-64 flex flex-col translate-y-full text-zinc-950 w-full scale-y-95 opacity-0 transition-[opacity,scale]",
+							beer.id === activeBeer?.id && "scale-y-100 opacity-100",
+						)}
+					>
+						<h1 className="font-mono font-semibold text-xl inline-block min-h-[1em] mb-2">{i + 1}. {beer?.name}</h1>
+
+						<div className="text-text-dark/85">
+							<p>{beer.brewery}</p>
+							<span>{beer.style} / {beer.abv.toFixed(1)}%</span>
+						</div>
 					</div>
-				</div>
+				))}
 			</div>
 		</MenuContext.Provider>
 	)
@@ -57,8 +66,8 @@ const Dispenser = () => {
 	return (
 		<div className="relative">
 			<div className="translate-y-full -bottom-2 w-full absolute">
-				<div className="absolute border h-(--dispenser-thickness) w-full bg-background-200 rounded-xs hatch-h" />
-				<div className="absolute bg-background-200 hatch-v border w-(--dispenser-thickness) h-20 rounded-t-xs left-1/2 -top-2 -translate-x-1/2" />
+				<div className="absolute border-(length:--dispenser-border-width) h-(--dispenser-thickness) w-full bg-background-200 rounded-xs hatch-h" />
+				<div className="absolute bg-background-200 hatch-v border-(length:--dispenser-border-width) w-(--dispenser-thickness) h-20 rounded-t-xs left-1/2 -top-2 -translate-x-1/2" />
 			</div>
 
 			<div className="flex gap-(--dispenser-thickness)">
@@ -79,7 +88,8 @@ type TapProps = HTMLAttributes<HTMLDivElement> & {
 const Tap = forwardRef<HTMLDivElement, TapProps>(({ active, ...rest }, ref) => (
 	<div ref={ref} {...rest} className="relative">
 		<div
-			className={cn("peer relative cursor-default group flex flex-col items-center justify-center h-14 aspect-square rounded-full border border-raisin-black border-dashed bg-background-100 transition-colors",
+			className={cn(
+				"peer relative cursor-default group flex flex-col items-center justify-center h-14 aspect-square rounded-full border border-raisin-black font-mono bg-background-100 transition-colors",
 				"hover:bg-raisin-black hover:text-text-light hover:border-background-100 hover:border-2 hover:font-bold hover:border-solid",
 				active && "border-solid border-2 font-bold"
 			)}
@@ -92,8 +102,8 @@ const Tap = forwardRef<HTMLDivElement, TapProps>(({ active, ...rest }, ref) => (
 			className={cn(
 				"absolute top-8 left-1/2 -translate-y-full -translate-x-1/2",
 				"-z-15 rounded-xs bg-raisin-black border w-4 h-12 transition-transform",
-				"peer-hover:-translate-y-[130%]",
-				active && "-translate-y-[130%]"
+				"peer-hover:-translate-y-[140%]",
+				active && "-translate-y-[140%]"
 			)}
 		/>
 
