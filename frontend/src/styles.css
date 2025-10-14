@@ -3,11 +3,14 @@
 @import "tailwindcss";
 
 :root {
+	--check-spacing: 2px;
+	--check-thickness: 1px;
+
 	--checked-gradient: repeating-linear-gradient(-45deg,
 			transparent,
-			transparent 4px,
-			var(--color-border) 4px,
-			var(--color-border) 5px);
+			transparent var(--check-spacing),
+			var(--color-border) var(--check-spacing),
+			var(--color-border) calc(var(--check-spacing) + var(--check-thickness)));
 
 	--dispenser-thickness: 2.5rem;
 	--dispenser-label-height: 8px;
@@ -55,10 +58,6 @@
 		overflow: hidden;
 		visibility: hidden;
 	}
-}
-
-@utility bg-checked {
-	background: var(--checked-gradient);
 }
 
 @utility hatch-v {
