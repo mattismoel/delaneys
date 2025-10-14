@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as OmOsRouteImport } from './routes/om-os'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as IndexRouteImport } from './routes/index'
 
+const OmOsRoute = OmOsRouteImport.update({
+  id: '/om-os',
+  path: '/om-os',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MenuRoute = MenuRouteImport.update({
   id: '/menu',
   path: '/menu',
@@ -26,31 +32,42 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/menu': typeof MenuRoute
+  '/om-os': typeof OmOsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/menu': typeof MenuRoute
+  '/om-os': typeof OmOsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/menu': typeof MenuRoute
+  '/om-os': typeof OmOsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/menu'
+  fullPaths: '/' | '/menu' | '/om-os'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/menu'
-  id: '__root__' | '/' | '/menu'
+  to: '/' | '/menu' | '/om-os'
+  id: '__root__' | '/' | '/menu' | '/om-os'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MenuRoute: typeof MenuRoute
+  OmOsRoute: typeof OmOsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/om-os': {
+      id: '/om-os'
+      path: '/om-os'
+      fullPath: '/om-os'
+      preLoaderRoute: typeof OmOsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/menu': {
       id: '/menu'
       path: '/menu'
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MenuRoute: MenuRoute,
+  OmOsRoute: OmOsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

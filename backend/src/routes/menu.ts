@@ -3,9 +3,7 @@ import type { MenuProvider } from "../menu.ts";
 
 const router = Router()
 
-
-
-const menuRoutes = (app: Router, menuProvider: MenuProvider) => {
+const routes = (app: Router, menuProvider: MenuProvider) => {
 	app.use("/menues", router)
 
 	router.get("/:menuId", async (req, res) => {
@@ -16,4 +14,4 @@ const menuRoutes = (app: Router, menuProvider: MenuProvider) => {
 	})
 }
 
-export default menuRoutes
+export default routes
