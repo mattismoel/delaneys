@@ -1,0 +1,16 @@
+(cors) {
+	@origin header Origin {args.0}
+	header @origin {
+		Access-Control-Allow-Origin "{args.0}"
+	}
+}
+
+localhost {
+	reverse_proxy frontend:5173
+}
+
+api.localhost {
+	log 
+	import cors https://localhost
+	reverse_proxy backend:8080
+}
