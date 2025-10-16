@@ -13,6 +13,7 @@ import { Route as OmOsRouteImport } from './routes/om-os'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 
 const OmOsRoute = OmOsRouteImport.update({
   id: '/om-os',
@@ -34,18 +35,25 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRegisterRoute = AuthRegisterRouteImport.update({
+  id: '/auth/register',
+  path: '/auth/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/kontakt': typeof KontaktRoute
   '/menu': typeof MenuRoute
   '/om-os': typeof OmOsRoute
+  '/auth/register': typeof AuthRegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/kontakt': typeof KontaktRoute
   '/menu': typeof MenuRoute
   '/om-os': typeof OmOsRoute
+  '/auth/register': typeof AuthRegisterRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/kontakt': typeof KontaktRoute
   '/menu': typeof MenuRoute
   '/om-os': typeof OmOsRoute
+  '/auth/register': typeof AuthRegisterRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/kontakt' | '/menu' | '/om-os'
+  fullPaths: '/' | '/kontakt' | '/menu' | '/om-os' | '/auth/register'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/kontakt' | '/menu' | '/om-os'
-  id: '__root__' | '/' | '/kontakt' | '/menu' | '/om-os'
+  to: '/' | '/kontakt' | '/menu' | '/om-os' | '/auth/register'
+  id: '__root__' | '/' | '/kontakt' | '/menu' | '/om-os' | '/auth/register'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +76,7 @@ export interface RootRouteChildren {
   KontaktRoute: typeof KontaktRoute
   MenuRoute: typeof MenuRoute
   OmOsRoute: typeof OmOsRoute
+  AuthRegisterRoute: typeof AuthRegisterRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/register': {
+      id: '/auth/register'
+      path: '/auth/register'
+      fullPath: '/auth/register'
+      preLoaderRoute: typeof AuthRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   KontaktRoute: KontaktRoute,
   MenuRoute: MenuRoute,
   OmOsRoute: OmOsRoute,
+  AuthRegisterRoute: AuthRegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
