@@ -8,7 +8,11 @@ import cookieParser from "cookie-parser"
 
 const app = express()
 
-app.use(cors())
+app.use(cors({
+	credentials: true,
+	origin: env.FRONTEND_ORIGIN,
+}))
+
 app.use(cookieParser())
 
 const menuProvider = memoryMenuProvider()

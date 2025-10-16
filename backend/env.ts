@@ -9,6 +9,8 @@ const envSchema = z.object({
 		z.literal("development"),
 	]).default("development"),
 	PORT: z.coerce.number().positive().default(8080),
+
+	FRONTEND_ORIGIN: z.url().nonempty(),
 	BASE_URL: z.url().nonempty(),
 
 	UNTAPPD_API_ACCESS_TOKEN: z.string().transform(key => btoa(key)),

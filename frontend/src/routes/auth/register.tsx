@@ -5,9 +5,17 @@ export const Route = createFileRoute('/auth/register')({
 })
 
 function RouteComponent() {
+	const handleLogin = async (provider: string) => {
+		const res = await fetch(`http://localhost:8080/auth/login/${provider}`, {
+			credentials: "include",
+		})
+
+		console.log(res.headers)
+	}
+
 	return (
 		<main className="py-32 px-responsive">
-			<a href="https://api.localhost/auth/login/google">Google</a>
+			<a href="http://localhost:8080/auth/login/google">Login with Gooogle</a>
 		</main>
 	)
 }

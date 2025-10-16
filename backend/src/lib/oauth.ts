@@ -1,4 +1,4 @@
-import { Google } from "arctic";
+import { Google, OAuth2Client, OAuth2Tokens } from "arctic";
 import { env } from "../../env";
 
 const providers = ["google", "apple", "github"] as const
@@ -34,5 +34,14 @@ export const genereateAuthUrl = (
 			return google.createAuthorizationURL(state, verifier, scopes)
 		default:
 			throw new Error("Provider not implemented!")
+	}
+}
+
+export const validateAuthCode = async (provider: Provider, code: string, verifier: string): Promise<OAuth2Tokens> => {
+	switch (provider) {
+		case "google":
+			return await google.validateAuthorizationCode(code, verifier)
+		default:
+			throw new Error("Provider not implemented")
 	}
 }
