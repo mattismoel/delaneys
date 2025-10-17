@@ -1,4 +1,4 @@
-import express from "express"
+import express, { type NextFunction, type Request, type Response } from "express"
 import { env } from "./env.ts"
 import routes from "./src/routes/index.ts"
 import { memoryMenuProvider } from "./src/lib/memory/menu-provider.ts"
@@ -8,7 +8,9 @@ import { drizzle } from "drizzle-orm/node-postgres"
 import { drizzleUserRepository } from "./src/services/drizzle/user.ts"
 import * as schema from "./src/db/schema.ts"
 import { drizzleAuthRepository } from "./src/services/drizzle/auth.ts"
+import { APIError } from "./src/error.ts"
 import { drizzleEmployeeRepository } from "./src/services/drizzle/employee.ts"
+
 const db = drizzle(env.DATABASE_URL, { schema })
 
 const app = express()
@@ -31,6 +33,18 @@ app.use(routes(
 	userRepository,
 	authRepository,
 ))
+
+app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
+	if (err instanceof APIError) {
+		res.status(err.status).send(err.error())
+		return
+	}
+
+	console.error(err)
+
+	const serverError = new APIError(req, 500, "Something went wrong").error()
+	res.status(500).send(serverError)
+})
 
 try {
 	app.listen(env.PORT, "0.0.0.0", () => {
