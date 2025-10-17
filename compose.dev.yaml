@@ -1,4 +1,19 @@
 services:
+  db:
+    image: postgres
+    restart: unless-stopped
+    shm_size: 128mb
+    ports:
+    - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: password
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+    - 8081:8080
+
   backend:
     build:
       context: ./backend
@@ -8,6 +23,8 @@ services:
       - /backend/node_modules
     ports:
       - 8080:8080
+    depends_on:
+    - db
 
   frontend:
     build:
