@@ -10,12 +10,18 @@ type BaseProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type"> & {
 
 type ButtonProps = BaseProps & ButtonHTMLAttributes<HTMLButtonElement>
 
-type LinkButtonProps = BaseProps & {
-	to: LinkOptions["to"]
-}
+type LinkButtonProps = BaseProps
+	& ({
+		to: LinkOptions["to"]
+		href?: never
+	} | {
+		to?: never
+		href: string;
+	})
 
 const baseClasses =
-	"px-8 py-3 text-center rounded-sm border border-transparent transition-colors";
+	"flex gap-2 items-center w-fit px-8 py-3 text-center rounded-sm border border-transparent transition-colors";
+
 const variantClasses = new Map<Variant, string>([
 	[
 		"primary",
@@ -37,6 +43,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({ variant = "p
 	/>
 ))
 
-export const LinkButton = ({ to, variant = "primary", children, ...rest }: LinkButtonProps) => (
-	<Link to={to} className={cn(baseClasses, variantClasses.get(variant), rest.className)}>{children}</Link>
+export const LinkButton = ({ to, href, variant = "primary", children, ...rest }: LinkButtonProps) => (
+	to
+		? <Link to={to} className={cn(baseClasses, variantClasses.get(variant), rest.className)}>{children}</Link>
+		: <a href={href} className={cn(baseClasses, variantClasses.get(variant), rest.className)}>{children}</a>
 )
