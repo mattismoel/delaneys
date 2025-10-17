@@ -12,8 +12,11 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as OmOsRouteImport } from './routes/om-os'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as KontaktRouteImport } from './routes/kontakt'
+import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthRegisterRouteImport } from './routes/auth/register'
+import { Route as AuthLoginRouteImport } from './routes/auth/login'
+import { Route as AdminEmployeesIndexRouteImport } from './routes/admin/employees/index'
+import { Route as AdminEmployeesCreateRouteImport } from './routes/admin/employees/create'
 
 const OmOsRoute = OmOsRouteImport.update({
   id: '/om-os',
@@ -30,53 +33,103 @@ const KontaktRoute = KontaktRouteImport.update({
   path: '/kontakt',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthRegisterRoute = AuthRegisterRouteImport.update({
-  id: '/auth/register',
-  path: '/auth/register',
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AdminEmployeesIndexRoute = AdminEmployeesIndexRouteImport.update({
+  id: '/employees/',
+  path: '/employees/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminEmployeesCreateRoute = AdminEmployeesCreateRouteImport.update({
+  id: '/employees/create',
+  path: '/employees/create',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/kontakt': typeof KontaktRoute
   '/menu': typeof MenuRoute
   '/om-os': typeof OmOsRoute
-  '/auth/register': typeof AuthRegisterRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/admin/employees/create': typeof AdminEmployeesCreateRoute
+  '/admin/employees': typeof AdminEmployeesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/kontakt': typeof KontaktRoute
   '/menu': typeof MenuRoute
   '/om-os': typeof OmOsRoute
-  '/auth/register': typeof AuthRegisterRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/admin/employees/create': typeof AdminEmployeesCreateRoute
+  '/admin/employees': typeof AdminEmployeesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteRouteWithChildren
   '/kontakt': typeof KontaktRoute
   '/menu': typeof MenuRoute
   '/om-os': typeof OmOsRoute
-  '/auth/register': typeof AuthRegisterRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/admin/employees/create': typeof AdminEmployeesCreateRoute
+  '/admin/employees/': typeof AdminEmployeesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/kontakt' | '/menu' | '/om-os' | '/auth/register'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/kontakt'
+    | '/menu'
+    | '/om-os'
+    | '/auth/login'
+    | '/admin/employees/create'
+    | '/admin/employees'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/kontakt' | '/menu' | '/om-os' | '/auth/register'
-  id: '__root__' | '/' | '/kontakt' | '/menu' | '/om-os' | '/auth/register'
+  to:
+    | '/'
+    | '/admin'
+    | '/kontakt'
+    | '/menu'
+    | '/om-os'
+    | '/auth/login'
+    | '/admin/employees/create'
+    | '/admin/employees'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/kontakt'
+    | '/menu'
+    | '/om-os'
+    | '/auth/login'
+    | '/admin/employees/create'
+    | '/admin/employees/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
   KontaktRoute: typeof KontaktRoute
   MenuRoute: typeof MenuRoute
   OmOsRoute: typeof OmOsRoute
-  AuthRegisterRoute: typeof AuthRegisterRoute
+  AuthLoginRoute: typeof AuthLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -102,6 +155,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KontaktRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -109,22 +169,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/register': {
-      id: '/auth/register'
-      path: '/auth/register'
-      fullPath: '/auth/register'
-      preLoaderRoute: typeof AuthRegisterRouteImport
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/admin/employees/': {
+      id: '/admin/employees/'
+      path: '/employees'
+      fullPath: '/admin/employees'
+      preLoaderRoute: typeof AdminEmployeesIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/admin/employees/create': {
+      id: '/admin/employees/create'
+      path: '/employees/create'
+      fullPath: '/admin/employees/create'
+      preLoaderRoute: typeof AdminEmployeesCreateRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
   }
 }
 
+interface AdminRouteRouteChildren {
+  AdminEmployeesCreateRoute: typeof AdminEmployeesCreateRoute
+  AdminEmployeesIndexRoute: typeof AdminEmployeesIndexRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminEmployeesCreateRoute: AdminEmployeesCreateRoute,
+  AdminEmployeesIndexRoute: AdminEmployeesIndexRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
   KontaktRoute: KontaktRoute,
   MenuRoute: MenuRoute,
   OmOsRoute: OmOsRoute,
-  AuthRegisterRoute: AuthRegisterRoute,
+  AuthLoginRoute: AuthLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
