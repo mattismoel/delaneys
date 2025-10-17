@@ -3,8 +3,13 @@ import { env } from "./env.ts"
 import routes from "./src/routes/index.ts"
 import { memoryMenuProvider } from "./src/lib/memory/menu-provider.ts"
 import cors from "cors"
-import { memoryEmployeeProvider } from "./src/lib/memory/employee-provider.ts"
 import cookieParser from "cookie-parser"
+import { drizzle } from "drizzle-orm/node-postgres"
+import { drizzleUserRepository } from "./src/services/drizzle/user.ts"
+import * as schema from "./src/db/schema.ts"
+import { drizzleAuthRepository } from "./src/services/drizzle/auth.ts"
+import { drizzleEmployeeRepository } from "./src/services/drizzle/employee.ts"
+const db = drizzle(env.DATABASE_URL, { schema })
 
 const app = express()
 
@@ -16,9 +21,16 @@ app.use(cors({
 app.use(cookieParser())
 
 const menuProvider = memoryMenuProvider()
-const employeeProvider = memoryEmployeeProvider()
+const employeeProvider = drizzleEmployeeRepository(db)
+const userRepository = drizzleUserRepository(db)
+const authRepository = drizzleAuthRepository(db)
 
-app.use(routes(menuProvider, employeeProvider))
+app.use(routes(
+	menuProvider,
+	employeeProvider,
+	userRepository,
+	authRepository,
+))
 
 try {
 	app.listen(env.PORT, "0.0.0.0", () => {

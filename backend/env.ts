@@ -12,6 +12,7 @@ const envSchema = z.object({
 
 	FRONTEND_ORIGIN: z.url().nonempty(),
 	BASE_URL: z.url().nonempty(),
+	DATABASE_URL: z.url(),
 
 	UNTAPPD_API_ACCESS_TOKEN: z.string().transform(key => btoa(key)),
 	UNTAPPD_LOCATION_ID: z.coerce.number().int().nonnegative(),

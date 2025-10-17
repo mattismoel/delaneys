@@ -1,14 +1,15 @@
 import { Router } from "express";
-import type { EmployeeProvider } from "../employee";
+import type { EmployeeRepository } from "../employee";
 
 const router = Router()
 
 
-const routes = (app: Router, employeeProvider: EmployeeProvider) => {
+const routes = (app: Router, employeeRepository: EmployeeRepository) => {
 	app.use("/employees", router)
 
 	router.get("/", async (req, res) => {
-		const employees = await employeeProvider.getEmployees()
+		const employees = await employeeRepository.getEmployees()
+		console.log(employees)
 		res.send(employees)
 	})
 }

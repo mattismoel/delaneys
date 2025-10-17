@@ -1,13 +1,13 @@
 import z from "zod";
 
-export type EmployeeProvider = {
+export type EmployeeRepository = {
 	getEmployees: () => Promise<Employee[]>
 }
 
 const employee = z.object({
-	imageSrc: z.url().optional(),
 	name: z.string().nonempty(),
-	role: z.string().optional()
+	role: z.string().optional().nullish(),
+	imageSrc: z.url().optional().nullish(),
 })
 
 export type Employee = z.infer<typeof employee>

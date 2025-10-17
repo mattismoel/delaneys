@@ -1,17 +1,31 @@
-import { Google, OAuth2Client, OAuth2Tokens } from "arctic";
+import { Facebook, Google, OAuth2Tokens } from "arctic";
 import { env } from "../../env";
+import z from "zod";
 
-const providers = ["google", "apple", "github"] as const
+export const openIdClaims = z.object({
+	sub: z.string().nonempty(),
+	email: z.email().nonempty(),
+	given_name: z.string().nonempty(),
+	family_name: z.string().nonempty(),
+})
+
+const providers = ["google", "facebook"] as const
 export type Provider = typeof providers[number]
 
 const generateRedirectUrl = (provider: Provider): string => {
 	return `${env.BASE_URL}/auth/login/${provider}/callback`
 }
 
-export const google = new Google(
+const google = new Google(
 	env.GOOGLE_CLIENT_ID,
 	env.GOOGLE_CLIENT_SECRET,
 	generateRedirectUrl("google")
+)
+
+const facebook = new Facebook(
+	env.FACEBOOK_APP_ID,
+	env.FACEBOOK_APP_SECRET,
+	generateRedirectUrl("facebook")
 )
 
 export const parseProvider = (provider: string): Provider | null => {
@@ -27,11 +41,12 @@ export const genereateAuthUrl = (
 	provider: Provider,
 	state: string,
 	verifier: string,
-	...scopes: string[]
 ) => {
 	switch (provider) {
 		case "google":
-			return google.createAuthorizationURL(state, verifier, scopes)
+			return google.createAuthorizationURL(state, verifier, ["openid", "email", "profile"])
+		case "facebook":
+			return facebook.createAuthorizationURL(state, ["email"])
 		default:
 			throw new Error("Provider not implemented!")
 	}
@@ -41,6 +56,8 @@ export const validateAuthCode = async (provider: Provider, code: string, verifie
 	switch (provider) {
 		case "google":
 			return await google.validateAuthorizationCode(code, verifier)
+		case "facebook":
+			return await facebook.validateAuthorizationCode(code)
 		default:
 			throw new Error("Provider not implemented")
 	}
