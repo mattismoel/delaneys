@@ -17,7 +17,7 @@ export const Route = createFileRoute('/om-os')({
 })
 
 function RouteComponent() {
-	const { data: employees } = useSuspenseQuery(employeesQueryOpts())
+	const { data: { data: employees } } = useSuspenseQuery(employeesQueryOpts())
 
 	return (
 		<main className="min-h-svh py-32 px-responsive flex flex-col gap-32">
@@ -68,7 +68,7 @@ function RouteComponent() {
 				<div
 					className="grid grid-cols-1 @xl:grid-cols-2 @2xl:grid-cols-3 @4xl:grid-cols-4 gap-8"
 				>
-					{employees.map(employee => <EmployeeCard key={employee.name} employee={employee} />)}
+					{employees?.map(employee => <EmployeeCard key={employee.name} employee={employee} />)}
 				</div>
 			</section>
 		</main>
