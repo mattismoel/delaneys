@@ -3,10 +3,16 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 import "./styles.css";
 
+
 import { routeTree } from './routeTree.gen'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import * as z from "zod";
+import { da } from 'zod/v4/locales';
+
 const queryClient = new QueryClient()
+
+z.config(da())
 
 const router = createRouter({
 	routeTree,
