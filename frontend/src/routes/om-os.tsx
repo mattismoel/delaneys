@@ -17,7 +17,7 @@ export const Route = createFileRoute('/om-os')({
 })
 
 function RouteComponent() {
-	const { data: { data: employees } } = useSuspenseQuery(employeesQueryOpts())
+	const { data: employees } = useSuspenseQuery(employeesQueryOpts())
 
 	return (
 		<main className="min-h-svh py-32 px-responsive flex flex-col gap-32">
