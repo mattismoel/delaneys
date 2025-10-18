@@ -1,17 +1,17 @@
-import { Router } from "express"
-import type { MenuProvider } from "../menu.ts";
+import type { Menu, MenuProvider } from "../menu.ts";
+import { type FastifyPluginAsync } from "fastify";
 
-const router = Router()
-
-const routes = (app: Router, menuProvider: MenuProvider) => {
-	app.use("/menues", router)
-
-	router.get("/:menuId", async (req, res) => {
-		const menuId = parseInt(req.params.menuId)
-		const menu = await menuProvider.menuById(menuId)
-
-		res.send(menu)
-	})
+const routes = (menuProvider: MenuProvider): FastifyPluginAsync => {
+	return async (instance) => {
+		instance.get<{
+			Params: { menuId: number },
+			Reply: { 200: Menu }
+		}>("/:menuId", async (request, reply) => {
+			const { menuId } = request.params
+			const menu = await menuProvider.menuById(menuId)
+			return reply.status(200).send(menu)
+		})
+	}
 }
 
 export default routes

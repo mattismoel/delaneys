@@ -1,17 +1,13 @@
-import { Router } from "express";
+import type { FastifyPluginAsync } from "fastify";
 import type { EmployeeRepository } from "../employee";
 
-const router = Router()
-
-
-const routes = (app: Router, employeeRepository: EmployeeRepository) => {
-	app.use("/employees", router)
-
-	router.get("/", async (req, res) => {
-		const employees = await employeeRepository.getEmployees()
-		console.log(employees)
-		res.send(employees)
-	})
+const routes = (employeeRepository: EmployeeRepository): FastifyPluginAsync => {
+	return async (instance) => {
+		instance.get("/", async (_, res) => {
+			const employees = await employeeRepository.getEmployees()
+			res.status(200).send(employees)
+		})
+	}
 }
 
 export default routes

@@ -1,56 +1,52 @@
-import express, { type NextFunction, type Request, type Response } from "express"
-import { env } from "./env.ts"
-import routes from "./src/routes/index.ts"
-import { memoryMenuProvider } from "./src/lib/memory/menu-provider.ts"
-import cors from "cors"
-import cookieParser from "cookie-parser"
+import fastify from "fastify"
+import cookie from "@fastify/cookie"
+import cors from "@fastify/cors"
+
 import { drizzle } from "drizzle-orm/node-postgres"
-import { drizzleUserRepository } from "./src/services/drizzle/user.ts"
+
+import { env } from "./env.ts"
+
+import routes from "./src/routes/index.ts"
+import { errorHandler } from "./src/error.ts"
 import * as schema from "./src/db/schema.ts"
+
+import { memoryMenuProvider } from "./src/lib/memory/menu-provider.ts"
 import { drizzleAuthRepository } from "./src/services/drizzle/auth.ts"
-import { APIError } from "./src/error.ts"
 import { drizzleEmployeeRepository } from "./src/services/drizzle/employee.ts"
+import { drizzleUserRepository } from "./src/services/drizzle/user.ts"
 
 const db = drizzle(env.DATABASE_URL, { schema })
 
-const app = express()
+const app = fastify({
+	logger: {
+		level: "warn"
+	}
+})
 
-app.use(cors({
+app.register(cookie)
+
+app.register(cors, {
 	credentials: true,
 	origin: env.FRONTEND_ORIGIN,
-}))
+})
 
-app.use(cookieParser())
+app.setErrorHandler(errorHandler)
 
 const menuProvider = memoryMenuProvider()
 const employeeProvider = drizzleEmployeeRepository(db)
 const userRepository = drizzleUserRepository(db)
 const authRepository = drizzleAuthRepository(db)
 
-app.use(routes(
+app.register(routes(
 	menuProvider,
 	employeeProvider,
 	userRepository,
 	authRepository,
 ))
 
-app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
-	if (err instanceof APIError) {
-		res.status(err.status).send(err.error())
-		return
-	}
-
-	console.error(err)
-
-	const serverError = new APIError(req, 500, "Something went wrong").error()
-	res.status(500).send(serverError)
-})
-
 try {
-	app.listen(env.PORT, "0.0.0.0", () => {
-		console.log("listening on port", env.PORT)
-	})
+	app.listen({ port: env.PORT, host: "0.0.0.0" })
 } catch (err) {
-	console.error("could not start server", err)
+	app.log.error(err)
 	process.exit(1)
 }
