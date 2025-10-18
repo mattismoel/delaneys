@@ -17,6 +17,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AdminEmployeesIndexRouteImport } from './routes/admin/employees/index'
 import { Route as AdminEmployeesCreateRouteImport } from './routes/admin/employees/create'
+import { Route as AdminEmployeesEmployeeIdRouteImport } from './routes/admin/employees/$employeeId'
 
 const OmOsRoute = OmOsRouteImport.update({
   id: '/om-os',
@@ -58,6 +59,12 @@ const AdminEmployeesCreateRoute = AdminEmployeesCreateRouteImport.update({
   path: '/employees/create',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminEmployeesEmployeeIdRoute =
+  AdminEmployeesEmployeeIdRouteImport.update({
+    id: '/employees/$employeeId',
+    path: '/employees/$employeeId',
+    getParentRoute: () => AdminRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByFullPath {
   '/menu': typeof MenuRoute
   '/om-os': typeof OmOsRoute
   '/auth/login': typeof AuthLoginRoute
+  '/admin/employees/$employeeId': typeof AdminEmployeesEmployeeIdRoute
   '/admin/employees/create': typeof AdminEmployeesCreateRoute
   '/admin/employees': typeof AdminEmployeesIndexRoute
 }
@@ -76,6 +84,7 @@ export interface FileRoutesByTo {
   '/menu': typeof MenuRoute
   '/om-os': typeof OmOsRoute
   '/auth/login': typeof AuthLoginRoute
+  '/admin/employees/$employeeId': typeof AdminEmployeesEmployeeIdRoute
   '/admin/employees/create': typeof AdminEmployeesCreateRoute
   '/admin/employees': typeof AdminEmployeesIndexRoute
 }
@@ -87,6 +96,7 @@ export interface FileRoutesById {
   '/menu': typeof MenuRoute
   '/om-os': typeof OmOsRoute
   '/auth/login': typeof AuthLoginRoute
+  '/admin/employees/$employeeId': typeof AdminEmployeesEmployeeIdRoute
   '/admin/employees/create': typeof AdminEmployeesCreateRoute
   '/admin/employees/': typeof AdminEmployeesIndexRoute
 }
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/menu'
     | '/om-os'
     | '/auth/login'
+    | '/admin/employees/$employeeId'
     | '/admin/employees/create'
     | '/admin/employees'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
     | '/menu'
     | '/om-os'
     | '/auth/login'
+    | '/admin/employees/$employeeId'
     | '/admin/employees/create'
     | '/admin/employees'
   id:
@@ -119,6 +131,7 @@ export interface FileRouteTypes {
     | '/menu'
     | '/om-os'
     | '/auth/login'
+    | '/admin/employees/$employeeId'
     | '/admin/employees/create'
     | '/admin/employees/'
   fileRoutesById: FileRoutesById
@@ -190,15 +203,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEmployeesCreateRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/employees/$employeeId': {
+      id: '/admin/employees/$employeeId'
+      path: '/employees/$employeeId'
+      fullPath: '/admin/employees/$employeeId'
+      preLoaderRoute: typeof AdminEmployeesEmployeeIdRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
   }
 }
 
 interface AdminRouteRouteChildren {
+  AdminEmployeesEmployeeIdRoute: typeof AdminEmployeesEmployeeIdRoute
   AdminEmployeesCreateRoute: typeof AdminEmployeesCreateRoute
   AdminEmployeesIndexRoute: typeof AdminEmployeesIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminEmployeesEmployeeIdRoute: AdminEmployeesEmployeeIdRoute,
   AdminEmployeesCreateRoute: AdminEmployeesCreateRoute,
   AdminEmployeesIndexRoute: AdminEmployeesIndexRoute,
 }

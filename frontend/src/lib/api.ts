@@ -9,22 +9,33 @@ export const apiError = z.object({
 
 type APIError = z.infer<typeof apiError>
 
-type FetchBackendResponse<T> =
-	| { data: T, error: null }
-	| { data: null, error: APIError }
+export async function fetchBackend(
+	pathname: string,
+	schema: null,
+	init?: RequestInit
+): Promise<null>
 
-export const fetchBackend = async <T,>(
+export async function fetchBackend<T>(
 	pathname: string,
 	schema: ZodType<T>,
 	init?: RequestInit
-): Promise<FetchBackendResponse<T>> => {
+): Promise<T>
+
+export async function fetchBackend<T>(
+	pathname: string,
+	schema: ZodType<T> | null,
+	init?: RequestInit
+): Promise<T | null> {
 	const url = `${env.VITE_BACKEND_URL}/${pathname.replace(/^\/|\/$/g, "")}`
+
 	const res = await fetch(url, init)
 	if (!res.ok) {
-		const error = apiError.parse(await res.json())
-		return { data: null, error }
+		throw new Error("Could not fetch backend")
 	}
 
+	if (!schema) return null
+
 	const data = schema.parse(await res.json())
-	return { data, error: null }
+	return data
 }
+

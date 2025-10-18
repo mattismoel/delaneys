@@ -14,6 +14,9 @@ const envSchema = z.object({
 	BASE_URL: z.url().nonempty(),
 	DATABASE_URL: z.url(),
 
+	S3_BUCKET_NAME: z.string().nonempty(),
+	AWS_REGION: z.string().nonempty(),
+
 	UNTAPPD_API_ACCESS_TOKEN: z.string().transform(key => btoa(key)),
 	UNTAPPD_LOCATION_ID: z.coerce.number().int().nonnegative(),
 

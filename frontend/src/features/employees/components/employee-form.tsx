@@ -28,7 +28,7 @@ const EmployeeForm = ({ employee, onSubmit }: Props) => {
 						<AvatarSelector
 							onChange={field.onChange}
 							buttonText={field.value ? "Ændr..." : "Vælg..."}
-							src={field.value ? URL.createObjectURL(field.value) : undefined}
+							src={field.value ? URL.createObjectURL(field.value) : employee?.imageSrc ?? undefined}
 						/>
 					)}
 				/>

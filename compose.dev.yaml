@@ -21,10 +21,17 @@ services:
     volumes:
       - ./backend:/app
       - /backend/node_modules
+      - ~/.aws:/root/.aws:ro
     ports:
       - 8080:8080
     depends_on:
     - db
+    environment:
+      BASE_URL: http://localhost:8080
+      FRONTEND_ORIGIN: http://localhost:5173
+      DATABASE_URL: postgresql://postgres:password@db:5432
+      S3_BUCKET_NAME: "delaneys-bucket"
+      AWS_REGION: "eu-north-1"
 
   frontend:
     build:

@@ -26,13 +26,9 @@ const providerDataRecord: Record<ProviderName, ProviderData> = {
 export const providerData = (provider: ProviderName): ProviderData => providerDataRecord[provider]
 
 export const isUserApproved = async (): Promise<boolean> => {
-	const { data, error } = await fetchBackend("/auth/me", user, {
+	const { approved } = await fetchBackend("/auth/me", user, {
 		credentials: "include"
 	})
 
-	if (error) {
-		throw new Error(error.message)
-	}
-
-	return data.approved
+	return approved
 }

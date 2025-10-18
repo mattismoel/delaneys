@@ -1,6 +1,7 @@
 import fastify from "fastify"
 import cookie from "@fastify/cookie"
 import cors from "@fastify/cors"
+import multipart from "@fastify/multipart"
 
 import { drizzle } from "drizzle-orm/node-postgres"
 
@@ -14,6 +15,7 @@ import { memoryMenuProvider } from "./src/lib/memory/menu-provider.ts"
 import { drizzleAuthRepository } from "./src/services/drizzle/auth.ts"
 import { drizzleEmployeeRepository } from "./src/services/drizzle/employee.ts"
 import { drizzleUserRepository } from "./src/services/drizzle/user.ts"
+import { s3BucketStorage } from "./src/services/s3/s3.ts"
 
 const db = drizzle(env.DATABASE_URL, { schema })
 
@@ -23,11 +25,13 @@ const app = fastify({
 	}
 })
 
+app.register(multipart)
 app.register(cookie)
 
 app.register(cors, {
 	credentials: true,
 	origin: env.FRONTEND_ORIGIN,
+	methods: ["GET", "POST", "UPDATE", "DELETE"]
 })
 
 app.setErrorHandler(errorHandler)
@@ -37,11 +41,14 @@ const employeeProvider = drizzleEmployeeRepository(db)
 const userRepository = drizzleUserRepository(db)
 const authRepository = drizzleAuthRepository(db)
 
+const bucketStorage = s3BucketStorage(env.S3_BUCKET_NAME)
+
 app.register(routes(
 	menuProvider,
 	employeeProvider,
 	userRepository,
 	authRepository,
+	bucketStorage,
 ))
 
 try {
