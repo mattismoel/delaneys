@@ -20,7 +20,7 @@ type LinkButtonProps = BaseProps
 	})
 
 const baseClasses =
-	"flex gap-2 items-center w-fit px-8 py-3 text-center rounded-sm border border-transparent transition-colors";
+	"flex gap-2 justify-center items-center w-fit px-8 py-2 text-center rounded-sm border border-transparent transition-colors";
 
 const variantClasses = new Map<Variant, string>([
 	[
