@@ -93,7 +93,7 @@ const EmployeeCard = ({ employee }: EmployeeCardProps) => (
 		)}
 
 		<div className="flex flex-col items-center">
-			<h3 className="font-heading font-bold mb-2">
+			<h3 className="font-heading text-xl font-bold mb-2">
 				{employee.name}
 			</h3>
 			<span className="text-center text-text/75">{employee.role}</span>
