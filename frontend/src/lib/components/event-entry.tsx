@@ -24,7 +24,6 @@ const EventEntry = ({ title, description, imgSrc }: Props) => {
 			threshold: 1.0,
 			rootMargin: "64px 0px -96px 0px",
 		});
-		console.log(observer)
 
 		observer.observe(element.current);
 	}, [element, element.current]);

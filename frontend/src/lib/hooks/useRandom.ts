@@ -6,11 +6,8 @@ type OverrideProps<T> = {
 }
 
 export const useRandom = <T,>(choices: T[]) => {
-	console.log(choices.length, "min", 0, "max", choices.length - 1)
-
 	const randomIndex = () => {
 		const idx = Math.floor(Math.random() * choices.length)
-		console.log(idx)
 		return idx
 	}
 
@@ -25,7 +22,6 @@ export const useRandom = <T,>(choices: T[]) => {
 		if (!props.findFn) return
 
 		const newIdx = choices.findIndex(props.findFn)
-		console.log("new override", newIdx, choices[0])
 
 		if (newIdx === -1) {
 			setCurrentIdx(null)

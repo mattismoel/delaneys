@@ -22,7 +22,6 @@ function RouteComponent() {
 		setIsHovered((id !== null))
 
 		if (id === null) {
-			// override({ newValue: null })
 			return
 		}
 
@@ -36,7 +35,6 @@ function RouteComponent() {
 	}
 
 	useEffect(() => {
-		console.log("hovered", isHovered)
 		const interval = isHovered ? undefined : setInterval(randomise, 3000)
 		return () => clearInterval(interval)
 	}, [isHovered])
