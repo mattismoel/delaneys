@@ -22,7 +22,7 @@ const EventEntry = ({ title, description, imgSrc }: Props) => {
 		if (!element.current) return
 		const observer = new IntersectionObserver(handleVisible, {
 			threshold: 1.0,
-			rootMargin: "64px 0px -96px 0px",
+			rootMargin: "32px 0px 0px 0px",
 		});
 
 		observer.observe(element.current);
