@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
 import EmployeeForm from '../../../features/employees/components/employee-form'
 import type z from 'zod'
 import { createEmployee, type employeeForm } from '../../../features/employees/employee'
@@ -10,7 +10,7 @@ export const Route = createFileRoute('/admin/employees/create')({
 })
 
 function RouteComponent() {
-	const navigate = useNavigate()
+	const router = useRouter()
 	const queryClient = useQueryClient()
 	const [submitting, setSubmitting] = useState(false)
 
@@ -20,7 +20,8 @@ function RouteComponent() {
 		await createEmployee(form)
 
 		await queryClient.invalidateQueries({ queryKey: ["employees"] })
-		await navigate({ to: "/admin/employees" })
+		router.history.back()
+
 		setSubmitting(false)
 	}
 
