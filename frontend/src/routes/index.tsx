@@ -4,6 +4,7 @@ import { LinkButton } from "../lib/components/button"
 import EventEntry from "../lib/components/event-entry"
 import ChairsImage from "../assets/bar-2.jpg"
 import PourImage from "../assets/bar-3.jpg"
+import Logo from "../lib/components/logo"
 
 export const Route = createFileRoute('/')({
 	component: RouteComponent,
@@ -21,11 +22,7 @@ function RouteComponent() {
 					alt="Baggrund af hanerne på Delaney's Bar & Bottleshop"
 				/>
 				<div className="px-responsive w-full">
-					<h1
-						className="text-text-light text-5xl font-bold mb-8 font-heading max-w-xl leading-[1.2] md:text-7xl lg:text-8xl"
-					>
-						Delaney's&nbsp;Bar&nbsp;& Bottleshop
-					</h1>
+					<Logo className="*:fill-text-light -translate-x-6 h-20 mb-4 sm:h-28 lg:-translate-x-14 lg:h-36" />
 					<p className="text-text-light mb-8 max-w-lg leading-loose">
 						En hjemmelig specialøl-bar i hjertet af Skibhuskvarteret. Kom og nyd en
 						lækker øl med dine venner og bekendte.
