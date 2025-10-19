@@ -6,12 +6,14 @@ import z from "zod";
 export const providers = ["google", "facebook"] as const
 export type ProviderName = typeof providers[number]
 
-const user = z.object({
+export const user = z.object({
 	email: z.email().nonempty(),
 	firstName: z.string().nonempty(),
 	lastName: z.string().nonempty(),
 	approved: z.boolean(),
 })
+
+export type User = z.infer<typeof user>
 
 type ProviderData = {
 	name: string;

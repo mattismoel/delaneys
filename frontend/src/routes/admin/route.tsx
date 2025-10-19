@@ -1,15 +1,22 @@
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
-import { isUserApproved } from '../../features/auth/auth'
+import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router'
+import AuthProvider, { useAuth } from '../../lib/context/auth'
 
 export const Route = createFileRoute('/admin')({
 	component: RouteComponent,
-	beforeLoad: async () => {
-		if (!await isUserApproved()) {
-			return redirect({ to: "/auth/login" })
-		}
-	}
 })
 
-function RouteComponent() {
+const Layout = () => {
+	const { user, loading } = useAuth()
+
+	if (loading) return <span>Loading...</span>
+	if (user === null) return <Navigate to="/auth/login" />
 	return <Outlet />
+}
+
+function RouteComponent() {
+	return (
+		<AuthProvider>
+			<Layout />
+		</AuthProvider>
+	)
 }
