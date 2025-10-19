@@ -16,6 +16,9 @@ import { drizzleAuthRepository } from "./src/services/drizzle/auth.ts"
 import { drizzleEmployeeRepository } from "./src/services/drizzle/employee.ts"
 import { drizzleUserRepository } from "./src/services/drizzle/user.ts"
 import { s3BucketStorage } from "./src/services/s3/s3.ts"
+import { sharpImageTransformer } from "./src/services/sharp/image.ts"
+
+const MAX_FILE_UPLOAD_SIZE_BYTES = 20000000 // 20MB.
 
 const db = drizzle(env.DATABASE_URL, { schema })
 
@@ -25,7 +28,12 @@ const app = fastify({
 	}
 })
 
-app.register(multipart)
+app.register(multipart, {
+	limits: {
+		fileSize: MAX_FILE_UPLOAD_SIZE_BYTES,
+	}
+})
+
 app.register(cookie)
 
 app.register(cors, {
@@ -42,6 +50,7 @@ const userRepository = drizzleUserRepository(db)
 const authRepository = drizzleAuthRepository(db)
 
 const bucketStorage = s3BucketStorage(env.S3_BUCKET_NAME)
+const imageTransformer = sharpImageTransformer()
 
 app.register(routes(
 	menuProvider,
@@ -49,6 +58,7 @@ app.register(routes(
 	userRepository,
 	authRepository,
 	bucketStorage,
+	imageTransformer,
 ))
 
 try {

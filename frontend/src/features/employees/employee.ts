@@ -12,6 +12,7 @@ export const employeeForm = z.object({
 	name: z.string().nonempty("Navn på ansat skal defineres"),
 	image: z
 		.file("Billede af ansat skal defineres")
+		.max(20000000, "Billede må maks være 20MB")
 		.mime(["image/jpeg", "image/png", "image/webp"], "Billede skal være JPEG, PNG eller WebP")
 		.optional(),
 	role: z.string().optional()

@@ -3,8 +3,16 @@ import { insertEmployeeSchema, updateEmployeeSchema, type EmployeeRepository } f
 import type { BucketStorage } from "../lib/bucket";
 import { APIError } from "../error";
 import z from "zod";
+import type { ImageTransformer as ImageTransformer } from "../lib/image";
+import { randomFilename } from "../lib/file";
 
-const routes = (employeeRepository: EmployeeRepository, bucketStorage: BucketStorage): FastifyPluginAsync => {
+const EMPLOYEE_IMAGE_WIDTH = 1024
+
+const routes = (
+	employeeRepository: EmployeeRepository,
+	bucketStorage: BucketStorage,
+	imageTransformer: ImageTransformer,
+): FastifyPluginAsync => {
 	return async (instance) => {
 		instance.get("/", async (_, res) => {
 			const employees = await employeeRepository.getEmployees()
@@ -64,25 +72,26 @@ const routes = (employeeRepository: EmployeeRepository, bucketStorage: BucketSto
 				await bucketStorage.deleteObject(new URL(employee.imageSrc))
 			}
 
-			const fileExtension = data.filename.split(".").pop();
-			if (!fileExtension) throw new APIError(req, 400, "No image file extension")
+			const resizedImage = imageTransformer.resize(data.file, {
+				width: EMPLOYEE_IMAGE_WIDTH,
+			})
 
-			const fileName = `${crypto.randomUUID()}.${fileExtension}`
-			const uploadUrl = await bucketStorage.uploadObject(`employees/${fileName}`, data.file)
+			const filename = randomFilename(data.filename)
+			const uploadUrl = await bucketStorage.uploadObject(`employees/${filename}`, resizedImage)
 
 			res.status(201).send(uploadUrl)
 		})
 
 		instance.post("/image", async (req, res) => {
 			const data = await req.file()
-
 			if (!data) throw new APIError(req, 400, "No image provided")
 
-			const fileExtension = data.filename.split(".").pop();
-			if (!fileExtension) throw new APIError(req, 400, "No image file extension")
+			const resizedImage = imageTransformer.resize(data.file, {
+				width: EMPLOYEE_IMAGE_WIDTH
+			})
 
-			const fileName = `${crypto.randomUUID()}.${fileExtension}`
-			const uploadUrl = await bucketStorage.uploadObject(`employees/${fileName}`, data.file)
+			const fileName = randomFilename(data.filename)
+			const uploadUrl = await bucketStorage.uploadObject(`employees/${fileName}`, resizedImage)
 
 			res.status(201).send(uploadUrl)
 		})
