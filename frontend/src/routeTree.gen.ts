@@ -15,6 +15,7 @@ import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as AdminRouteRouteImport } from './routes/admin/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
+import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
 import { Route as AdminEmployeesIndexRouteImport } from './routes/admin/employees/index'
 import { Route as AdminEmployeesCreateRouteImport } from './routes/admin/employees/create'
 import { Route as AdminEmployeesEmployeeIdRouteImport } from './routes/admin/employees/$employeeId'
@@ -49,6 +50,11 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
   path: '/auth/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminEmployeesIndexRoute = AdminEmployeesIndexRouteImport.update({
   id: '/employees/',
   path: '/employees/',
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/kontakt': typeof KontaktRoute
   '/menu': typeof MenuRoute
   '/om-os': typeof OmOsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
   '/auth/login': typeof AuthLoginRoute
   '/admin/employees/$employeeId': typeof AdminEmployeesEmployeeIdRoute
   '/admin/employees/create': typeof AdminEmployeesCreateRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   '/kontakt': typeof KontaktRoute
   '/menu': typeof MenuRoute
   '/om-os': typeof OmOsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
   '/auth/login': typeof AuthLoginRoute
   '/admin/employees/$employeeId': typeof AdminEmployeesEmployeeIdRoute
   '/admin/employees/create': typeof AdminEmployeesCreateRoute
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/kontakt': typeof KontaktRoute
   '/menu': typeof MenuRoute
   '/om-os': typeof OmOsRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
   '/auth/login': typeof AuthLoginRoute
   '/admin/employees/$employeeId': typeof AdminEmployeesEmployeeIdRoute
   '/admin/employees/create': typeof AdminEmployeesCreateRoute
@@ -108,6 +117,7 @@ export interface FileRouteTypes {
     | '/kontakt'
     | '/menu'
     | '/om-os'
+    | '/admin/dashboard'
     | '/auth/login'
     | '/admin/employees/$employeeId'
     | '/admin/employees/create'
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/kontakt'
     | '/menu'
     | '/om-os'
+    | '/admin/dashboard'
     | '/auth/login'
     | '/admin/employees/$employeeId'
     | '/admin/employees/create'
@@ -130,6 +141,7 @@ export interface FileRouteTypes {
     | '/kontakt'
     | '/menu'
     | '/om-os'
+    | '/admin/dashboard'
     | '/auth/login'
     | '/admin/employees/$employeeId'
     | '/admin/employees/create'
@@ -189,6 +201,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/employees/': {
       id: '/admin/employees/'
       path: '/employees'
@@ -214,12 +233,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteRouteChildren {
+  AdminDashboardRoute: typeof AdminDashboardRoute
   AdminEmployeesEmployeeIdRoute: typeof AdminEmployeesEmployeeIdRoute
   AdminEmployeesCreateRoute: typeof AdminEmployeesCreateRoute
   AdminEmployeesIndexRoute: typeof AdminEmployeesIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminDashboardRoute: AdminDashboardRoute,
   AdminEmployeesEmployeeIdRoute: AdminEmployeesEmployeeIdRoute,
   AdminEmployeesCreateRoute: AdminEmployeesCreateRoute,
   AdminEmployeesIndexRoute: AdminEmployeesIndexRoute,
