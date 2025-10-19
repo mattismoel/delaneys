@@ -115,7 +115,7 @@ const Entry = ({ employee, onArchive, onRestore, onDelete }: EntryProps) => (
 			<EmployeeImage src={employee.imageSrc} alt={employee.name} />
 
 			<div className="flex flex-col flex-1">
-				<h2 className="font-serif font-bold text-2xl group-hover:underline">{employee.name}</h2>
+				<h2 className="font-serif font-bold text-xl group-hover:underline">{employee.name}</h2>
 				<p className={cn("text-text-dark/75", !employee.role && "italic")}>
 					{employee.role || "Ingen rolle bestemt..."}
 				</p>
