@@ -6,7 +6,7 @@ import Input from "../../../lib/components/input"
 import AvatarSelector from "../../../lib/components/avatar-selector"
 import { Button } from "../../../lib/components/button"
 import ErroneousField from "../../../lib/components/erroneous-field"
-import { LuLoader, LuLoaderCircle } from "react-icons/lu"
+import { LuLoaderCircle } from "react-icons/lu"
 
 type Props = {
 	employee?: Employee
@@ -29,7 +29,7 @@ const EmployeeForm = ({ employee, submitting, onSubmit }: Props) => {
 					render={({ field }) => (
 						<AvatarSelector
 							onChange={field.onChange}
-							buttonText={field.value ? "Ændr..." : "Vælg..."}
+							buttonText={(field.value || employee?.imageSrc) ? "Ændr..." : "Vælg..."}
 							src={field.value ? URL.createObjectURL(field.value) : employee?.imageSrc ?? undefined}
 						/>
 					)}
