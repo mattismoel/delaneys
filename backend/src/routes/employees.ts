@@ -45,7 +45,7 @@ const routes = (employeeRepository: EmployeeRepository, bucketStorage: BucketSto
 			if (!employee) throw new APIError(req, 404, "No such employee found")
 
 			if (employee.imageSrc) {
-				await bucketStorage.deleteObject(employee.imageSrc)
+				await bucketStorage.deleteObject(new URL(employee.imageSrc))
 			}
 
 			await employeeRepository.deleteEmployee(employeeId)
@@ -61,7 +61,7 @@ const routes = (employeeRepository: EmployeeRepository, bucketStorage: BucketSto
 			if (!employee) throw new APIError(req, 404, "No such employee")
 
 			if (employee.imageSrc) {
-				await bucketStorage.deleteObject(employee.imageSrc)
+				await bucketStorage.deleteObject(new URL(employee.imageSrc))
 			}
 
 			const fileExtension = data.filename.split(".").pop();

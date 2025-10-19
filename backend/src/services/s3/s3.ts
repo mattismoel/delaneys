@@ -6,9 +6,14 @@ import { Upload } from "@aws-sdk/lib-storage"
 export const s3BucketStorage = (bucketName: string): BucketStorage => {
 	const client = new S3Client()
 
-	const createObjectUrl = (key: string): URL => {
-		const url = new URL(key, `https://${bucketName}.s3.amazonaws.com/`)
+	const createObjectUrl = async (key: string): Promise<URL> => {
+		const region = await client.config.region()
+		const url = new URL(key, `https://${bucketName}.s3.${region}.amazonaws.com/`)
 		return url
+	}
+
+	const keyFromUrl = (urlKey: URL): string => {
+		return urlKey.pathname.slice(1)
 	}
 
 	const uploadObject = async (key: string, body: Readable): Promise<URL> => {
@@ -17,17 +22,15 @@ export const s3BucketStorage = (bucketName: string): BucketStorage => {
 			params: { Bucket: bucketName, Key: key, Body: body }
 		})
 
-		try {
-			await upload.done()
-			return createObjectUrl(key)
-		} catch (e) {
-			console.error(e)
-			throw e
-		}
-
+		await upload.done()
+		return await createObjectUrl(key)
 	}
 
-	const deleteObject = async (key: string) => {
+	const deleteObject = async (key: string | URL) => {
+		if (key instanceof URL) {
+			key = keyFromUrl(key)
+		}
+
 		await client.send(new DeleteObjectCommand({
 			Bucket: bucketName,
 			Key: key
