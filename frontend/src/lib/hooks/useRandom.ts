@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { randomIndex } from "../random"
 
 type OverrideProps<T> = {
 	newValue: T | null
@@ -6,12 +7,7 @@ type OverrideProps<T> = {
 }
 
 export const useRandom = <T,>(choices: T[]) => {
-	const randomIndex = () => {
-		const idx = Math.floor(Math.random() * choices.length)
-		return idx
-	}
-
-	const [currentIdx, setCurrentIdx] = useState<number | null>(randomIndex())
+	const [currentIdx, setCurrentIdx] = useState<number | null>(randomIndex(choices))
 
 	const override = (props: OverrideProps<T>) => {
 		if (!props.newValue) {
@@ -36,9 +32,9 @@ export const useRandom = <T,>(choices: T[]) => {
 		if (choices.length === 1) return 0
 
 		setCurrentIdx(prevIdx => {
-			let newIdx = randomIndex()
+			let newIdx = randomIndex(choices)
 			while (newIdx === prevIdx) {
-				newIdx = randomIndex()
+				newIdx = randomIndex(choices)
 			}
 
 			return newIdx
