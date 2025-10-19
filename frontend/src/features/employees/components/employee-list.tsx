@@ -22,7 +22,7 @@ const EmployeeList = ({ employees }: Props) => {
 		const employee = employees?.find(employee => employee.id === id)
 		if (!employee) return
 
-		if (!confirm(`Er du sikker på, at du vil fjerne ${employee.name}?`)) return
+		if (!confirm(`Er du sikker på, at du vil slette ${employee.name}?\n\nOBS: Handlingen kan ikke fortrydes.`)) return
 
 		await deleteEmployee(id)
 		await queryClient.invalidateQueries({ queryKey: ["employees"] })
@@ -119,11 +119,11 @@ const Entry = ({ employee, onArchive, onRestore, onDelete }: EntryProps) => (
 		</Link>
 
 		<div className="flex">
-			<ActionButton type="button" onClick={employee.archived ? onRestore : onArchive}>
+			<ActionButton title="Arkivér (Hall of Fame)" type="button" onClick={employee.archived ? onRestore : onArchive}>
 				{employee.archived ? <LuArchiveRestore /> : <LuArchive />}
 			</ActionButton>
 
-			<ActionButton type="button" onClick={onDelete}>
+			<ActionButton title="Slet" type="button" onClick={onDelete}>
 				<LuTrash />
 			</ActionButton>
 		</div>
@@ -145,14 +145,15 @@ const EmployeeImage = ({ src, alt }: EmployeeImageProps) => (
 )
 
 type ActionButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+	title: string;
 	to?: ToOptions["to"] | never
 	params?: ToOptions["params"] | never
 }
 
-const ActionButton = ({ children, to, params, ...rest }: ActionButtonProps) => (
+const ActionButton = ({ children, title, to, params, ...rest }: ActionButtonProps) => (
 	to
-		? <Link to={to} params={params} className={cn(actionButtonBaseClasses, rest.className)}>{children}</Link>
-		: <button {...rest} className={cn(actionButtonBaseClasses, rest.className)}>{children}</button>
+		? <Link title={title} to={to} params={params} className={cn(actionButtonBaseClasses, rest.className)}>{children}</Link>
+		: <button {...rest} title={title} className={cn(actionButtonBaseClasses, rest.className)}>{children}</button>
 )
 
 export default EmployeeList
