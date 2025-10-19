@@ -21,6 +21,9 @@ export type EmployeeRepository = {
 	insertEmployee: (load: InsertEmployee) => Promise<Employee>
 	updateEmployee: (id: number, load: UpdateEmployee) => Promise<Employee | null>;
 	deleteEmployee: (id: number) => Promise<void>
+
+	archiveEmployee: (id: number) => Promise<void>
+	restoreEmployee: (id: number) => Promise<void>
 }
 
 const employee = z.object({
@@ -28,6 +31,7 @@ const employee = z.object({
 	name: z.string().nonempty(),
 	role: z.string().optional().nullish(),
 	imageSrc: z.url().optional().nullish(),
+	archived: z.boolean(),
 })
 
 export type Employee = z.infer<typeof employee>

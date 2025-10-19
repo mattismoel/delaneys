@@ -37,6 +37,19 @@ const routes = (
 			return updatedEmployee
 		})
 
+		instance.post<{
+			Params: { employeeId: number },
+			Querystring: { archive: string }
+		}>("/archive/:employeeId", async (req, res) => {
+			const archive = req.query.archive === "true"
+
+			if (archive) {
+				await employeeRepository.archiveEmployee(req.params.employeeId)
+			} else {
+				await employeeRepository.restoreEmployee(req.params.employeeId)
+			}
+		})
+
 		instance.get<{
 			Params: { employeeId: number }
 		}>("/:employeeId", async (req, _) => {

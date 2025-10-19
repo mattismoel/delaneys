@@ -5,7 +5,8 @@ export const employee = z.object({
 	id: z.int().positive(),
 	name: z.string().nonempty(),
 	imageSrc: z.url().nonempty(),
-	role: z.string().optional()
+	role: z.string().optional(),
+	archived: z.boolean(),
 })
 
 export const employeeForm = z.object({
@@ -70,4 +71,16 @@ export const updateEmployee = async (id: number, data: z.infer<typeof employeeFo
 	})
 
 	return result
+}
+
+export const archiveEmployee = async (id: number) => {
+	await fetchBackend(`/employees/archive/${id}?archive=true`, null, {
+		method: "POST"
+	})
+}
+
+export const restoreEmployee = async (id: number) => {
+	await fetchBackend(`/employees/archive/${id}?archive=false`, null, {
+		method: "POST"
+	})
 }

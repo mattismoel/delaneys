@@ -32,5 +32,21 @@ export const drizzleEmployeeRepository = (db: NodePgDatabase<typeof schema>): Em
 		return employee
 	}
 
-	return { getEmployees, getEmployeeById, insertEmployee, updateEmployee, deleteEmployee }
+	const archiveEmployee = async (id: number) => {
+		await db
+			.update(schema.employeeTable).set({
+				archived: true
+			})
+			.where(eq(schema.employeeTable.id, id))
+	}
+
+	const restoreEmployee = async (id: number) => {
+		await db
+			.update(schema.employeeTable).set({
+				archived: false
+			})
+			.where(eq(schema.employeeTable.id, id))
+	}
+
+	return { getEmployees, getEmployeeById, insertEmployee, updateEmployee, archiveEmployee, restoreEmployee, deleteEmployee }
 }

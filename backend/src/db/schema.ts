@@ -30,5 +30,6 @@ export const employeeTable = pgTable("employees", {
 	id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
 	name: text("name").notNull(),
 	role: text("role"),
+	archived: boolean().notNull().default(false),
 	imageSrc: text("image_src")
 })
