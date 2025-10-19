@@ -43,7 +43,7 @@
 }
 
 @utility px-responsive {
-	@apply px-6 sm:px-8 md:px-16 lg:px-32 xl:px-64;
+	@apply px-8 sm:px-10 md:px-16 lg:px-32 xl:px-64;
 }
 
 @utility font-bold-no-shift {
