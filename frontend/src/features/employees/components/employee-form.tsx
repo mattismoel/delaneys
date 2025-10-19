@@ -6,13 +6,15 @@ import Input from "../../../lib/components/input"
 import AvatarSelector from "../../../lib/components/avatar-selector"
 import { Button } from "../../../lib/components/button"
 import ErroneousField from "../../../lib/components/erroneous-field"
+import { LuLoader, LuLoaderCircle } from "react-icons/lu"
 
 type Props = {
 	employee?: Employee
 	onSubmit: (form: z.infer<typeof employeeForm>) => void;
+	submitting: boolean;
 }
 
-const EmployeeForm = ({ employee, onSubmit }: Props) => {
+const EmployeeForm = ({ employee, submitting, onSubmit }: Props) => {
 	const { control, formState: { errors }, register, handleSubmit } = useForm({
 		defaultValues: employee ? { ...employee } : undefined,
 		resolver: zodResolver(employeeForm)
@@ -44,7 +46,13 @@ const EmployeeForm = ({ employee, onSubmit }: Props) => {
 				</ErroneousField>
 			</fieldset>
 
-			<Button className="w-full">{employee ? "Redigér" : "Tilføj"}</Button>
+			<Button className="w-full">
+				{submitting ? (
+					<LuLoaderCircle className="animate-spin" />
+				) : (
+					employee ? "Redigér" : "Tilføj"
+				)}
+			</Button>
 		</form >
 	)
 }
