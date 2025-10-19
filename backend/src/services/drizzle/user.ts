@@ -27,5 +27,30 @@ export const drizzleUserRepository = (db: NodePgDatabase<typeof schema>): UserRe
 		return user
 	}
 
-	return { insertUser, getUserById }
+	const getUsers = async () => {
+		const users = await db.select().from(schema.userTable)
+		return users
+	}
+
+	const approveUser = async (id: number) => {
+		await db
+			.update(schema.userTable).set({ approved: true })
+			.where(eq(schema.userTable.id, id))
+	}
+
+	const deleteUser = async (id: number) => {
+		await db
+			.delete(schema.sessionTable)
+			.where(eq(schema.sessionTable.userId, id))
+
+		await db
+			.delete(schema.userIdentities)
+			.where(eq(schema.userIdentities.userId, id))
+
+		await db
+			.delete(schema.userTable)
+			.where(eq(schema.userTable.id, id))
+	}
+
+	return { insertUser, getUsers, getUserById, approveUser, deleteUser }
 }

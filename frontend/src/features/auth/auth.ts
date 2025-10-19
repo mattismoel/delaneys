@@ -1,19 +1,9 @@
 import type { IconType } from "react-icons/lib";
 import { SiFacebook, SiGoogle } from "react-icons/si";
-import { fetchBackend } from "../../lib/api.ts";
-import z from "zod";
 
 export const providers = ["google", "facebook"] as const
 export type ProviderName = typeof providers[number]
 
-export const user = z.object({
-	email: z.email().nonempty(),
-	firstName: z.string().nonempty(),
-	lastName: z.string().nonempty(),
-	approved: z.boolean(),
-})
-
-export type User = z.infer<typeof user>
 
 type ProviderData = {
 	name: string;
@@ -26,11 +16,3 @@ const providerDataRecord: Record<ProviderName, ProviderData> = {
 }
 
 export const providerData = (provider: ProviderName): ProviderData => providerDataRecord[provider]
-
-export const isUserApproved = async (): Promise<boolean> => {
-	const { approved } = await fetchBackend("/auth/me", user, {
-		credentials: "include"
-	})
-
-	return approved
-}

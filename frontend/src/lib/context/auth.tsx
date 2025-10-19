@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type PropsWithChildren } from "react"
-import { user, type User } from "../../features/auth/auth"
+import { user, type User } from "../../features/auth/user"
 import { fetchBackend } from "../api";
 
 type AuthContext = {
@@ -24,15 +24,6 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
 			const me = await fetchBackend("/auth/me", user, {
 				credentials: "include"
 			})
-
-			console.log("MEEE", me)
-
-			if (!me.approved) {
-				console.log("NOT APPROVED")
-				setCurrentUser(null)
-				setLoading(false)
-				return
-			}
 
 			setCurrentUser(me)
 		} catch (e) {

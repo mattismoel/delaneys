@@ -22,7 +22,11 @@ export type Session = z.infer<typeof session>
 
 export type UserRepository = {
 	getUserById: (id: number) => Promise<User | null>
+	getUsers: () => Promise<User[]>
 	insertUser: (email: string, firstName: string, lastName: string) => Promise<User>
+	deleteUser: (id: number) => Promise<void>;
+
+	approveUser: (id: number) => Promise<void>;
 }
 
 export type AuthRepository = {

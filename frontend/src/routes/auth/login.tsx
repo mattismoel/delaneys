@@ -17,7 +17,8 @@ function RouteComponent() {
 						const { name, Icon } = providerData(provider)
 						const url = new URL(`${env.VITE_BACKEND_URL}/auth/login/${provider}`)
 
-						url.searchParams.set("success_redirect", `${window.location.origin}/admin`)
+						url.searchParams.set("success_redirect", `${window.location.origin}/admin/dashboard`)
+						url.searchParams.set("approval_redirect", `${window.location.origin}/auth/approval`)
 
 						return (
 							<LinkButton href={url.toString()} className="w-full">

@@ -10,6 +10,8 @@ const Layout = () => {
 
 	if (loading) return <span>Loading...</span>
 	if (user === null) return <Navigate to="/auth/login" />
+	if (!user?.approved) return <Navigate to="/" />
+
 	return <Outlet />
 }
 

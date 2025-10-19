@@ -1,12 +1,10 @@
-import type { ButtonHTMLAttributes } from "react"
 import { archiveEmployee, deleteEmployee, restoreEmployee, type Employee } from "../employee"
 import { LuArchive, LuArchiveRestore, LuCircleUserRound, LuPlus, LuTrash } from "react-icons/lu"
-import { Link, type ToOptions } from "@tanstack/react-router"
+import { Link } from "@tanstack/react-router"
 import { cn } from "../../../lib/class"
 import { useQueryClient } from "@tanstack/react-query"
 import { LinkButton } from "../../../lib/components/button"
-
-const actionButtonBaseClasses = "p-2 text-lg text-text-dark/50 rounded-sm hover:bg-background-200 hover:text-text-dark group-hover:hover:bg-background-300"
+import ActionButton from "../../../lib/components/action-button"
 
 type Props = {
 	employees: Employee[]
@@ -73,7 +71,7 @@ const EmployeeList = ({ employees }: Props) => {
 				</section>
 
 				<section>
-					<h1 className="font-bold font-serif text-4xl mb-8">Hall of fame</h1>
+					<h1 className="font-bold font-serif text-4xl mb-8">Hall of Fame</h1>
 
 					{archivedEmployees.length === 0 ? <span>Intet at se hér...</span> : (
 						<ul className="flex flex-col gap-2">
@@ -123,11 +121,11 @@ const Entry = ({ employee, onArchive, onRestore, onDelete }: EntryProps) => (
 		</Link>
 
 		<div className="flex p-4">
-			<ActionButton title="Arkivér (Hall of Fame)" type="button" onClick={employee.archived ? onRestore : onArchive}>
+			<ActionButton title="Arkivér (Hall of Fame)" onClick={employee.archived ? onRestore : onArchive}>
 				{employee.archived ? <LuArchiveRestore /> : <LuArchive />}
 			</ActionButton>
 
-			<ActionButton title="Slet" type="button" onClick={onDelete}>
+			<ActionButton title="Slet" onClick={onDelete}>
 				<LuTrash />
 			</ActionButton>
 		</div>
@@ -148,16 +146,5 @@ const EmployeeImage = ({ src, alt }: EmployeeImageProps) => (
 	)
 )
 
-type ActionButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-	title: string;
-	to?: ToOptions["to"] | never
-	params?: ToOptions["params"] | never
-}
-
-const ActionButton = ({ children, title, to, params, ...rest }: ActionButtonProps) => (
-	to
-		? <Link title={title} to={to} params={params} className={cn(actionButtonBaseClasses, rest.className)}>{children}</Link>
-		: <button {...rest} title={title} className={cn(actionButtonBaseClasses, rest.className)}>{children}</button>
-)
 
 export default EmployeeList

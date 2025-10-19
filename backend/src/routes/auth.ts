@@ -7,12 +7,41 @@ import { APIError } from "../error"
 
 const routes = (userRepository: UserRepository, authRepository: AuthRepository): FastifyPluginAsync => {
 	return async (instance) => {
+		instance.get("/users", async () => {
+			const users = await userRepository.getUsers()
+			return users
+		})
+
+		instance.post<{
+			Params: { userId: number }
+		}>("/users/:userId/approve", async (req, res) => {
+			await userRepository.approveUser(req.params.userId)
+		})
+
+		instance.post<{
+			Params: { userId: number }
+		}>("/users/:userId/reject", async (req, res) => {
+			await userRepository.deleteUser(req.params.userId)
+		})
+
+		instance.delete<{
+			Params: { userId: number }
+		}>("/users/:userId", async (req, res) => {
+			await userRepository.deleteUser(req.params.userId)
+		})
+
 		instance.get<{
-			Querystring: { "success_redirect": string },
+			Querystring: {
+				"success_redirect": string,
+				"approval_redirect": string,
+			},
 			Params: { provider: Provider },
 		}>("/login/:provider", async (req, res) => {
 			const successRedirect = req.query["success_redirect"]?.toString()
 			if (!successRedirect) throw new APIError(req, 400, "No success redirect URL defined")
+
+			const approvalRedirect = req.query["approval_redirect"]?.toString()
+			if (!approvalRedirect) throw new APIError(req, 400, "No approval redirect URL defined")
 
 			const provider = parseProvider(req.params.provider)
 			if (!provider) throw new APIError(req, 400, "No provider defined")
@@ -23,6 +52,14 @@ const routes = (userRepository: UserRepository, authRepository: AuthRepository):
 			const url = genereateAuthUrl(provider, state, verifier)
 
 			res.setCookie("redirect-url", successRedirect, {
+				httpOnly: true,
+				maxAge: 60 * 1000,
+				secure: env.NODE_ENV === "production",
+				path: "/",
+				sameSite: "lax"
+			})
+
+			res.setCookie("approval-redirect-url", approvalRedirect, {
 				httpOnly: true,
 				maxAge: 60 * 1000,
 				secure: env.NODE_ENV === "production",
@@ -62,10 +99,12 @@ const routes = (userRepository: UserRepository, authRepository: AuthRepository):
 			const storedState = req.cookies[`${provider}-oauth-state`]
 			const verifier = req.cookies[`${provider}-oauth-verifier`]
 			const successRedirectUrl = req.cookies["redirect-url"]
+			const approvalRedirectUrl = req.cookies["approval-redirect-url"]
 
 			if (!verifier) throw new APIError(req, 400, "No verifier cookie found")
 			if (!storedState) throw new APIError(req, 400, "No stored state cookie found")
 			if (!successRedirectUrl) throw new APIError(req, 400, "No success redirect url cookie found")
+			if (!approvalRedirectUrl) throw new APIError(req, 400, "No approval redirect url cookie found")
 
 			if (state !== storedState) throw new APIError(req, 400, "Given state and stored state do not match")
 
@@ -87,7 +126,10 @@ const routes = (userRepository: UserRepository, authRepository: AuthRepository):
 
 			const existingUser = await authRepository.getUserByOidcSub(sub)
 			if (existingUser !== null) {
-				if (!existingUser.approved) throw new APIError(req, 400, "User not approved")
+				if (!existingUser.approved) {
+					res.redirect(approvalRedirectUrl)
+					return
+				}
 
 				const { session, token } = createSession(existingUser.id)
 
@@ -100,7 +142,8 @@ const routes = (userRepository: UserRepository, authRepository: AuthRepository):
 
 			const { id: createdUserId } = await userRepository.insertUser(email, givenName, familyName)
 			await authRepository.insertUserIdentity(createdUserId, sub, provider)
-			res.status(201)
+
+			res.redirect(approvalRedirectUrl)
 		})
 
 		instance.get("/me", async (req, res) => {
