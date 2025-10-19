@@ -73,7 +73,7 @@ const UserEntry = ({ user, currentUser, variant, onApprove, onReject, onDelete }
 						<ActionButton
 							title="Slet"
 							onClick={() => onDelete?.(user.id)}
-							confirmation={`Slet ${user.firstName} ${user.lastName}?`}
+							confirmation={`Slet ${user.firstName} ${user.lastName}?\n\nOBS: Handlingen kan ikke fortrydes.`}
 						>
 							<LuTrash />
 						</ActionButton>
