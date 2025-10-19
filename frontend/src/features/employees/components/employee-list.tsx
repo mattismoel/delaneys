@@ -106,8 +106,12 @@ type EntryProps = {
 })
 
 const Entry = ({ employee, onArchive, onRestore, onDelete }: EntryProps) => (
-	<li className="group w-full p-4 flex bg-background-100 border border-border/75 rounded-sm items-center hover:bg-background-200" key={employee.id}>
-		<Link to="/admin/employees/$employeeId" params={{ employeeId: employee.id.toString() }} className="flex items-center flex-1 gap-8">
+	<li className="group w-full flex bg-background-100 border border-border/75 rounded-sm items-center hover:bg-background-200" key={employee.id}>
+		<Link
+			to="/admin/employees/$employeeId"
+			params={{ employeeId: employee.id.toString() }}
+			className="flex items-center flex-1 gap-8 p-4"
+		>
 			<EmployeeImage src={employee.imageSrc} alt={employee.name} />
 
 			<div className="flex flex-col flex-1">
@@ -118,7 +122,7 @@ const Entry = ({ employee, onArchive, onRestore, onDelete }: EntryProps) => (
 			</div>
 		</Link>
 
-		<div className="flex">
+		<div className="flex p-4">
 			<ActionButton title="Arkivér (Hall of Fame)" type="button" onClick={employee.archived ? onRestore : onArchive}>
 				{employee.archived ? <LuArchiveRestore /> : <LuArchive />}
 			</ActionButton>
