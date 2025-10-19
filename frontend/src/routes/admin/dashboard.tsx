@@ -14,9 +14,8 @@ function RouteComponent() {
 	const { data: employees } = useSuspenseQuery(employeesQueryOpts())
 
 	return (
-		<main className="py-32 px-responsive">
+		<main className="py-32 px-responsive flex flex-col gap-16">
 			<section>
-				<h1 className="font-bold font-serif text-4xl mb-8">Ansatte</h1>
 				<EmployeeList employees={employees} />
 			</section>
 
