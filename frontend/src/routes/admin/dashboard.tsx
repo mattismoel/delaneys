@@ -3,10 +3,13 @@ import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 
 import { useAuth } from '../../lib/context/auth'
 import { deleteUser, updateUserApproval } from '../../features/auth/user'
+import { archiveEmployee, deleteEmployee, restoreEmployee } from '../../features/employees/employee'
 
 import { employeesQueryOpts } from '../../features/employees/query'
 import { usersQueryOptions } from '../../features/auth/query'
 
+import { LuPlus } from 'react-icons/lu'
+import { LinkButton } from '../../lib/components/button'
 import EmployeeList from '../../features/employees/components/employee-list'
 import UserList from '../../features/auth/components/user-list'
 
@@ -28,6 +31,9 @@ function RouteComponent() {
 	const approvedUsers = users.filter(u => u.approved)
 	const nonApprovedUsers = users.filter(u => !u.approved)
 
+	const activeEmployees = employees.filter(e => !e.archived)
+	const archivedEmployees = employees.filter(e => e.archived)
+
 	const handleApproveUser = async (id: number) => {
 		await updateUserApproval(id, "approve")
 		await queryClient.invalidateQueries({ queryKey: ["users"] })
@@ -43,10 +49,55 @@ function RouteComponent() {
 		await queryClient.invalidateQueries({ queryKey: ["users"] })
 	}
 
+	const handleDeleteEmployee = async (id: number) => {
+		await deleteEmployee(id)
+		await queryClient.invalidateQueries({ queryKey: ["employees"] })
+	}
+
+	const handleArhiveEmployee = async (id: number) => {
+		await archiveEmployee(id)
+		queryClient.invalidateQueries({ queryKey: ["employees"] })
+	}
+
+	const handleRestoreEmployee = async (id: number) => {
+		await restoreEmployee(id)
+		queryClient.invalidateQueries({ queryKey: ["employees"] })
+	}
+
 	return (
 		<main className="py-32 px-responsive flex flex-col gap-32">
 			<section>
-				<EmployeeList employees={employees} />
+				<div className="@container">
+					<div className="grid grid-cols-1 @4xl:grid-cols-2 gap-32">
+						<section className="">
+							<div className="mb-8 flex justify-between">
+								<h1 className="font-bold font-serif text-4xl mb">Ansatte</h1>
+								<LinkButton to="/admin/employees/create" className="px-3 py-1">
+									<LuPlus />Tilføj
+								</LinkButton>
+							</div>
+
+							<EmployeeList
+								employees={activeEmployees}
+								variant="employed"
+								onDelete={handleDeleteEmployee}
+								onArchive={handleArhiveEmployee}
+								Fallback={() => <span>Ingen ansatte...</span>}
+							/>
+						</section>
+
+						<section>
+							<h1 className="font-bold font-serif text-4xl mb-8">Hall of Fame</h1>
+							<EmployeeList
+								variant="non-employed"
+								employees={archivedEmployees}
+								Fallback={() => <span>Ingen tidligere ansatte...</span>}
+								onDelete={handleDeleteEmployee}
+								onRestore={handleRestoreEmployee}
+							/>
+						</section>
+					</div>
+				</div>
 			</section>
 
 			<section>
@@ -89,4 +140,3 @@ function RouteComponent() {
 		</main>
 	)
 }
-

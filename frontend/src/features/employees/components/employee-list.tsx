@@ -1,109 +1,57 @@
-import { archiveEmployee, deleteEmployee, restoreEmployee, type Employee } from "../employee"
-import { LuArchive, LuArchiveRestore, LuCircleUserRound, LuPlus, LuTrash } from "react-icons/lu"
+import { type Employee } from "../employee"
+import { LuArchive, LuArchiveRestore, LuCircleUserRound, LuTrash } from "react-icons/lu"
 import { Link } from "@tanstack/react-router"
 import { cn } from "../../../lib/class"
-import { useQueryClient } from "@tanstack/react-query"
-import { LinkButton } from "../../../lib/components/button"
 import ActionButton from "../../../lib/components/action-button"
+import type { ComponentType } from "react"
 
-type Props = {
+type BaseProps = {
 	employees: Employee[]
+	onDelete: (id: number) => void;
+
+	Fallback: ComponentType
 }
 
-const EmployeeList = ({ employees }: Props) => {
-	const queryClient = useQueryClient()
+type Props = BaseProps &
+	({
+		variant: "employed"
+		onArchive: (id: number) => void;
+		onRestore?: never;
+	} | {
+		variant: "non-employed"
+		onRestore: (id: number) => void;
+		onArchive?: never;
+	})
 
-	const activeEmployees = employees.filter(e => !e.archived)
-	const archivedEmployees = employees.filter(e => e.archived)
-
-	const handleDelete = async (id: number) => {
-		const employee = employees?.find(employee => employee.id === id)
-		if (!employee) return
-
-		if (!confirm(`Er du sikker på, at du vil slette ${employee.name}?\n\nOBS: Handlingen kan ikke fortrydes.`)) return
-
-		await deleteEmployee(id)
-		await queryClient.invalidateQueries({ queryKey: ["employees"] })
-	}
-
-	const handleArhive = async (id: number) => {
-		const employee = employees?.find(employee => employee.id === id)
-		if (!employee) return
-
-		if (!confirm(`Arkivér ${employee.name}?`)) return
-		await archiveEmployee(id)
-		queryClient.invalidateQueries({ queryKey: ["employees"] })
-	}
-
-
-	const handleRestore = async (id: number) => {
-		const employee = employees?.find(employee => employee.id === id)
-		if (!employee) return
-
-		if (!confirm(`Ansæt ${employee.name} igen?`)) return
-		await restoreEmployee(id)
-		queryClient.invalidateQueries({ queryKey: ["employees"] })
-	}
+const EmployeeList = ({ employees, variant, Fallback, onDelete, onArchive, onRestore }: Props) => {
+	if (employees.length === 0) return <Fallback />
 
 	return (
-		<div className="@container">
-			<div className="grid grid-cols-1 @4xl:grid-cols-2 gap-32">
-				<section className="">
-					<div className="mb-8 flex justify-between">
-						<h1 className="font-bold font-serif text-4xl mb">Ansatte</h1>
-						<LinkButton to="/admin/employees/create" className="px-3 py-1">
-							<LuPlus />Tilføj
-						</LinkButton>
-					</div>
-
-					{activeEmployees.length === 0 ? <span>Ingen ansatte...</span> : (
-						<ul className="flex flex-col gap-2">
-							{activeEmployees.map((employee) => (
-								<Entry
-									key={employee.id}
-									employee={employee}
-									onArchive={() => handleArhive(employee.id)}
-									onDelete={() => handleDelete(employee.id)}
-								/>
-							))}
-						</ul>
-					)}
-				</section>
-
-				<section>
-					<h1 className="font-bold font-serif text-4xl mb-8">Hall of Fame</h1>
-
-					{archivedEmployees.length === 0 ? <span>Intet at se hér...</span> : (
-						<ul className="flex flex-col gap-2">
-							{archivedEmployees.map((employee) => (
-								<Entry
-									key={employee.id}
-									employee={employee}
-									onRestore={() => handleRestore(employee.id)}
-									onDelete={() => handleDelete(employee.id)}
-								/>
-							))}
-						</ul>
-					)}
-				</section>
-			</div>
-		</div>
+		<ul className="flex flex-col gap-2">
+			{employees.map((employee) => (
+				<Entry
+					key={employee.id}
+					variant={variant}
+					employee={employee}
+					onArchive={() => onArchive?.(employee.id)}
+					onDelete={() => onDelete?.(employee.id)}
+					onRestore={() => onRestore?.(employee.id)}
+				/>
+			))}
+		</ul>
 	)
 }
 
 type EntryProps = {
 	employee: Employee
+	variant: "employed" | "non-employed"
 
-	onDelete: () => void;
-} & ({
-	onArchive: () => void;
-	onRestore?: never
-} | {
-	onArchive?: never;
-	onRestore: () => void;
-})
+	onDelete: (id: number) => void;
+	onArchive?: (id: number) => void;
+	onRestore?: (id: number) => void;
+}
 
-const Entry = ({ employee, onArchive, onRestore, onDelete }: EntryProps) => (
+const Entry = ({ employee, variant, onArchive, onRestore, onDelete }: EntryProps) => (
 	<li className="group w-full flex bg-background-100 border border-border/75 rounded-sm items-center hover:bg-background-200" key={employee.id}>
 		<Link
 			to="/admin/employees/$employeeId"
@@ -121,16 +69,33 @@ const Entry = ({ employee, onArchive, onRestore, onDelete }: EntryProps) => (
 		</Link>
 
 		<div className="flex p-4">
-			<ActionButton title="Arkivér (Hall of Fame)" onClick={employee.archived ? onRestore : onArchive}>
-				{employee.archived ? <LuArchiveRestore /> : <LuArchive />}
-			</ActionButton>
+			{variant === "employed" ? (
+				<ActionButton
+					title="Arkivér (Hall of Fame)"
+					onClick={() => onArchive?.(employee.id)}
+					confirmation={`Arkivér ${employee.name}?\n\nOBS: Den ansætte sættes i Hall of Fame.`}
+				>
+					{employee.archived ? <LuArchiveRestore /> : <LuArchive />}
+				</ActionButton>
+			) : (
+				<ActionButton
+					title="Genansæt"
+					onClick={() => onRestore?.(employee.id)}
+					confirmation={`Genansæt ${employee.name}?`}
+				>
+					{employee.archived ? <LuArchiveRestore /> : <LuArchive />}
+				</ActionButton>
+			)}
 
-			<ActionButton title="Slet" onClick={onDelete}>
+			<ActionButton
+				title="Slet"
+				onClick={() => onDelete(employee.id)}
+				confirmation={`Slet ${employee.name}?\n\nOBS: Handlingen kan ikke fortrydes.`}
+			>
 				<LuTrash />
 			</ActionButton>
 		</div>
 	</li>
-
 )
 
 type EmployeeImageProps = {
