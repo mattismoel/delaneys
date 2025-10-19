@@ -8,7 +8,7 @@ const Logo = ({ className }: HTMLAttributes<SVGElement>) => (
 		viewBox="0 0 475 120"
 		xmlnsXlink="http://www.w3.org/1999/xlink"
 		xmlns="http://www.w3.org/2000/svg"
-		className={cn("z-0 *:fill-text-dark w-min h-8", className)}
+		className={cn("-translate-x-2 z-0 *:fill-text-dark w-min h-8", className)}
 	>
 		<defs id="defs1" />
 		<g id="g1">
