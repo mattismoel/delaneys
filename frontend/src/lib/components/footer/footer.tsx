@@ -23,7 +23,7 @@ const Footer = () => (
 	>
 		<div className="flex flex-col justify-between gap-16 lg:grid-cols-2 md:flex-row">
 			<div className="flex flex-col gap-6 justify-between">
-				<Logo className="h-12 md:-translate-x-4 -translate-y-3 fill-text" />
+				<Logo variant="dark" className="h-12 md:-translate-x-4 -translate-y-3" />
 				<div className="flex flex-col gap-8">
 					<ul className="flex flex-col gap-2">
 						<ContactEntry type="phone" value="+45 10 99 40" Icon={LuPhone} />

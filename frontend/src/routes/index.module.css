@@ -1,0 +1,78 @@
+.container {
+	--subtitle-duration: 0.6s;
+
+	.subtitle {
+		display: flex;
+		justify-content: center;
+		color: var(--color-text-light);
+		font-size: var(--text-xl);
+
+		span {
+			opacity: 0;
+			animation: word-pop-in 0.5s linear forwards;
+		}
+
+		span:nth-of-type(1) {
+			animation-delay: calc(var(--heading-duration) + (var(--subtitle-duration) / 3) * 1);
+		}
+
+		span:nth-of-type(2) {
+			animation-delay: calc(var(--heading-duration) + (var(--subtitle-duration) / 3) * 2);
+		}
+
+		span:nth-of-type(3) {
+			animation-delay: calc(var(--heading-duration) + (var(--subtitle-duration) / 3) * 3);
+		}
+	}
+
+	.actionContainer {
+		opacity: 0;
+		animation: action-slide-in 1.5s linear forwards;
+		animation-delay: calc(var(--heading-duration) + var(--subtitle-duration) + 0.6s);
+	}
+}
+
+.image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	object-fit: cover;
+	height: 100svh;
+	width: 100vw;
+	z-index: -50;
+	filter: brightness(50%);
+	opacity: 0;
+	animation: image-fade-in 10s linear forwards;
+}
+
+@keyframes image-fade-in {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes action-slide-in {
+	from {
+		transform: translateY(-1rem);
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes word-pop-in {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}

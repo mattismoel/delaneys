@@ -1,0 +1,45 @@
+.strokes {
+	/* D-line */
+	--duration-fraction-1: 0.1;
+
+	/* "DELAYNE" */
+	--duration-fraction-2: 0.6;
+
+	/* "S" */
+	--duration-fraction-3: 0.1;
+
+	/* S mark */
+	--duration-fraction-4: 0.1;
+
+	--duration-1: calc(var(--heading-duration) * var(--duration-fraction-1));
+	--duration-2: calc(var(--heading-duration) * var(--duration-fraction-2));
+	--duration-3: calc(var(--heading-duration) * var(--duration-fraction-3));
+	--duration-4: calc(var(--heading-duration) * var(--duration-fraction-4));
+
+	--delay-1: 0s;
+	--delay-2: calc(var(--heading-duration) * var(--duration-fraction-1));
+	--delay-3: calc(var(--heading-duration) * (var(--duration-fraction-1) + var(--duration-fraction-2)));
+	--delay-4: calc(var(--heading-duration) * (var(--duration-fraction-1) + var(--duration-fraction-2) + var(--duration-fraction-3)));
+}
+
+.p1 {
+	animation: var(--duration-1) ease-out var(--delay-1) dash-move forwards;
+}
+
+.p2 {
+	animation: var(--duration-2) ease-in-out var(--delay-2) dash-move forwards;
+}
+
+.p3 {
+	animation: var(--duration-3) ease-in-out var(--delay-3) dash-move forwards;
+}
+
+.p4 {
+	animation: var(--duration-4) ease-out var(--delay-4) dash-move forwards;
+}
+
+@keyframes dash-move {
+	100% {
+		stroke-dashoffset: 0;
+	}
+}

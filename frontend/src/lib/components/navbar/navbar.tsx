@@ -17,7 +17,7 @@ const Navbar = ({ entries, navMenuOpen, onToggleNavMenu }: Props) => {
 			className="z-20 bg-background-200 fixed w-full px-responsive flex justify-between items-center bg-background border-b border-border"
 		>
 			<Link to="/" className="py-4">
-				<Logo className="fill-text" />
+				<Logo variant="dark" className="h-8" />
 			</Link>
 			<ul className="hidden sm:flex">
 				{entries.map(({ to, title }) => <Entry to={to} title={title} />)}

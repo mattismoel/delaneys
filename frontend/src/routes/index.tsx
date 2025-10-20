@@ -5,6 +5,9 @@ import EventEntry from "../lib/components/event-entry"
 import ChairsImage from "../assets/bar-2.jpg"
 import PourImage from "../assets/bar-3.jpg"
 import Logo from "../lib/components/logo"
+import { cn } from "../lib/class"
+
+import styles from "./index.module.css"
 
 export const Route = createFileRoute('/')({
 	component: RouteComponent,
@@ -16,24 +19,44 @@ function RouteComponent() {
 			<section
 				className="relative h-svh flex justify-center items-center text-light-text group overflow-hidden"
 			>
+				<div className="-z-75 absolute h-svh w-full bg-[black]"></div>
 				<img
-					className="-z-50 absolute top-0 left-0 brightness-60 h-svh w-screen object-cover scale-103 transition-[scale] duration-5000 group-hover:scale-100"
+					className={styles.image}
 					src={LandingImage}
 					alt="Baggrund af hanerne på Delaney's Bar & Bottleshop"
 				/>
 				<div className="px-responsive w-full">
-					<Logo className="*:fill-text-light -translate-x-6 h-20 mb-4 sm:h-28 lg:-translate-x-14 lg:h-36" />
-					<p className="text-text-light mb-8 max-w-lg leading-loose">
-						En hjemmelig specialøl-bar i hjertet af Skibhuskvarteret. Kom og nyd en
-						lækker øl med dine venner og bekendte.
-					</p>
-					<div className="flex flex-col-reverse gap-4 w-full sm:flex-row">
-						<LinkButton to="/om-os" variant="secondary" className="w-full sm:w-fit">
-							Læs mere
-						</LinkButton>
-						<LinkButton to="/menu" className="w-full sm:w-fit">
-							Se menu
-						</LinkButton>
+					<div className={styles.container}>
+						<div className="mb-8 flex flex-col items-center sm:items-start">
+							<Logo
+								trace
+								variant="light"
+								className={cn(
+									"drop-shadow-xl drop-shadow-text-dark/75 -translate-x-10 h-20",
+									"sm:h-28 lg:-translate-x-14 lg:h-36",
+								)}
+							/>
+							<div className={styles.subtitle}>
+								<span>Bar</span>
+								<span>&nbsp;&amp;&nbsp;</span>
+								<span>Bottleshop</span>
+							</div>
+						</div>
+
+						<div className={styles.actionContainer}>
+							<p className="text-text-light mb-8 max-w-lg leading-loose text-shadow-sm">
+								En hjemmelig specialøl-bar i hjertet af Skibhuskvarteret. Kom og nyd en
+								lækker øl med dine venner og bekendte.
+							</p>
+							<div className="flex flex-col-reverse gap-4 w-full sm:flex-row">
+								<LinkButton to="/om-os" variant="secondary" className="w-full sm:w-fit">
+									Læs mere
+								</LinkButton>
+								<LinkButton to="/menu" className="w-full sm:w-fit">
+									Se menu
+								</LinkButton>
+							</div>
+						</div>
 					</div>
 				</div>
 			</section>

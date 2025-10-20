@@ -18,6 +18,8 @@
 
 	--font-sans: "Poppins", "sans-serif";
 	--font-mono: "IBM Plex Mono", "Poppins", "sans-serif";
+
+	--heading-duration: 2s;
 }
 
 @theme {
@@ -40,6 +42,38 @@
 	--font-sans: "Poppins", sans-serif;
 
 	--font-heading: var(--font-serif);
+
+	--animate-dash-move: dash-move 4s linear;
+	--animate-fade-in: fade-in 0.8s;
+	--animate-slide-in-from-top: slide-in-from-top 2.0s ease-in-out;
+
+	@keyframes fade-in {
+		from {
+			opacity: 0%;
+		}
+
+		to {
+			opacity: 100%;
+		}
+	}
+
+	@keyframes slide-in-from-top {
+		from {
+			transform: translateY(-2rem);
+		}
+
+		to {
+			transform: translateY(0);
+		}
+	}
+}
+
+@utility animation-forwards {
+	animation-fill-mode: forwards;
+}
+
+@utility animation-delay-* {
+	animation-delay: --value(integer)ms;
 }
 
 @utility px-responsive {
