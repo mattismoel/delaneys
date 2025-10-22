@@ -20,7 +20,7 @@ const Navbar = ({ entries, navMenuOpen, onToggleNavMenu }: Props) => {
 				<Logo variant="dark" className="h-8" />
 			</Link>
 			<ul className="hidden sm:flex">
-				{entries.map(({ to, title }) => <Entry to={to} title={title} />)}
+				{entries.map(({ to, title }) => <Entry key={title} to={to} title={title} />)}
 			</ul>
 			<button
 				className={cn("sm:hidden transition-[rotate]", navMenuOpen && "-rotate-90")}
