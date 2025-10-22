@@ -17,11 +17,16 @@ const envSchema = z.object({
 	S3_BUCKET_NAME: z.string().nonempty(),
 	AWS_REGION: z.string().nonempty(),
 
-	UNTAPPD_API_ACCESS_TOKEN: z.string().transform(key => btoa(key)),
-	UNTAPPD_LOCATION_ID: z.coerce.number().int().nonnegative(),
+	UNTAPPD_EMAIL: z.email().nonempty(),
+	UNTAPPD_API_ACCESS_TOKEN: z.string(),
+	UNTAPPD_LOCATION_ID: z.string().nonempty(),
+	UNTAPPD_MENU_ID: z.string().nonempty(),
 
 	GOOGLE_CLIENT_ID: z.string().nonempty(),
 	GOOGLE_CLIENT_SECRET: z.string().nonempty(),
-})
+}).transform(data => ({
+	...data,
+	UNTAPPD_ENCODED_ACCCESS_KEY: btoa(`${data.UNTAPPD_EMAIL}:${data.UNTAPPD_API_ACCESS_TOKEN}`)
+}))
 
 export const env = envSchema.parse(process.env)

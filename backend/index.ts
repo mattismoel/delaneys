@@ -11,12 +11,12 @@ import routes from "./src/routes/index.ts"
 import { errorHandler } from "./src/error.ts"
 import * as schema from "./src/db/schema.ts"
 
-import { memoryMenuProvider } from "./src/lib/memory/menu-provider.ts"
 import { drizzleAuthRepository } from "./src/services/drizzle/auth.ts"
 import { drizzleEmployeeRepository } from "./src/services/drizzle/employee.ts"
 import { drizzleUserRepository } from "./src/services/drizzle/user.ts"
 import { s3BucketStorage } from "./src/services/s3/s3.ts"
 import { sharpImageTransformer } from "./src/services/sharp/image.ts"
+import untappdMenuProvider from "./src/lib/untappd/menu.ts"
 
 const MAX_FILE_UPLOAD_SIZE_BYTES = 20000000 // 20MB.
 
@@ -44,7 +44,7 @@ app.register(cors, {
 
 app.setErrorHandler(errorHandler)
 
-const menuProvider = memoryMenuProvider()
+const menuProvider = untappdMenuProvider(env.UNTAPPD_MENU_ID)
 const employeeProvider = drizzleEmployeeRepository(db)
 const userRepository = drizzleUserRepository(db)
 const authRepository = drizzleAuthRepository(db)

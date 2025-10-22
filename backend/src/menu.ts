@@ -1,7 +1,7 @@
 import z from "zod";
 
 export type MenuProvider = {
-	menuById: (menuId: number) => Promise<Menu>;
+	getMenu: () => Promise<Menu>;
 }
 
 const beer = z.object({
@@ -10,11 +10,10 @@ const beer = z.object({
 	brewery: z.string().nonempty(),
 	style: z.string().nonempty(),
 	abv: z.number().nonnegative(),
+	url: z.url().nonempty(),
 })
 
 const menu = z.object({
-	id: z.int().positive(),
-	name: z.string().nonempty(),
 	beers: beer.array()
 })
 

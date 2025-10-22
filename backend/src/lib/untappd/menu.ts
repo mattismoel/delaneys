@@ -1,48 +1,73 @@
 import z from "zod";
 import type { Menu, MenuProvider } from "../../menu.ts";
+import { env } from "../../../env.ts";
 
 const UNTAPPD_BASE = "https://business.untappd.com/api/v1"
 
+const untappdAPIErrorResponse = z.object({
+	error: z.object({
+		status: z.int().positive(),
+		title: z.string(),
+		detail: z.string(),
+		code: z.string(),
+	})
+})
+
 const untappdItem = z.object({
-	id: z.int().nonnegative(),
 	name: z.string().nonempty(),
 	position: z.int().nonnegative(),
-	abv: z.number().nonnegative(),
+	abv: z.coerce.number().nonnegative(),
 	brewery: z.string().nonempty(),
-	breweryCountry: z.string().nonempty(),
-	style: z.string(),
+	style: z.string().transform(style => style.split(" - ").at(0) ?? style),
+	untappd_id: z.int().positive(),
+	untappd_beer_slug: z.string().nonempty(),
 })
 
 const untappdSection = z.object({
-	id: z.int().nonnegative(),
 	name: z.string().nonempty(),
 	items: untappdItem.array(),
 })
 
 const untappdMenu = z.object({
-	id: z.int().nonnegative(),
-	name: z.string().nonempty(),
 	sections: untappdSection.array()
-
 })
 
-const untappdMenuProvider = (locactionId: number): MenuProvider => {
-	const menuById = async (menuId: number): Promise<Menu> => {
-		const res = await fetch(`${UNTAPPD_BASE}/menus/${menuId}`)
+const untappdMenuReponse = z.object({
+	menu: untappdMenu
+})
+
+const untappdMenuProvider = (menuId: string): MenuProvider => {
+	const getMenu = async (): Promise<Menu> => {
+		const url = new URL(`${UNTAPPD_BASE}/menus/${menuId}`)
+		url.searchParams.set("full", "true")
+
+		const res = await fetch(url, {
+			headers: { "Authorization": `Basic ${env.UNTAPPD_ENCODED_ACCCESS_KEY}` }
+		})
+
 		if (!res.ok) {
-			throw new Error("could not fetch from untappd")
+			const { error } = untappdAPIErrorResponse.parse(await res.json())
+			throw new Error(`could not fetch from untappd: ${error.title}, ${error.detail}`)
 		}
 
-		const { id, name, sections } = untappdMenu.parse(await res.json())
 
-		const beers = sections.flatMap(({ items }) =>
-			items.map((item) => ({ ...item })))
+		const { menu } = untappdMenuReponse.parse(await res.json())
 
-		return { id, name, beers }
+		const beers = menu.sections.flatMap(({ items }) => items
+			.map((item) => ({ ...item })))
+			.sort((a, b) => a.position - b.position)
+
+		return {
+			beers: beers.map(beer => ({
+				...beer,
+				id: beer.untappd_id,
+				url: `https://untappd.com/b/${beer.untappd_beer_slug}/${beer.untappd_id}`
+			}))
+		}
 	}
 
 
-	return { menuById }
+	return { getMenu }
 }
 
 

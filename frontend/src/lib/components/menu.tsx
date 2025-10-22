@@ -55,6 +55,7 @@ const DispenserView = ({ className }: PropsWithClass) => {
 		<div className={cn("w-fit relative flex flex-col items-center gap-8", className)}>
 			{beers.map((beer, i) => (
 				<div
+					key={beer.id}
 					className={cn(
 						"absolute -top-64 flex flex-col translate-y-full text-zinc-950 w-full scale-y-95 opacity-0 transition-[opacity,scale]",
 						beer.id === activeBeer?.id && "scale-y-100 opacity-100",
@@ -90,8 +91,8 @@ const ListView = ({ className }: PropsWithClass) => {
 	return (
 		<div className={cn("", className)}>
 			<ul>
-				{beers.map(({ name, brewery, style, abv }, i) => (
-					<li className="group flex gap-8 w-full py-1 first:pt-0 last:pb-0">
+				{beers.map(({ id, name, brewery, style, abv }, i) => (
+					<li key={id} className="group flex gap-8 w-full py-1 first:pt-0 last:pb-0">
 						<span className="w-8">{i + 1}.</span>
 						<span className="w-64 hidden @2xl:inline-block">{brewery}</span>
 						<span className="w-full @2xl:w-72 @2xl:italic">{name}</span>
@@ -108,19 +109,20 @@ const ListView = ({ className }: PropsWithClass) => {
 
 type TapProps = HTMLAttributes<HTMLDivElement> & {
 	active: boolean
+	url: string;
 }
 
-const Tap = forwardRef<HTMLDivElement, TapProps>(({ active, ...rest }, ref) => (
+const Tap = forwardRef<HTMLDivElement, TapProps>(({ active, url, ...rest }, ref) => (
 	<div ref={ref} {...rest} className="group relative pointer-events-auto">
-		<div
+		<a href={url}
 			className={cn(
-				"outline outline-transparent peer relative cursor-default group flex flex-col items-center justify-center h-14 aspect-square rounded-full border border-raisin-black font-mono bg-background-100 transition-colors",
+				"outline outline-transparent peer relative group flex flex-col items-center justify-center h-14 aspect-square rounded-full border border-raisin-black font-mono bg-background-100 transition-colors",
 				"group-hover:bg-raisin-black group-hover:text-text-light group-hover:border-background-100 group-hover:border-2 group-hover:font-bold group-hover:border-solid group-hover:outline-raisin-black",
 				active && "border-solid border-2 font-bold"
 			)}
 		>
 			{rest.children}
-		</div>
+		</a>
 
 		{/* HANDLE */}
 		<div
@@ -152,6 +154,8 @@ const TapList = ({ beers, startIdx = 0 }: TapListProps) => {
 		<div className="flex gap-2">
 			{beers.map((beer, i) => (
 				<Tap
+					key={beer.id}
+					url={beer.url}
 					onMouseOver={() => onHover(beer.id)}
 					onMouseLeave={() => onHover(null)}
 					active={activeBeer?.id === beer.id}

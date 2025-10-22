@@ -8,12 +8,12 @@ import Menu from '../lib/components/menu'
 export const Route = createFileRoute('/menu')({
 	component: RouteComponent,
 	loader: async ({ context: { queryClient } }) => {
-		queryClient.ensureQueryData(menuQueryOpts(import.meta.env.VITE_MENU_ID))
+		queryClient.ensureQueryData(menuQueryOpts())
 	}
 })
 
 function RouteComponent() {
-	const { data: menu } = useSuspenseQuery(menuQueryOpts(import.meta.env.VITE_MENU_ID))
+	const { data: menu } = useSuspenseQuery(menuQueryOpts())
 
 	const { randomise, override, current: activeBeer } = useRandom(menu.beers)
 	const [isHovered, setIsHovered] = useState(false)

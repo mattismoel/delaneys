@@ -6,10 +6,10 @@ export const beer = z.object({
 	brewery: z.string().nonempty(),
 	style: z.string().nonempty(),
 	abv: z.number().nonnegative(),
+	url: z.url().nonempty(),
 })
 
 export const menu = z.object({
-	name: z.string().nonempty(),
 	beers: beer.array().min(0)
 })
 

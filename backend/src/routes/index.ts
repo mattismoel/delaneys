@@ -16,7 +16,7 @@ const routes = (
 	bucketStorage: BucketStorage,
 	imageTransformer: ImageTransformer,
 ): FastifyPluginAsync => async (instance) => {
-	instance.register(menuRoutes(menuProvider), { prefix: "/menues" })
+	instance.register(menuRoutes(menuProvider), { prefix: "/menu" })
 	instance.register(employeeRoutes(employeeProvider, bucketStorage, imageTransformer), { prefix: "/employees" })
 	instance.register(authRoutes(userRepository, authRepository), { prefix: "/auth" })
 }
