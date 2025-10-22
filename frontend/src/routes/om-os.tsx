@@ -32,9 +32,9 @@ function RouteComponent() {
 							sikre de nyeste og mest spændende øl. Se hvad vi har på hanerne her.
 						</p>
 					</div>
-					<div className="gap-4 hidden lg:flex">
-						<img src={TapsImage} alt="Baren" className="w-full rounded-sm" />
-						<img src={GlassImage} alt="Baren" className="w-full rounded-sm" />
+					<div className="gap-4 hidden grid-cols-2 lg:grid">
+						<img src={TapsImage} alt="Baren" className="h-full rounded-sm object-cover" />
+						<img src={GlassImage} alt="Baren" className="h-full rounded-sm object-cover" />
 					</div>
 				</div>
 			</section>
