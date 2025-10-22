@@ -27,14 +27,14 @@ function RouteComponent() {
 				/>
 				<div className="px-responsive w-full">
 					<div className={styles.container}>
-						<div className="mb-8 flex flex-col items-center sm:items-start">
+						<div className={`${styles.logoContainer} mb-8 flex flex-col items-center md:items-start`}>
 							<Logo
 								trace
 								variant="light"
-								className={cn(
-									"drop-shadow-xl drop-shadow-text-dark/75 -translate-x-10 h-20",
-									"sm:h-28 lg:-translate-x-14 lg:h-36",
-								)}
+								className={`${styles.logo} ${cn(
+									"drop-shadow-xl drop-shadow-text-dark/75",
+									// "sm:h-28 lg:-translate-x-14 lg:h-36",
+								)}`}
 							/>
 							<div className={styles.subtitle}>
 								<span>Bar</span>
@@ -44,15 +44,15 @@ function RouteComponent() {
 						</div>
 
 						<div className={styles.actionContainer}>
-							<p className="text-text-light mb-8 max-w-lg leading-loose text-shadow-sm">
+							<p className="text-center text-text-light mb-8 max-w-lg leading-loose text-shadow-sm md:text-left">
 								En hjemmelig specialøl-bar i hjertet af Skibhuskvarteret. Kom og nyd en
 								lækker øl med dine venner og bekendte.
 							</p>
 							<div className="flex flex-col-reverse gap-4 w-full sm:flex-row">
-								<LinkButton to="/om-os" variant="secondary" className="w-full sm:w-fit">
+								<LinkButton to="/om-os" variant="secondary" className="w-full md:w-fit">
 									Læs mere
 								</LinkButton>
-								<LinkButton to="/menu" className="w-full sm:w-fit">
+								<LinkButton to="/menu" className="w-full md:w-fit">
 									Se menu
 								</LinkButton>
 							</div>
