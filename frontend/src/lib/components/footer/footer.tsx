@@ -4,20 +4,14 @@ import Logo from "../logo";
 import ContactEntry from "./contact-entry";
 import SocialEntry from "./social-entry";
 import { SiFacebook, SiInstagram } from "react-icons/si";
-import { type OpeningHour } from "./opening-hours";
 import OpeningHours from "./opening-hours";
+import type { OpeningHour } from "../../../features/location/location";
 
-const openingHours: OpeningHour[] = [
-	{ weekday: "Mandag" },
-	{ weekday: "Tirsdag" },
-	{ weekday: "Onsdag", from: "14:00", to: "22:00" },
-	{ weekday: "Torsdag", from: "14:00", to: "00:00" },
-	{ weekday: "Fredag", from: "14:00", to: "00:00" },
-	{ weekday: "Lørdag", from: "14:00", to: "00:00" },
-	{ weekday: "Søndag" },
-]
+type Props = {
+	hours: OpeningHour[]
+}
 
-const Footer = () => (
+const Footer = ({ hours }: Props) => (
 	<footer
 		className="z-10 px-responsive py-16 flex flex-col gap-12 bg-background-200 border-t border-t-border relative"
 	>
@@ -48,7 +42,7 @@ const Footer = () => (
 
 			<div>
 				<h2 className="font-heading font-bold mb-4">Åbningstider</h2>
-				<OpeningHours hours={openingHours} />
+				<OpeningHours hours={hours} />
 			</div>
 			<a
 				href="https://www.findsmiley.dk/1343488"

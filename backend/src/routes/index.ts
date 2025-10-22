@@ -7,8 +7,11 @@ import type { AuthRepository, UserRepository } from "../lib/auth.ts";
 import type { FastifyPluginAsync } from "fastify";
 import type { BucketStorage } from "../lib/bucket.ts";
 import type { ImageTransformer } from "../lib/image.ts";
+import locationRoutes from "./location.ts";
+import type { LocationProvider } from "../location.tsx";
 
 const routes = (
+	locationProvider: LocationProvider,
 	menuProvider: MenuProvider,
 	employeeProvider: EmployeeRepository,
 	userRepository: UserRepository,
@@ -19,6 +22,7 @@ const routes = (
 	instance.register(menuRoutes(menuProvider), { prefix: "/menu" })
 	instance.register(employeeRoutes(employeeProvider, bucketStorage, imageTransformer), { prefix: "/employees" })
 	instance.register(authRoutes(userRepository, authRepository), { prefix: "/auth" })
+	instance.register(locationRoutes(locationProvider), { prefix: "/location" })
 }
 
 export default routes

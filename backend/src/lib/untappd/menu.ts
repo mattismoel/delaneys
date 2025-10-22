@@ -1,17 +1,7 @@
 import z from "zod";
 import type { Menu, MenuProvider } from "../../menu.ts";
 import { env } from "../../../env.ts";
-
-const UNTAPPD_BASE = "https://business.untappd.com/api/v1"
-
-const untappdAPIErrorResponse = z.object({
-	error: z.object({
-		status: z.int().positive(),
-		title: z.string(),
-		detail: z.string(),
-		code: z.string(),
-	})
-})
+import { UNTAPPD_BASE, untappdAPIErrorResponse } from "./untappd.ts";
 
 const untappdItem = z.object({
 	name: z.string().nonempty(),
