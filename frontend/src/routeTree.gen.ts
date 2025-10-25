@@ -17,7 +17,6 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthApprovalRouteImport } from './routes/auth/approval'
 import { Route as AdminDashboardRouteImport } from './routes/admin/dashboard'
-import { Route as AdminEmployeesIndexRouteImport } from './routes/admin/employees/index'
 import { Route as AdminEmployeesCreateRouteImport } from './routes/admin/employees/create'
 import { Route as AdminEmployeesEmployeeIdRouteImport } from './routes/admin/employees/$employeeId'
 
@@ -61,11 +60,6 @@ const AdminDashboardRoute = AdminDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const AdminEmployeesIndexRoute = AdminEmployeesIndexRouteImport.update({
-  id: '/employees/',
-  path: '/employees/',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
 const AdminEmployeesCreateRoute = AdminEmployeesCreateRouteImport.update({
   id: '/employees/create',
   path: '/employees/create',
@@ -89,7 +83,6 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginRoute
   '/admin/employees/$employeeId': typeof AdminEmployeesEmployeeIdRoute
   '/admin/employees/create': typeof AdminEmployeesCreateRoute
-  '/admin/employees': typeof AdminEmployeesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,7 +95,6 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginRoute
   '/admin/employees/$employeeId': typeof AdminEmployeesEmployeeIdRoute
   '/admin/employees/create': typeof AdminEmployeesCreateRoute
-  '/admin/employees': typeof AdminEmployeesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,7 +108,6 @@ export interface FileRoutesById {
   '/auth/login': typeof AuthLoginRoute
   '/admin/employees/$employeeId': typeof AdminEmployeesEmployeeIdRoute
   '/admin/employees/create': typeof AdminEmployeesCreateRoute
-  '/admin/employees/': typeof AdminEmployeesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,7 +122,6 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/admin/employees/$employeeId'
     | '/admin/employees/create'
-    | '/admin/employees'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,7 +134,6 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/admin/employees/$employeeId'
     | '/admin/employees/create'
-    | '/admin/employees'
   id:
     | '__root__'
     | '/'
@@ -157,7 +146,6 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/admin/employees/$employeeId'
     | '/admin/employees/create'
-    | '/admin/employees/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -228,13 +216,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/admin/employees/': {
-      id: '/admin/employees/'
-      path: '/employees'
-      fullPath: '/admin/employees'
-      preLoaderRoute: typeof AdminEmployeesIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
     '/admin/employees/create': {
       id: '/admin/employees/create'
       path: '/employees/create'
@@ -256,14 +237,12 @@ interface AdminRouteRouteChildren {
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminEmployeesEmployeeIdRoute: typeof AdminEmployeesEmployeeIdRoute
   AdminEmployeesCreateRoute: typeof AdminEmployeesCreateRoute
-  AdminEmployeesIndexRoute: typeof AdminEmployeesIndexRoute
 }
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminDashboardRoute: AdminDashboardRoute,
   AdminEmployeesEmployeeIdRoute: AdminEmployeesEmployeeIdRoute,
   AdminEmployeesCreateRoute: AdminEmployeesCreateRoute,
-  AdminEmployeesIndexRoute: AdminEmployeesIndexRoute,
 }
 
 const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
