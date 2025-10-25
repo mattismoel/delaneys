@@ -104,7 +104,6 @@
 @media(min-width: 768px) {
 	.logo {
 		height: 10rem;
-		transform: translateX(-48px);
 	}
 
 	@keyframes logo-scale {
@@ -117,7 +116,6 @@
 @media(min-width: 992px) {
 	.logo {
 		height: 12rem;
-		transform: translateX(-64px);
 	}
 
 	@keyframes logo-scale {

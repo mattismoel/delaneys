@@ -32,7 +32,7 @@ function RouteComponent() {
 								trace
 								variant="light"
 								className={`${styles.logo} ${cn(
-									"drop-shadow-xl drop-shadow-text-dark/75",
+									"translate-x-0 drop-shadow-xl drop-shadow-text-dark/75 md:-translate-x-[12%]",
 									// "sm:h-28 lg:-translate-x-14 lg:h-36",
 								)}`}
 							/>
