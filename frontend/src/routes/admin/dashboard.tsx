@@ -65,8 +65,8 @@ function RouteComponent() {
 	}
 
 	return (
-		<main className="py-32 px-responsive flex flex-col gap-32">
-			<section>
+		<main className="py-32 px-8 flex flex-col gap-32">
+			<section className="mx-responsive w-full">
 				<div className="@container">
 					<div className="grid grid-cols-1 @4xl:grid-cols-2 gap-32">
 						<section className="">
@@ -100,7 +100,7 @@ function RouteComponent() {
 				</div>
 			</section>
 
-			<section>
+			<section className="mx-responsive w-full">
 				<div className="@container">
 					<div className="mb-8">
 						<h1 className="font-bold font-serif text-4xl mb-4">Administratorer</h1>

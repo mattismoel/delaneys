@@ -31,8 +31,8 @@ function RouteComponent() {
 	}
 
 	return (
-		<main className="h-svh px-responsive py-32 flex justify-center items-center">
-			<div>
+		<main className="h-svh px-8 py-32 flex justify-center items-center">
+			<div className="mx-responsive">
 				<h1 className="font-serif text-4xl font-bold mb-8">Redigér {employee.name}</h1>
 				<EmployeeForm employee={employee} onSubmit={handleSubmit} submitting={submitting} />
 			</div>

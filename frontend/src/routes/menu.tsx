@@ -40,8 +40,10 @@ function RouteComponent() {
 	}, [isHovered])
 
 	return (
-		<main className="flex h-svh justify-center items-center">
-			<Menu menu={menu} activeBeer={activeBeer} onHover={handleHover} />
+		<main className="px-8 flex h-svh justify-center items-center">
+			<div className="mx-responsive w-full">
+				<Menu menu={menu} activeBeer={activeBeer} onHover={handleHover} />
+			</div>
 		</main>
 	)
 }

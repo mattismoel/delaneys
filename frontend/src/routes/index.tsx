@@ -17,7 +17,7 @@ function RouteComponent() {
 	return (
 		<main className="min-h-svh">
 			<section
-				className="relative h-svh flex justify-center items-center text-light-text group overflow-hidden"
+				className="px-8 relative h-svh flex justify-center items-center text-light-text group overflow-hidden"
 			>
 				<div className="-z-75 absolute h-svh w-full bg-[black]"></div>
 				<img
@@ -25,7 +25,7 @@ function RouteComponent() {
 					src={LandingImage}
 					alt="Baggrund af hanerne på Delaney's Bar & Bottleshop"
 				/>
-				<div className="px-responsive w-full">
+				<div className="mx-responsive w-full">
 					<div className={styles.container}>
 						<div className={`${styles.logoContainer} mb-8 flex flex-col items-center md:items-start`}>
 							<Logo
@@ -61,38 +61,42 @@ function RouteComponent() {
 				</div>
 			</section>
 
-			<section className="px-responsive pt-24 pb-12 leading-loose bg-background">
-				Hos Delaney's er der plads til alle der sætter pris på god stemning og et
-				nøje udvalgt sortiment af øl&nbsp;&mdash;&nbsp;alt fra kolde fadøl til
-				spændende udvalg af flasker og dåser. Det er et sted, hvor gode minder
-				skabes, om end til en quiz-aften, til live-musik eller blot en hyggelig snak
-				i baren.
+			<section className="px-8 pt-24 pb-12 leading-loose bg-background">
+				<p className="mx-responsive">
+					Hos Delaney's er der plads til alle der sætter pris på god stemning og et
+					nøje udvalgt sortiment af øl&nbsp;&mdash;&nbsp;alt fra kolde fadøl til
+					spændende udvalg af flasker og dåser. Det er et sted, hvor gode minder
+					skabes, om end til en quiz-aften, til live-musik eller blot en hyggelig snak
+					i baren.
+				</p>
 			</section>
 
-			<section className="px-responsive pt-12 pb-24 flex flex-col gap-16 md:flex-row">
-				<div className="w-full max-w-lg">
-					<h1 className="font-heading font-bold text-2xl mb-4">Events på baren</h1>
-					<p className="leading-loose">
-						På Delaney’s kan du opleve alt fra quiz-aftener og live-musik til
-						ølsmagninger.
-						<br />
-						<br />
-						Hold øje på vores sociale medier for kommende events, og vær med til nogle
-						hyggelige stunder!
-					</p>
-				</div>
+			<section className="px-8 pt-12 pb-24">
+				<div className="mx-responsive flex flex-col gap-16 md:flex-row">
+					<div className="w-full max-w-lg">
+						<h1 className="font-heading font-bold text-2xl mb-4">Events på baren</h1>
+						<p className="leading-loose">
+							På Delaney’s kan du opleve alt fra quiz-aftener og live-musik til
+							ølsmagninger.
+							<br />
+							<br />
+							Hold øje på vores sociale medier for kommende events, og vær med til nogle
+							hyggelige stunder!
+						</p>
+					</div>
 
-				<div className="flex flex-col gap-4 md:flex-row">
-					<EventEntry
-						title="Quiz"
-						description="Hyggelige quiz-aftener, med temaer i øst og vest. Kom og vær med!"
-						imgSrc={ChairsImage}
-					/>
-					<EventEntry
-						title="Ølsmagning"
-						description="Kom og vær med til, at smage nye spændende special-øl."
-						imgSrc={PourImage}
-					/>
+					<div className="flex flex-col gap-4 md:flex-row">
+						<EventEntry
+							title="Quiz"
+							description="Hyggelige quiz-aftener, med temaer i øst og vest. Kom og vær med!"
+							imgSrc={ChairsImage}
+						/>
+						<EventEntry
+							title="Ølsmagning"
+							description="Kom og vær med til, at smage nye spændende special-øl."
+							imgSrc={PourImage}
+						/>
+					</div>
 				</div>
 			</section>
 		</main>

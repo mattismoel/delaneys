@@ -14,20 +14,25 @@ type Props = {
 const Navbar = ({ entries, navMenuOpen, onToggleNavMenu }: Props) => {
 	return (
 		<nav
-			className="z-20 bg-background-200 fixed w-full px-responsive flex justify-between items-center bg-background border-b border-border"
+			className="z-20 bg-background-200 fixed w-full px-8 bg-background border-b border-border"
 		>
-			<Link to="/" className="py-4">
-				<Logo variant="dark" className="h-8" />
-			</Link>
-			<ul className="hidden sm:flex">
-				{entries.map(({ to, title }) => <Entry key={title} to={to} title={title} />)}
-			</ul>
-			<button
-				className={cn("sm:hidden transition-[rotate]", navMenuOpen && "-rotate-90")}
-				onClick={onToggleNavMenu}
-			>
-				<LuMenu />
-			</button>
+			<div className="flex w-full mx-responsive justify-between items-center">
+				<Link to="/" className="py-4">
+					<Logo variant="dark" className="h-8" />
+				</Link>
+
+				<ul className="hidden sm:flex">
+					{entries.map(({ to, title }) => <Entry key={title} to={to} title={title} />)}
+				</ul>
+
+				<button
+					className={cn("sm:hidden transition-[rotate]", navMenuOpen && "-rotate-90")}
+					onClick={onToggleNavMenu}
+				>
+					<LuMenu />
+				</button>
+
+			</div>
 		</nav>
 	)
 }

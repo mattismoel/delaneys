@@ -8,8 +8,8 @@ export const Route = createFileRoute('/kontakt')({
 
 function RouteComponent() {
 	return (
-		<main className="min-h-svh py-32 px-responsive flex flex-col gap-16">
-			<section>
+		<main className="min-h-svh py-32 px-8 flex flex-col gap-16">
+			<section className="mx-responsive">
 				<p className="leading-loose">
 					Har du spørgsmål, som ikke kan besvares af <a
 						href="#faq"
@@ -25,7 +25,7 @@ function RouteComponent() {
 				</p>
 			</section>
 
-			<section>
+			<section className="mx-responsive w-full">
 				<h1 className="font-heading font-bold text-2xl mb-4" id="faq">
 					Ofte stillede spørgsmål
 				</h1>
@@ -45,7 +45,7 @@ function RouteComponent() {
 				</div>
 			</section>
 
-			<section>
+			<section className="mx-responsive w-full">
 				<h1 className="font-heading font-bold text-2xl mb-4">Find os hér</h1>
 				<Map opts={{
 					address: "Tolderlundsvej 46",

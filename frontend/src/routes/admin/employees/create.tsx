@@ -26,8 +26,8 @@ function RouteComponent() {
 	}
 
 	return (
-		<main className="flex h-svh justify-center items-center">
-			<div>
+		<main className="flex h-svh justify-center items-center px-8">
+			<div className="mx-responsive">
 				<h1 className="font-serif text-4xl font-bold mb-8">Tilføj ny ansat</h1>
 				<EmployeeForm onSubmit={handleCreateEmployee} submitting={submitting} />
 			</div>

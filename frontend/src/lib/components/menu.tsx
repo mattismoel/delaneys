@@ -36,7 +36,7 @@ const Menu = ({ menu, activeBeer, onHover }: Props) => {
 		<MenuContext.Provider value={{ menu, activeBeer, isHovered, onHover: handleHover }}>
 			<div className="@container w-full flex flex-col items-center">
 				<DispenserView className="hidden lg:block" />
-				<div className="@container w-full lg:hidden px-responsive">
+				<div className="@container w-full lg:hidden">
 					<h1 className="font-serif font-bold text-2xl mb-8">Hvad har vi på hanerne?</h1>
 					<ListView />
 				</div>

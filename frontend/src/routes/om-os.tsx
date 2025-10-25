@@ -20,8 +20,8 @@ function RouteComponent() {
 	const { data: employees } = useSuspenseQuery(employeesQueryOpts())
 
 	return (
-		<main className="min-h-svh py-32 px-responsive flex flex-col gap-32">
-			<section>
+		<main className="px-8 min-h-svh py-32 flex flex-col gap-32">
+			<section className="mx-responsive">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
 					<div>
 						<h1 className="font-heading font-bold text-2xl mb-4">Vores udvalg</h1>
@@ -39,7 +39,7 @@ function RouteComponent() {
 				</div>
 			</section>
 
-			<section>
+			<section className="mx-responsive">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
 					<img src={BarImage} alt="Baren" className="rounded-sm hidden lg:block" />
 					<div>
@@ -54,7 +54,7 @@ function RouteComponent() {
 				</div>
 			</section>
 
-			<section className="@container flex flex-col gap-16">
+			<section className="@container mx-responsive w-full flex flex-col gap-16">
 				<div>
 					<h1 className="font-heading font-bold text-2xl mb-4">Mød holdet</h1>
 					<p className="leading-loose">

@@ -9,8 +9,8 @@ export const Route = createFileRoute('/auth/login')({
 
 function RouteComponent() {
 	return (
-		<main className="min-h-svh py-32 px-responsive flex justify-center items-center">
-			<div>
+		<main className="min-h-svh py-32 px-8 flex justify-center items-center">
+			<div className="mx-responsive">
 				<h1 className="text-2xl font-bold font-serif mb-4">Log ind</h1>
 				<div className="flex flex-col gap-2">
 					{providers.map(provider => {
