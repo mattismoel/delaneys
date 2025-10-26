@@ -7,7 +7,7 @@ type Props = {
 const OpeningHours = ({ hours }: Props) => (
 	<ul className="flex flex-col gap-1">
 		{hours.map((hour) => (
-			<li className="grid grid-cols-2" key={hour.day}>
+			<li className="grid grid-cols-2" key={hour.day + hour.to}>
 				<span>{dayName(hour.day)}</span>
 				{hour.closed ? (
 					<span className="text-right italic">Lukket</span>
