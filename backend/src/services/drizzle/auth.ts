@@ -1,8 +1,8 @@
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
-import type { AuthRepository, Session } from "../../lib/auth";
-import * as schema from "../../db/schema.ts"
+import * as schema from "./schema.ts"
 import { eq } from "drizzle-orm";
-import type { Provider } from "../../lib/oauth.ts";
+import type { AuthRepository, Session } from "../../features/auth/auth.ts";
+import type { OAuthProvider } from "../../features/auth/oauth.ts";
 
 export const drizzleAuthRepository = (db: NodePgDatabase<typeof schema>): AuthRepository => {
 	const insertSession = async (session: Session) => {
@@ -23,7 +23,7 @@ export const drizzleAuthRepository = (db: NodePgDatabase<typeof schema>): AuthRe
 		return result.users
 	}
 
-	const insertUserIdentity = async (userId: number, sub: string, provider: Provider) => {
+	const insertUserIdentity = async (userId: number, sub: string, provider: OAuthProvider) => {
 		await db
 			.insert(schema.userIdentities)
 			.values({ userId, sub, provider }).returning()

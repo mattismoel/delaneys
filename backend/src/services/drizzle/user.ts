@@ -1,7 +1,8 @@
 import type { NodePgDatabase } from "drizzle-orm/node-postgres";
-import type { UserRepository } from "../../lib/auth";
-import * as schema from "../../db/schema.ts"
 import { eq } from "drizzle-orm";
+import * as schema from "./schema.ts"
+
+import type { UserRepository } from "../../features/auth/auth";
 
 export const drizzleUserRepository = (db: NodePgDatabase<typeof schema>): UserRepository => {
 	const insertUser = async (email: string, firstName: string, lastName: string) => {

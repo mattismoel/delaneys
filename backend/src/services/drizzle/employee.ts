@@ -1,7 +1,9 @@
-import type { NodePgDatabase } from "drizzle-orm/node-postgres";
-import * as schema from "../../db/schema.ts"
-import type { EmployeeRepository, InsertEmployee, UpdateEmployee } from "../../employee";
-import { eq } from "drizzle-orm";
+import { eq } from "drizzle-orm"
+import type { NodePgDatabase } from "drizzle-orm/node-postgres"
+
+import type { EmployeeRepository, InsertEmployee, UpdateEmployee } from "../../features/employees/employee"
+
+import * as schema from "./schema.ts"
 
 export const drizzleEmployeeRepository = (db: NodePgDatabase<typeof schema>): EmployeeRepository => {
 	const getEmployees = async () => {

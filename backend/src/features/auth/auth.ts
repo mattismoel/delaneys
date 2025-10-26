@@ -1,6 +1,9 @@
 import { encodeBase32, encodeHexLowerCase } from "@oslojs/encoding"
+import type { FastifyRequest } from "fastify"
 import z from "zod"
-import type { Provider } from "./oauth"
+
+import { APIError } from "../../lib/error"
+import type { OAuthProvider } from "./oauth"
 
 const SESSION_LIFETIME_MS = 1000 * 60 * 60 * 24 * 30 // 30 day expiry.
 const SESSION_REFRESH_BUFFER = 1000 * 60 * 60 * 24 * 15 // 15 day refresh buffer.
@@ -30,7 +33,7 @@ export type UserRepository = {
 }
 
 export type AuthRepository = {
-	insertUserIdentity: (userId: number, sub: string, provider: Provider) => Promise<void>
+	insertUserIdentity: (userId: number, sub: string, provider: OAuthProvider) => Promise<void>
 	insertSession: (session: Session) => Promise<void>
 	getUserByOidcSub: (sub: string) => Promise<User | null>
 	getSession: (sessionId: string) => Promise<Session | null>
@@ -84,4 +87,15 @@ export const validateSession = async (session: Session, opts: ValidateSessionPro
 		await opts.onRefreshable(newExpiry)
 		return
 	}
+}
+
+export const getRequestSession = async (req: FastifyRequest, authRepo: AuthRepository) => {
+	const sessionToken = req.cookies["session"]
+	if (!sessionToken) throw new APIError(req, 400, "No session cookie provided")
+
+	const sessionId = sessionIdFromToken(sessionToken)
+
+	const session = await authRepo.getSession(sessionId)
+	if (!session) throw new APIError(req, 401, "No session")
+	return session
 }

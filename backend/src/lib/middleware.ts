@@ -1,7 +1,6 @@
 import type { FastifyRequest } from "fastify"
-import { validateSession, type AuthRepository } from "../lib/auth"
-import { getRequestSession } from "./auth"
-import { APIError } from "../error"
+import { getRequestSession, validateSession, type AuthRepository } from "../features/auth/auth"
+import { APIError } from "../lib/error"
 
 export const adminRouteProtector = (authRepository: AuthRepository) => {
 	return async (req: FastifyRequest) => {

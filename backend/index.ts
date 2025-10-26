@@ -2,22 +2,21 @@ import fastify from "fastify"
 import cookie from "@fastify/cookie"
 import cors from "@fastify/cors"
 import multipart from "@fastify/multipart"
+import * as schema from "./src/services/drizzle/schema.ts"
 
 import { drizzle } from "drizzle-orm/node-postgres"
 
 import { env } from "./env.ts"
 
-import routes from "./src/routes/index.ts"
-import { errorHandler } from "./src/error.ts"
-import * as schema from "./src/db/schema.ts"
+import { errorHandler } from "./src/lib/error.ts"
 
 import { drizzleAuthRepository } from "./src/services/drizzle/auth.ts"
 import { drizzleEmployeeRepository } from "./src/services/drizzle/employee.ts"
 import { drizzleUserRepository } from "./src/services/drizzle/user.ts"
 import { s3BucketStorage } from "./src/services/s3/s3.ts"
 import { sharpImageTransformer } from "./src/services/sharp/image.ts"
-import untappdMenuProvider from "./src/lib/untappd/menu.ts"
-import { untappdLocationProvider } from "./src/lib/untappd/location.ts"
+import { untappdLocationProvider } from "./src/services/untappd/location.ts"
+import routes from "./src/routes.ts"
 
 const MAX_FILE_UPLOAD_SIZE_BYTES = 20000000 // 20MB.
 
@@ -46,8 +45,7 @@ app.register(cors, {
 
 app.setErrorHandler(errorHandler)
 
-const menuProvider = untappdMenuProvider(env.UNTAPPD_MENU_ID)
-const locationProvider = untappdLocationProvider(env.UNTAPPD_LOCATION_ID)
+const locationProvider = untappdLocationProvider(env.UNTAPPD_LOCATION_ID, env.UNTAPPD_MENU_ID)
 const employeeProvider = drizzleEmployeeRepository(db)
 const userRepository = drizzleUserRepository(db)
 const authRepository = drizzleAuthRepository(db)
@@ -57,7 +55,6 @@ const imageTransformer = sharpImageTransformer()
 
 app.register(routes(
 	locationProvider,
-	menuProvider,
 	employeeProvider,
 	userRepository,
 	authRepository,

@@ -5,7 +5,7 @@ import { fetchBackend } from "../../lib/api";
 export const menuQueryOpts = () => queryOptions({
 	queryKey: ["menu"],
 	queryFn: async () => {
-		const menuData = await fetchBackend(`/menu`, menu)
+		const menuData = await fetchBackend(`/location/menu`, menu)
 		return menuData
 	}
 })

@@ -1,37 +1,28 @@
+import type { FastifyPluginAsync } from "fastify"
 import { decodeIdToken, generateCodeVerifier, generateState, OAuth2Tokens } from "arctic"
-import { genereateAuthUrl, openIdClaims, parseProvider, validateAuthCode, type Provider } from "../lib/oauth"
-import { createSession, sessionIdFromToken, validateSession, type AuthRepository, type UserRepository } from "../lib/auth"
-import { env } from "../../env"
-import { type FastifyPluginAsync, type FastifyReply, type FastifyRequest } from "fastify"
-import { APIError } from "../error"
-import { adminRouteProtector } from "./middleware"
 
+import { APIError } from "../../lib/error"
+import { env } from "../../../env"
+
+import { setSessionCookie } from "../../lib/cookie"
+
+import { createSession, getRequestSession, validateSession, type AuthRepository, type UserRepository } from "./auth"
+import { genereateAuthUrl, openIdClaims, parseProvider, validateAuthCode, type OAuthProvider } from "./oauth"
 
 const routes = (userRepository: UserRepository, authRepository: AuthRepository): FastifyPluginAsync => {
 	return async (instance) => {
-		instance.register((adminRoutes) => {
-			adminRoutes.addHook("preHandler", adminRouteProtector(authRepository))
+		instance.get("/me", async (req, res) => {
+			const session = await getRequestSession(req, authRepository)
 
-			adminRoutes.get("/users", async (req) => {
-				console.log("POST", req.cookies['session'])
-				return await userRepository.getUsers()
+			await validateSession(session, {
+				onInvalid: () => authRepository.invalidateSession(session.id),
+				onRefreshable: (newExpiry) => authRepository.refreshSession(session.id, newExpiry)
 			})
 
-			adminRoutes.post<{
-				Params: { userId: number }
-			}>("/users/:userId/approve", async (req, _) => {
-				await userRepository.approveUser(req.params.userId)
-			})
+			const user = await userRepository.getUserById(session.userId)
+			if (!user) throw new APIError(req, 401, "Invalid user information")
 
-			adminRoutes.post<{
-				Params: { userId: number }
-			}>("/users/:userId/reject", async (req, _) => {
-				await userRepository.deleteUser(req.params.userId)
-			})
-
-			adminRoutes.delete<{ Params: { userId: number } }>("/users/:userId", async (req, _) => {
-				await userRepository.deleteUser(req.params.userId)
-			})
+			res.send(user)
 		})
 
 		instance.get<{
@@ -39,7 +30,7 @@ const routes = (userRepository: UserRepository, authRepository: AuthRepository):
 				"success_redirect": string,
 				"approval_redirect": string,
 			},
-			Params: { provider: Provider },
+			Params: { provider: OAuthProvider },
 		}>("/login/:provider", async (req, res) => {
 			const successRedirect = req.query["success_redirect"]?.toString()
 			if (!successRedirect) throw new APIError(req, 400, "No success redirect URL defined")
@@ -92,7 +83,7 @@ const routes = (userRepository: UserRepository, authRepository: AuthRepository):
 
 		instance.get<{
 			Querystring: { code: string, state: string },
-			Params: { provider: Provider },
+			Params: { provider: OAuthProvider },
 		}>("/login/:provider/callback", async (req, res) => {
 			const provider = parseProvider(req.params.provider)
 			if (!provider) throw new APIError(req, 400, "No provider defined")
@@ -149,42 +140,7 @@ const routes = (userRepository: UserRepository, authRepository: AuthRepository):
 
 			res.redirect(approvalRedirectUrl)
 		})
-
-		instance.get("/me", async (req, res) => {
-			const session = await getRequestSession(req, authRepository)
-
-			await validateSession(session, {
-				onInvalid: () => authRepository.invalidateSession(session.id),
-				onRefreshable: (newExpiry) => authRepository.refreshSession(session.id, newExpiry)
-			})
-
-			const user = await userRepository.getUserById(session.userId)
-			if (!user) throw new APIError(req, 401, "Invalid user information")
-
-			res.send(user)
-		})
 	}
-}
-
-export const getRequestSession = async (req: FastifyRequest, authRepo: AuthRepository) => {
-	const sessionToken = req.cookies["session"]
-	if (!sessionToken) throw new APIError(req, 400, "No session cookie provided")
-
-	const sessionId = sessionIdFromToken(sessionToken)
-
-	const session = await authRepo.getSession(sessionId)
-	if (!session) throw new APIError(req, 401, "No session")
-	return session
-}
-
-const setSessionCookie = (res: FastifyReply, token: string, expiresAt: Date) => {
-	res.setCookie("session", token, {
-		httpOnly: true,
-		path: "/",
-		secure: env.NODE_ENV === "production",
-		sameSite: "lax",
-		expires: expiresAt,
-	})
 }
 
 export default routes

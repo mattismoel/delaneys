@@ -1,6 +1,19 @@
 import z from "zod";
 import { isBefore } from "date-fns"
 
+const beer = z.object({
+	id: z.int().positive(),
+	name: z.string().nonempty(),
+	brewery: z.string().nonempty(),
+	style: z.string().nonempty(),
+	abv: z.number().nonnegative(),
+	url: z.url().nonempty(),
+})
+
+const menu = z.object({
+	beers: beer.array()
+})
+
 const dayName = z.union([
 	z.literal("monday"),
 	z.literal("tuesday"),
@@ -28,7 +41,10 @@ const openingHour = z.union([
 ])
 
 export type OpeningHour = z.infer<typeof openingHour>
+export type Menu = z.infer<typeof menu>
+export type Beer = z.infer<typeof beer>
 
 export type LocationProvider = {
 	getHours: () => Promise<OpeningHour[]>;
+	getMenu: () => Promise<Menu>
 }

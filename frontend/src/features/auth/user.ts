@@ -12,7 +12,7 @@ export const user = z.object({
 export type User = z.infer<typeof user>
 
 export const listUsers = async () => {
-	const users = await fetchBackend("/auth/users", user.array(), {
+	const users = await fetchBackend("/users", user.array(), {
 		credentials: "include"
 	})
 
@@ -23,7 +23,7 @@ export const updateUserApproval = async (
 	id: number,
 	status: "approve" | "reject",
 ) => {
-	await fetchBackend(`/auth/users/${id}/${status}`, null, {
+	await fetchBackend(`/users/${id}/${status}`, null, {
 		method: "POST",
 		body: JSON.stringify({ status }),
 		headers: { "Content-Type": "application/json" },
@@ -32,7 +32,7 @@ export const updateUserApproval = async (
 }
 
 export const deleteUser = async (id: number) => {
-	await fetchBackend(`/auth/users/${id}`, null, {
+	await fetchBackend(`/users/${id}`, null, {
 		method: "DELETE",
 		credentials: "include"
 	})

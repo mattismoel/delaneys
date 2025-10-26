@@ -1,6 +1,7 @@
-import { Facebook, Google, OAuth2Tokens } from "arctic";
-import { env } from "../../env";
 import z from "zod";
+import { Google, OAuth2Tokens } from "arctic";
+
+import { env } from "../../../env";
 
 export const openIdClaims = z.object({
 	sub: z.string().nonempty(),
@@ -9,10 +10,10 @@ export const openIdClaims = z.object({
 	family_name: z.string().nonempty(),
 })
 
-const providers = ["google", "facebook"] as const
-export type Provider = typeof providers[number]
+const providers = ["google"] as const
+export type OAuthProvider = typeof providers[number]
 
-const generateRedirectUrl = (provider: Provider): string => {
+const generateRedirectUrl = (provider: OAuthProvider): string => {
 	return `${env.BASE_URL}/auth/login/${provider}/callback`
 }
 
@@ -22,13 +23,7 @@ const google = new Google(
 	generateRedirectUrl("google")
 )
 
-const facebook = new Facebook(
-	env.FACEBOOK_APP_ID,
-	env.FACEBOOK_APP_SECRET,
-	generateRedirectUrl("facebook")
-)
-
-export const parseProvider = (provider: string): Provider | null => {
+export const parseProvider = (provider: string): OAuthProvider | null => {
 	const providerName = providers.find((validProvider) => validProvider === provider)
 	if (providerName) {
 		return providerName
@@ -38,26 +33,22 @@ export const parseProvider = (provider: string): Provider | null => {
 }
 
 export const genereateAuthUrl = (
-	provider: Provider,
+	provider: OAuthProvider,
 	state: string,
 	verifier: string,
 ) => {
 	switch (provider) {
 		case "google":
 			return google.createAuthorizationURL(state, verifier, ["openid", "email", "profile"])
-		case "facebook":
-			return facebook.createAuthorizationURL(state, ["email"])
 		default:
 			throw new Error("Provider not implemented!")
 	}
 }
 
-export const validateAuthCode = async (provider: Provider, code: string, verifier: string): Promise<OAuth2Tokens> => {
+export const validateAuthCode = async (provider: OAuthProvider, code: string, verifier: string): Promise<OAuth2Tokens> => {
 	switch (provider) {
 		case "google":
 			return await google.validateAuthorizationCode(code, verifier)
-		case "facebook":
-			return await facebook.validateAuthorizationCode(code)
 		default:
 			throw new Error("Provider not implemented")
 	}
