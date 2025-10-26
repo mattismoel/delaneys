@@ -29,13 +29,14 @@ const app = fastify({
 	}
 })
 
+app.register(cookie)
+
 app.register(multipart, {
 	limits: {
 		fileSize: MAX_FILE_UPLOAD_SIZE_BYTES,
 	}
 })
 
-app.register(cookie)
 
 app.register(cors, {
 	credentials: true,

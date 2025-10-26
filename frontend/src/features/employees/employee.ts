@@ -32,6 +32,7 @@ export const createEmployee = async (data: z.infer<typeof employeeForm>) => {
 		imageSrc = await fetchBackend("/employees/image", z.url(), {
 			method: "POST",
 			body: formData,
+			credentials: "include",
 		})
 	}
 
@@ -39,7 +40,8 @@ export const createEmployee = async (data: z.infer<typeof employeeForm>) => {
 	const createdEmployee = await fetchBackend("/employees", employee, {
 		method: "POST",
 		body: JSON.stringify({ ...data, imageSrc }),
-		headers: { "Content-Type": "application/json" }
+		headers: { "Content-Type": "application/json" },
+		credentials: "include"
 	})
 
 	return createdEmployee
@@ -47,7 +49,8 @@ export const createEmployee = async (data: z.infer<typeof employeeForm>) => {
 
 export const deleteEmployee = async (id: number) => {
 	await fetchBackend(`/employees/${id}`, null, {
-		method: "DELETE"
+		method: "DELETE",
+		credentials: "include"
 	})
 }
 
@@ -60,14 +63,16 @@ export const updateEmployee = async (id: number, data: z.infer<typeof employeeFo
 
 		imageSrc = await fetchBackend(`/employees/${id}/image`, z.url(), {
 			method: "POST",
-			body: formData
+			body: formData,
+			credentials: "include"
 		})
 	}
 
 	const result = await fetchBackend(`/employees/${id}`, employee, {
 		method: "POST",
 		body: JSON.stringify({ ...data, imageSrc }),
-		headers: { "Content-Type": "application/json" }
+		headers: { "Content-Type": "application/json" },
+		credentials: "include"
 	})
 
 	return result
@@ -75,12 +80,14 @@ export const updateEmployee = async (id: number, data: z.infer<typeof employeeFo
 
 export const archiveEmployee = async (id: number) => {
 	await fetchBackend(`/employees/archive/${id}?archive=true`, null, {
-		method: "POST"
+		method: "POST",
+		credentials: "include"
 	})
 }
 
 export const restoreEmployee = async (id: number) => {
 	await fetchBackend(`/employees/archive/${id}?archive=false`, null, {
-		method: "POST"
+		method: "POST",
+		credentials: "include"
 	})
 }

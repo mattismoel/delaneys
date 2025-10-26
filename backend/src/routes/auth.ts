@@ -2,32 +2,36 @@ import { decodeIdToken, generateCodeVerifier, generateState, OAuth2Tokens } from
 import { genereateAuthUrl, openIdClaims, parseProvider, validateAuthCode, type Provider } from "../lib/oauth"
 import { createSession, sessionIdFromToken, validateSession, type AuthRepository, type UserRepository } from "../lib/auth"
 import { env } from "../../env"
-import { type FastifyPluginAsync, type FastifyReply } from "fastify"
+import { type FastifyPluginAsync, type FastifyReply, type FastifyRequest } from "fastify"
 import { APIError } from "../error"
+import { adminRouteProtector } from "./middleware"
+
 
 const routes = (userRepository: UserRepository, authRepository: AuthRepository): FastifyPluginAsync => {
 	return async (instance) => {
-		instance.get("/users", async () => {
-			const users = await userRepository.getUsers()
-			return users
-		})
+		instance.register((adminRoutes) => {
+			adminRoutes.addHook("preHandler", adminRouteProtector(authRepository))
 
-		instance.post<{
-			Params: { userId: number }
-		}>("/users/:userId/approve", async (req, res) => {
-			await userRepository.approveUser(req.params.userId)
-		})
+			adminRoutes.get("/users", async (req) => {
+				console.log("POST", req.cookies['session'])
+				return await userRepository.getUsers()
+			})
 
-		instance.post<{
-			Params: { userId: number }
-		}>("/users/:userId/reject", async (req, res) => {
-			await userRepository.deleteUser(req.params.userId)
-		})
+			adminRoutes.post<{
+				Params: { userId: number }
+			}>("/users/:userId/approve", async (req, _) => {
+				await userRepository.approveUser(req.params.userId)
+			})
 
-		instance.delete<{
-			Params: { userId: number }
-		}>("/users/:userId", async (req, res) => {
-			await userRepository.deleteUser(req.params.userId)
+			adminRoutes.post<{
+				Params: { userId: number }
+			}>("/users/:userId/reject", async (req, _) => {
+				await userRepository.deleteUser(req.params.userId)
+			})
+
+			adminRoutes.delete<{ Params: { userId: number } }>("/users/:userId", async (req, _) => {
+				await userRepository.deleteUser(req.params.userId)
+			})
 		})
 
 		instance.get<{
@@ -147,13 +151,7 @@ const routes = (userRepository: UserRepository, authRepository: AuthRepository):
 		})
 
 		instance.get("/me", async (req, res) => {
-			const sessionToken = req.cookies["session"]
-			if (!sessionToken) throw new APIError(req, 400, "No session cookie provided")
-
-			const sessionId = sessionIdFromToken(sessionToken)
-
-			const session = await authRepository.getSession(sessionId)
-			if (!session) throw new APIError(req, 401, "No session")
+			const session = await getRequestSession(req, authRepository)
 
 			await validateSession(session, {
 				onInvalid: () => authRepository.invalidateSession(session.id),
@@ -166,6 +164,17 @@ const routes = (userRepository: UserRepository, authRepository: AuthRepository):
 			res.send(user)
 		})
 	}
+}
+
+export const getRequestSession = async (req: FastifyRequest, authRepo: AuthRepository) => {
+	const sessionToken = req.cookies["session"]
+	if (!sessionToken) throw new APIError(req, 400, "No session cookie provided")
+
+	const sessionId = sessionIdFromToken(sessionToken)
+
+	const session = await authRepo.getSession(sessionId)
+	if (!session) throw new APIError(req, 401, "No session")
+	return session
 }
 
 const setSessionCookie = (res: FastifyReply, token: string, expiresAt: Date) => {

@@ -13,7 +13,9 @@ export const employeesQueryOpts = () => queryOptions({
 export const employeeByIdQueryOpts = (employeeId: number) => queryOptions({
 	queryKey: ["employees", { id: employeeId }],
 	queryFn: async () => {
-		const result = await fetchBackend(`/employees/${employeeId}`, employee)
+		const result = await fetchBackend(`/employees/${employeeId}`, employee, {
+			credentials: "include",
+		})
 		return result
 	}
 })
