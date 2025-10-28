@@ -1,6 +1,7 @@
-import { createContext, forwardRef, useContext, useState, type HTMLAttributes } from "react";
+import { createContext, forwardRef, useContext, useEffect, useState, type HTMLAttributes } from "react";
 import { type Beer, type Menu as MenuType } from "../../features/menu/menu"
 import { cn, type PropsWithClass } from "../class";
+import { useRandom } from "../hooks/useRandom";
 
 type MenuContext = {
 	menu: MenuType
@@ -19,18 +20,33 @@ const useMenuContext = () => {
 
 type Props = {
 	menu: MenuType;
-	activeBeer: Beer | null
-
-	onHover: (id: number | null) => void;
 }
 
-const Menu = ({ menu, activeBeer, onHover }: Props) => {
+const Menu = ({ menu }: Props) => {
 	const [isHovered, setIsHovered] = useState(false)
 
-	const handleHover = (newId: number | null) => {
-		setIsHovered(newId ? true : false)
-		onHover(newId)
+	const { randomise, override, current: activeBeer } = useRandom(menu.beers)
+
+	const handleHover = (id: number | null) => {
+		setIsHovered((id !== null))
+
+		if (id === null) {
+			return
+		}
+
+		const newBeer = menu.beers.find(beer => beer.id === id)
+		if (!newBeer) {
+			override({ newValue: null })
+			return
+		}
+
+		override({ newValue: newBeer, findFn: (beer) => beer.id === newBeer.id })
 	}
+
+	useEffect(() => {
+		const interval = isHovered ? undefined : setInterval(randomise, 3000)
+		return () => clearInterval(interval)
+	}, [isHovered])
 
 	return (
 		<MenuContext.Provider value={{ menu, activeBeer, isHovered, onHover: handleHover }}>
