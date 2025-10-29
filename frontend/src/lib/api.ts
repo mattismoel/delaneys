@@ -7,8 +7,6 @@ export const apiError = z.object({
 	path: z.string().nonempty()
 })
 
-type APIError = z.infer<typeof apiError>
-
 export async function fetchBackend(
 	pathname: string,
 	schema: null,
