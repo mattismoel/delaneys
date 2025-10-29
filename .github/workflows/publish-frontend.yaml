@@ -3,6 +3,7 @@ name: Publish Frontend
 env:
   REGISTRY: ghcr.io
   PACKAGE_NAME: frontend
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 on:
   push:
@@ -34,5 +35,5 @@ jobs:
           context: ./frontend
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.event.repository.name }}/${{ env.PACKAGE_NAME }}:${{ github.ref_name }}
+            ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.event.repository.name }}/${{ env.PACKAGE_NAME }}:${{ env.BRANCH_NAME }}
             ${{ env.REGISTRY }}/${{ github.actor }}/${{ github.event.repository.name }}/${{ env.PACKAGE_NAME }}:${{ github.sha }}
