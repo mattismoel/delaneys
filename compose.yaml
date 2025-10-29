@@ -20,6 +20,20 @@ services:
   backend:
     image: ghcr.io/mattismoel/delaneys/backend:main
     restart: unless-stopped
+    secrets:
+    - untappd_email
+    - untappd_api_access_token
+    - untappd_location_id
+    - untappd_menu_id
+    - google_client_id
+    - google_client_secret
+    environment:
+      UNTAPPD_EMAIL: /run/secrets/untappd_email
+      UNTAPPD_API_ACCESS_TOKEN: /run/secrets/untappd_api_access_token
+      UNTAPPD_LOCATION_ID: /run/secrets/untappd_location_id
+      UNTAPPD_MENU_ID: /run/secrets/untappd_menu_id
+      GOOGLE_CLIENT_ID: /run/secrets/google_client_id
+      GOOGLE_CLIENT_SECRET: /run/secrets/google_client_secret
 
   db:
     image: postgres
