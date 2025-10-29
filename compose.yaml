@@ -1,0 +1,37 @@
+services:
+  caddy:
+    image: caddy:alpine
+    restart: unless-stopped
+    ports:
+    - 80:80
+    - 443:443
+    - 443:443/udp
+    volumes:
+    - caddy_data:/data
+    - caddy_config:/config
+    configs:
+    - source: caddyfile
+      target: /etc/caddy/Caddyfile
+
+  frontend:
+    image: ghcr.io/mattismoel/delaneys/frontend:main
+    restart: unless-stopped
+
+  backend:
+    image: ghcr.io/mattismoel/delaneys/backend:main
+    restart: unless-stopped
+
+  db:
+    image: postgres
+    restart: unless-stopped
+    shm_size: 128mb
+    ports:
+    - 5432:5432
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+configs:
+  caddyfile:
+    file: ./Caddyfile

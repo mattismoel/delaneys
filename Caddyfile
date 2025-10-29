@@ -1,0 +1,7 @@
+:443 {
+	handle_path /api/* {
+		reverse_proxy backend:8080
+	}
+
+	reverse_proxy frontend:3000
+}
