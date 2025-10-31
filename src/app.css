@@ -1,0 +1,45 @@
+@import "tailwindcss";
+@plugin "@iconify/tailwind4";
+
+:root {
+	--heading-duration: 2s;
+}
+
+@theme {
+	--color-*: initial;
+
+	--color-primary: oklch(100% 20% 55);
+	--color-background: oklch(from var(--color-primary) l 15% h);
+	--color-surface-100: oklch(from var(--color-background) 98% c h);
+	--color-border: oklch(from var(--color-primary) 80% c h);
+
+	--color-text-dark: oklch(from var(--color-primary) 20% c h);
+	--color-text-dark-muted: oklch(from var(--color-text-dark) 35% c h);
+	--color-text-light: oklch(from var(--color-primary) l c h);
+	--color-text-light-muted: oklch(from var(--color-text-light) 80% 10% h);
+
+	--font-serif: serif;
+
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+
+		to {
+			opacity: 100;
+		}
+	}
+}
+
+@utility mx-responsive {
+	--max-content-width: 55em;
+	--min-padding: 3rem;
+
+	max-width: min(var(--max-content-width), 100% - var(--min-padding));
+	margin: 0 auto;
+}
+
+@utility fade-in-* {
+	animation: fade-in --value([*]);
+}
