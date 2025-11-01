@@ -127,6 +127,10 @@
     );
   }
 
+  path {
+    opacity: 0;
+  }
+
   .p1 {
     animation: var(--duration-1) ease-out var(--delay-1) dash-move forwards;
   }
@@ -144,8 +148,12 @@
   }
 
   @keyframes dash-move {
+    0% {
+      opacity: 100%;
+    }
     100% {
       stroke-dashoffset: 0;
+      opacity: 100%;
     }
   }
 </style>
