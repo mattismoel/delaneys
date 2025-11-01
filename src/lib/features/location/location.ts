@@ -55,6 +55,7 @@ export const dayName = (day: Day) => {
 
 export type OpeningHour = z.infer<typeof openingHour>
 export type Menu = z.infer<typeof menu>
+export type Beer = z.infer<typeof beer>
 
 export type LocationProvider = {
 	getMenu: () => Promise<Menu>

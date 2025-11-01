@@ -3,6 +3,14 @@
 
 :root {
 	--heading-duration: 2s;
+
+	--check-spacing: 2px;
+	--check-thickness: 1px;
+	--checked-gradient: repeating-linear-gradient(-45deg,
+			transparent,
+			transparent var(--check-spacing),
+			var(--color-border) var(--check-spacing),
+			var(--color-border) calc(var(--check-spacing) + var(--check-thickness)));
 }
 
 @theme {
@@ -11,6 +19,7 @@
 	--color-primary: oklch(100% 20% 55);
 	--color-background: oklch(from var(--color-primary) l 15% h);
 	--color-surface-100: oklch(from var(--color-background) 98% c h);
+	--color-surface-200: oklch(from var(--color-background) 90% c h);
 	--color-border: oklch(from var(--color-primary) 80% c h);
 
 	--color-text-dark: oklch(from var(--color-primary) 20% c h);
@@ -42,4 +51,30 @@
 
 @utility fade-in-* {
 	animation: fade-in --value([*]);
+}
+
+@utility hatch-v {
+	&::after {
+		content: "";
+		background: var(--checked-gradient);
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 25%;
+		height: 100%;
+		border-right: var(--color-border) solid 1px;
+	}
+}
+
+@utility hatch-h {
+	&::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		width: 100%;
+		height: 25%;
+		border-top: var(--color-border) solid 1px;
+		background: var(--checked-gradient);
+	}
 }
