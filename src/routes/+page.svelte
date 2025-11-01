@@ -12,14 +12,21 @@
     <img
       src={LandingImage}
       alt=""
-      class="absolute top-0 left-0 -z-10 h-full w-full fade-in-[4s] object-cover brightness-40"
+      class="absolute top-0 left-0 -z-10 h-full w-full fade-in-[4s] object-cover brightness-30"
     />
 
     <div class="mx-responsive">
       <div>
-        <div class="logo-container mb-8">
-          <Logo variant="light" class="drop-shadow-xl drop-shadow-[black]/25" />
-          <div class="subtitle text-2xl font-semibold text-text-light">
+        <div class="logo-container mb-12">
+          <div class="flex w-full items-center justify-center">
+            <Logo
+              variant="light"
+              class="translate-x-0 drop-shadow-xl drop-shadow-[black]/25 lg:-translate-x-[12%]"
+            />
+          </div>
+          <div
+            class="subtitle flex justify-center text-2xl font-semibold text-text-light lg:justify-start"
+          >
             <span>Bar</span>
             <span>&nbsp;&amp;&nbsp;</span>
             <span>Bottleshop</span>
@@ -27,14 +34,18 @@
         </div>
 
         <div class="action-container">
-          <p class="mb-8 max-w-2xl leading-relaxed text-text-light-muted">
+          <p
+            class="mb-12 max-w-2xl text-center leading-relaxed text-text-light-muted sm:text-left"
+          >
             En hjemmelig specialøl-bar i hjertet af Skibhuskvarteret. Kom og nyd
             en lækker øl med dine venner og bekendte.
           </p>
 
-          <div class="flex gap-2">
-            <Button variant="secondary" href="/om-os">Læs mere</Button>
-            <Button href="/menu">Se menu</Button>
+          <div class="flex flex-col-reverse gap-2 sm:flex-row">
+            <Button variant="secondary" href="/om-os" class="w-full sm:w-fit"
+              >Læs mere</Button
+            >
+            <Button href="/menu" class="w-full sm:w-fit">Se menu</Button>
           </div>
         </div>
       </div>
