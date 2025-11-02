@@ -1,12 +1,13 @@
 <script lang="ts">
+  import type { PropsWithClass } from "$lib/class";
   import type { Beer, Menu } from "$lib/features/location/location";
   import { Randomiser } from "$lib/stores/random.svelte";
 
-  type Props = {
+  type Props = PropsWithClass<{
     menu: Menu;
-  };
+  }>;
 
-  let { menu }: Props = $props();
+  let { menu, ...rest }: Props = $props();
 
   let isHovered = $state(false);
 
@@ -42,103 +43,127 @@
   const rightBeers = menu.beers.slice(menu.beers.length / 2);
 </script>
 
-{#snippet tap(beer: Beer, idx: number, active: boolean, onHover: () => void)}
-  <div
-    role="listitem"
-    class="group pointer-events-auto relative"
-    onmouseover={onHover}
-    onfocus={onHover}
-  >
-    <a
-      href={beer.url}
-      class={[
-        "peer group relative flex aspect-square h-14 flex-col items-center justify-center rounded-full border bg-background font-mono outline outline-transparent transition-colors",
-        "group-hover:border-background-100 group-hover:border-2 group-hover:border-solid group-hover:bg-text-dark group-hover:font-bold group-hover:text-text-light group-hover:outline-text-dark",
-        active && "border-2 border-solid font-bold",
-      ]}
-    >
-      {idx}
-    </a>
-
-    <!--  HANDLE -->
-    <div
-      class={[
-        "absolute top-8 left-1/2 -translate-x-1/2 -translate-y-full",
-        "-z-15 h-12 w-4 rounded-xs border bg-text-dark transition-transform",
-        "peer-hover:-translate-y-[140%]",
-        active && "-translate-y-[140%]",
-      ]}
-    ></div>
-
-    <!-- LABEL HOLDER -->
-    <div
-      class="hatch-v absolute bottom-0 left-1/2 -z-10 h-4 w-2.5 -translate-x-1/2 translate-y-[80%] border bg-surface-200"
-    ></div>
-
-    <!-- TAP END -->
-    <div
-      class="hatch-v absolute -bottom-16 left-1/2 -z-10 h-4 w-2 -translate-x-1/2 rounded-b-xs border bg-surface-200"
-    ></div>
-  </div>
-{/snippet}
-
 {#snippet tapList(
   beers: Beer[],
   onHover: (id: number) => void,
   startIdx: number = 0,
   activeId: number,
 )}
-  <ul class="flex justify-between gap-3">
+  <ul class="flex justify-between">
     {#each beers as beer, i}
-      {@render tap(beer, startIdx + (i + 1), activeId === beer.id, () =>
-        onHover(beer.id),
-      )}
+      <div
+        role="listitem"
+        class="group pointer-events-auto isolate flex flex-col items-center"
+        onmouseover={() => onHover(beer.id)}
+        onfocus={() => onHover(beer.id)}
+      >
+        <!--  HANDLE -->
+        <div
+          class={[
+            "left-1/2",
+            "h-12 w-4 rounded-xs border bg-text-dark transition-transform",
+            activeId === beer.id ? "translate-y-[20%]" : "translate-y-1/2",
+          ]}
+        ></div>
+
+        <a
+          href={beer.url}
+          class={[
+            "peer group z-50 flex aspect-square h-14 flex-col items-center justify-center rounded-full border bg-background font-mono outline outline-transparent transition-colors",
+            "group-hover:border-background-100 group-hover:border-2 group-hover:border-solid group-hover:bg-text-dark group-hover:font-bold group-hover:text-text-light group-hover:outline-text-dark",
+            activeId === beer.id && "border-2 border-solid font-bold",
+          ]}
+        >
+          {startIdx + i}
+        </a>
+
+        <!-- LABEL HOLDER -->
+        <div
+          class="hatch-v relative h-2 w-2.5 border-r border-l bg-surface-200"
+        ></div>
+
+        <div
+          class="hatch-h relative aspect-square h-(--dispenser-thickness) w-16 border-t-2 border-b-2 bg-surface-100 group-first:border-l-2 group-last:border-r-2"
+        ></div>
+
+        <!-- TAP END -->
+        <div
+          class="hatch-v relative h-3 w-2 rounded-b-xs border-r border-b border-l bg-surface-200"
+        ></div>
+      </div>
     {/each}
   </ul>
 {/snippet}
 
-<div class={["relative flex w-fit flex-col items-center gap-8"]}>
-  {#each menu.beers as beer, i}
-    <div
-      class={[
-        "text-zinc-950 absolute -top-64 flex w-full translate-y-full scale-y-95 flex-col opacity-0 transition-[opacity,scale]",
-        beer.id === randomiser.current?.id && "scale-y-100 opacity-100",
-      ]}
-    >
-      <h1 class="mb-2 inline-block min-h-[1em] font-mono text-xl font-semibold">
-        {i + 1}. {beer?.name}
-      </h1>
+{#snippet beerDescriptor(beers: Beer[], activeId: number)}
+  <div class="relative h-24 w-full">
+    {#each beers as beer, i}
+      <div
+        class={[
+          "text-zinc-950 absolute top-0 left-0 flex w-full flex-col",
+          beer.id === activeId ? "fade-in" : "fade-out",
+        ]}
+      >
+        <h1
+          class="mb-2 inline-block min-h-[1em] font-mono text-xl font-semibold"
+        >
+          {i + 1}. {beer?.name}
+        </h1>
 
-      <div class="text-text-dark/85">
-        <p>{beer.brewery}</p>
-        <span>{beer.style} / {beer.abv.toFixed(1)}%</span>
+        <div class="text-text-dark/85">
+          <p>{beer.brewery}</p>
+          <span>{beer.style} / {beer.abv.toFixed(1)}%</span>
+        </div>
       </div>
+    {/each}
+  </div>
+{/snippet}
+
+<!-- CONTAINER -->
+<div class={["relative isolate flex w-fit flex-col gap-8 pb-2", rest.class]}>
+  {@render beerDescriptor(menu.beers, randomiser.current.id)}
+
+  <div class="relative">
+    <!-- MIDDLE POLE -->
+    <div
+      class="hatch-v absolute -bottom-2 left-1/2 z-10 h-20 w-[calc(var(--dispenser-thickness)+5px)] -translate-x-1/2 rounded-t-xs border-2 bg-surface-100"
+    ></div>
+
+    <div class="flex gap-(--dispenser-thickness)">
+      {@render tapList(leftBeers, handleHover, 1, randomiser.current.id)}
+      {@render tapList(
+        rightBeers,
+        handleHover,
+        menu.beers.length / 2 + 1,
+        randomiser.current.id,
+      )}
     </div>
-  {/each}
-  <div class="absolute -bottom-2 w-full translate-y-full">
-    <div
-      class="hatch-h absolute h-(--dispenser-thickness) w-full rounded-xs border-(length:--dispenser-border-width) bg-surface-100"
-    ></div>
-    <div
-      class="hatch-v absolute -top-2 left-1/2 h-20 w-(--dispenser-thickness) -translate-x-1/2 rounded-t-xs border-(length:--dispenser-border-width) bg-surface-100"
-    ></div>
   </div>
-
-  <div class="flex gap-(--dispenser-thickness)">
-    {@render tapList(leftBeers, handleHover, 1, randomiser.current.id)}
-    {@render tapList(
-      rightBeers,
-      handleHover,
-      menu.beers.length / 2,
-      randomiser.current.id,
-    )}
-  </div>
-
-  <div class="absolute -bottom-20 w-full border-t"></div>
+  <div class="absolute bottom-0 w-full border-t"></div>
 </div>
 
 <style>
   :root {
     --dispenser-thickness: 3rem;
+    --fade-duration: 100ms;
+  }
+
+  .fade-in {
+    visibility: visible;
+    opacity: 1;
+    transform: scaleY(100%);
+    transition:
+      opacity var(--fade-duration) linear,
+      transform var(--fade-duration) linear;
+  }
+
+  .fade-out {
+    visibility: hidden;
+    opacity: 0;
+    transform: scaleY(95%);
+    transition:
+      visibility 0s var(--fade-duration),
+      opacity var(--fade-duration) linear,
+      transform var(--fade-duration) linear;
   }
 </style>
