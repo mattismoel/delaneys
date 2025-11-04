@@ -26,7 +26,8 @@
 
 	--color-text-dark: oklch(from var(--color-primary) 20% c h);
 	--color-text-dark-muted: oklch(from var(--color-text-dark) 35% c h);
-	--color-text-light: oklch(from var(--color-primary) l c h);
+
+	--color-text-light: oklch(from var(--color-primary) 100% 10% h);
 	--color-text-light-muted: oklch(from var(--color-text-light) 80% 10% h);
 
 	--font-serif: serif;
