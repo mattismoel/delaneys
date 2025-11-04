@@ -21,7 +21,7 @@
   type Props = BaseProps & (LinkButtonProps | ButtonProps);
 
   const baseClasses =
-    "rounded-sm px-5 py-2 border transition-[background,_filter] text-center";
+    "flex gap-2 justify-center items-center rounded-sm px-5 py-2 border transition-[background,_filter] text-center";
 
   const variantClasses: Record<Variant, string> = {
     primary:
