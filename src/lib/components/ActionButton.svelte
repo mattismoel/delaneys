@@ -40,7 +40,7 @@
     type="submit"
     class={[
       "rounded-sm p-2 text-lg text-text-dark/50",
-      "not-disabled:hover:bg-surface-100 not-disabled:hover:text-text-dark",
+      "not-disabled:hover:bg-surface-200 not-disabled:hover:text-text-dark",
       "disabled:hover disabled:text-text-dark/25",
       rest.class,
     ]}
