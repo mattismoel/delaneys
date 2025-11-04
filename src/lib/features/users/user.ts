@@ -13,3 +13,12 @@ export const user = z.object({
 type ID = z.infer<typeof id>
 export type User = z.infer<typeof user>
 
+export type GetUsersHandler = () => Promise<User[]>
+export type ApproveUserHandler = (id: ID) => Promise<void>
+export type DeleteUserHandler = (id: ID) => Promise<void>
+
+export type UserProvider = {
+	getUsers: GetUsersHandler
+	approveUser: ApproveUserHandler
+	deleteUser: DeleteUserHandler
+}
