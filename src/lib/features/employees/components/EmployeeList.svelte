@@ -32,24 +32,35 @@
 </script>
 
 {#if employees.length === 0}
-  <span>{emptyText}</span>
+  <span class="text-text-dark-muted italic">{emptyText}</span>
 {:else}
   <ul class="flex flex-col gap-2">
     {#each employees as employee}
       <li
-        class="group bg-background-100 hover:bg-background-200 flex w-full items-center rounded-sm border border-border/75"
+        class={[
+          "group flex w-full items-center rounded-sm border border-border/75",
+          !disabled && "hover:bg-surface-100",
+        ]}
       >
         <a
           href="/admin/employees/{employee.id}"
-          class="flex flex-1 items-center gap-8 p-4"
+          class={[
+            "flex flex-1 items-center gap-8 p-4",
+            disabled && "cursor-default",
+          ]}
         >
           {@render employeeImage(employee.src, employee.name)}
 
           <div class="flex flex-1 flex-col">
-            <h2 class="font-serif text-xl font-bold group-hover:underline">
+            <h2
+              class={[
+                "font-serif text-xl font-bold",
+                !disabled && "group-hover:underline",
+              ]}
+            >
               {employee.name}
             </h2>
-            <p class={["text-text-dark/75", !employee.role && "italic"]}>
+            <p class={["text-text-dark-muted", !employee.role && "italic"]}>
               {employee.role || "Ingen rolle bestemt..."}
             </p>
           </div>
