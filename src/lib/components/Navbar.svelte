@@ -25,7 +25,7 @@
   class="fixed z-100 flex w-full items-center justify-between border-b border-border bg-surface-100 px-16"
 >
   <a href="/">
-    <Logo height="2rem" trace={true} />
+    <Logo height="2rem" />
   </a>
 
   <nav>
