@@ -16,10 +16,12 @@
 @theme {
 	--color-*: initial;
 
-	--color-primary: oklch(100% 20% 55);
-	--color-background: oklch(from var(--color-primary) l 15% h);
-	--color-surface-100: oklch(from var(--color-background) 98% c h);
+	--color-primary: oklch(100% 20% 60);
+	--color-background: oklch(from var(--color-primary) l 14% h);
+
+	--color-surface-100: oklch(from var(--color-background) 96% c h);
 	--color-surface-200: oklch(from var(--color-background) 90% c h);
+
 	--color-border: oklch(from var(--color-primary) 80% c h);
 
 	--color-text-dark: oklch(from var(--color-primary) 20% c h);
