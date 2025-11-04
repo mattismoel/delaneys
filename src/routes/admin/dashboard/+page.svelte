@@ -59,7 +59,7 @@
     <div class="@container">
       <div class="mb-8">
         <h1 class="mb-4 font-serif text-4xl font-bold">Administratorer</h1>
-        <p class="text-text-dark/75">
+        <p class="text-text-dark-muted">
           Overblik af administratorer af hjemmesiden. Administratorer er i stand
           til at tilføje, redigére og slette ansatte, samt godkende, afvise og
           slette administratorer.
