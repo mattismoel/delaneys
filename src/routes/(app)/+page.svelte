@@ -34,6 +34,7 @@
         <div class="logo-container mb-12">
           <div class="flex w-full items-center justify-center">
             <Logo
+              trace
               variant="light"
               class="translate-x-0 drop-shadow-xl drop-shadow-[black]/25 lg:-translate-x-[12%]"
             />
