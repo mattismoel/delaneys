@@ -15,6 +15,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	event.locals.locationProvider = untappdLocationProvider(UNTAPPD_LOCATION_ID, UNTAPPD_MENU_ID)
 	event.locals.employeeProvider = pocketBaseEmployeeProvider(pb)
+
+	// If it is not an admin page, we do not care for the admin dependencies.
+	// This speeds up page loads for non-admin pages, and skips the auth-check flow.
+	if (!isAdminPath(event.url.pathname)) {
+		const response = await resolve(event)
+		return response
+	}
+
 	event.locals.userProvider = pocketBaseUserProvider(pb)
 	event.locals.authProvider = pocketBaseAuthProvider(pb)
 
@@ -28,8 +36,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	const response = await resolve(event)
-
 	response.headers.append("set-cookie", pb.authStore.exportToCookie())
 
 	return response
+}
+
+const isAdminPath = (pathname: string): boolean => {
+	return pathname.startsWith("/admin")
 }
