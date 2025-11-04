@@ -5,7 +5,21 @@
   import Button from "$lib/components/Button.svelte";
   import EventEntry from "$lib/components/EventEntry.svelte";
   import Logo from "$lib/components/Logo.svelte";
+
+  let prevScrollY = $state(0);
+
+  let scrollDirection: 0 | 1 | -1 = $state(0);
+
+  const handleScroll = (newScrollY: number) => {
+    const diff = prevScrollY - newScrollY;
+    scrollDirection = diff > 0 ? 1 : -1;
+    prevScrollY = newScrollY;
+  };
+
+  $inspect(scrollDirection);
 </script>
+
+<svelte:window onscroll={(e) => handleScroll(e.currentTarget.scrollY)} />
 
 <main class="min-h-svh">
   <section class="relative -z-20 min-h-svh place-content-center bg-[black]">
@@ -52,7 +66,10 @@
     </div>
 
     <div
-      class="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center text-text-light"
+      class={[
+        "absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center text-text-light transition-opacity",
+        scrollDirection === -1 && "opacity-0",
+      ]}
     >
       <span class="animate-bounce">Scroll ned</span>
       <span class="icon-[lucide--chevron-down] animate-bounce text-2xl"></span>
