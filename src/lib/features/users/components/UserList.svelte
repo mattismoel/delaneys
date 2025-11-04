@@ -42,7 +42,7 @@
 </script>
 
 {#if users.length === 0}
-  <span>{emptyText}</span>
+  <span class="text-text-dark-muted italic">{emptyText}</span>
 {:else}
   <ul class="mb-8 flex flex-col gap-2">
     {#each users as user}
@@ -55,7 +55,7 @@
             {user.lastName}
             {isCurrent ? "(Mig)" : ""}
           </h2>
-          <p class="text-text-dark/75">{user.email}</p>
+          <p class="text-text-dark-muted">{user.email}</p>
         </div>
 
         <div class="flex">
@@ -76,7 +76,6 @@
             <ActionButton
               action="{rest.approveAction}&id={user.id}"
               title="Godkend"
-              type="submit"
               confirmation="Godkend {user.firstName} {user.lastName}?"
               {onsubmit}
               {onfinish}
@@ -88,7 +87,6 @@
             <ActionButton
               action="{rest.rejectAction}&id={user.id}"
               title="Afvis"
-              type="submit"
               confirmation={`Afvis ${user.firstName} ${user.lastName}?`}
               {onsubmit}
               {onfinish}
