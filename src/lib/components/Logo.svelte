@@ -14,9 +14,13 @@
     dark: "stroke-text-dark",
   };
 
-  let { variant = "dark", trace = true, ...rest }: Props = $props();
+  let { variant = "dark", trace, ...rest }: Props = $props();
 
   const tracer: Attachment<SVGPathElement> = (element) => {
+    if (!trace) {
+      return;
+    }
+
     element.style.strokeDasharray = element.getTotalLength().toString();
     element.style.strokeDashoffset = element.getTotalLength().toString();
   };
@@ -127,10 +131,6 @@
     );
   }
 
-  path {
-    opacity: 0;
-  }
-
   .p1 {
     animation: var(--duration-1) ease-out var(--delay-1) dash-move forwards;
   }
@@ -153,7 +153,6 @@
     }
     100% {
       stroke-dashoffset: 0;
-      opacity: 100%;
     }
   }
 </style>
