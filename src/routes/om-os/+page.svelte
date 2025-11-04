@@ -3,6 +3,9 @@
   import GlassImage from "$lib/assets/glass.jpg";
   import FacadeImage from "$lib/assets/outside-night.jpg";
   import ImageGrid from "$lib/components/ImageGrid.svelte";
+  import EmployeeDisplay from "$lib/components/EmployeeDisplay.svelte";
+
+  let { data } = $props();
 </script>
 
 <main class="py-32">
@@ -45,5 +48,19 @@
         lysere og mere indbydende rammer.
       </p>
     </div>
+  </section>
+
+  <section class="mx-responsive pt-16">
+    <div class="mb-16">
+      <h1 class="mb-4 font-serif text-2xl font-bold">Mød holdet</h1>
+      <p class="leading-relaxed text-text-dark-muted">
+        Bag disken finder du et passioneret hold, der brænder for god øl og gode
+        oplevelser. Vi står klar til at guide dig gennem vores udvalg, og
+        forhåbentlig finde din næste favoritøl. Vi er her for at gøre din
+        oplevelse lidt bedre, én skænk ad gangen.
+      </p>
+    </div>
+
+    <EmployeeDisplay employees={data.employees} />
   </section>
 </main>
