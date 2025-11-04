@@ -14,7 +14,6 @@
   const handleVisible: IntersectionObserverCallback = (entries) => {
     entries.map((entry) => {
       isVisible = entry.isIntersecting;
-      console.log("VISIBLE", isVisible);
     });
   };
 
