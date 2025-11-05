@@ -73,7 +73,7 @@
               {employee.name}
             </h2>
             <p class={["text-text-dark-muted", !employee.role && "italic"]}>
-              {employee.role || "Ingen rolle bestemt..."}
+              {employee.role || "Ingen rolle..."}
             </p>
           </div>
         </a>
@@ -137,7 +137,7 @@
             <ActionButton
               title="Flyt ned"
               action="{movedownAction}&id={employee.id}"
-              class="py-1 group-last:pointer-events-none group-last:opacity-25"
+              class="py-1 group-last:pointer-events-none group-last:opacity-50"
               {onsubmit}
               {onfinish}
               {disabled}
