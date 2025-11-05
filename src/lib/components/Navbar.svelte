@@ -14,6 +14,7 @@
   <li>
     <a
       {href}
+      onclick={() => (isMenuShown = false)}
       class={[
         "inline-flex p-2 text-2xl decoration-2 underline-offset-3",
         "sm:p-4 sm:text-lg",
