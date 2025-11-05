@@ -22,6 +22,11 @@ export const actions: Actions = {
 		if (!id) error(400, "No employee ID provided")
 		await locals.employeeProvider.restoreEmployee(id)
 	},
+	deleteEmployee: async ({ locals, url }) => {
+		const id = url.searchParams.get("id")
+		if (!id) error(400, "No employee ID found")
+		await locals.employeeProvider.deleteEmployee(id)
+	},
 	moveEmployeeUp: async ({ locals, url }) => {
 		const id = url.searchParams.get("id")
 		if (!id) error(400, "No employee ID")

@@ -11,39 +11,42 @@ export const employee = z.object({
 	orderIdx: z.int().nonnegative(),
 })
 
-export const employeeForm = z.object({
+const baseEmployeeForm = z.object({
 	name: z.string().nonempty("Navn på ansat skal defineres"),
-	image: z
-		.file("Billede af ansat skal defineres")
-		.max(20000000, "Billede må maks være 20MB")
-		.mime(["image/jpeg", "image/png", "image/webp"], "Billede skal være JPEG, PNG eller WebP")
-		.optional(),
 	role: z.string().optional()
+
 })
 
-export const insertEmployeeSchema = z.object({
-	name: z.string().nonempty(),
-	role: z.string().optional(),
-	imageSrc: z.url().nonempty()
+const avatarImage = z
+	.file()
+	.max(2000000)
+	.mime(["image/jpeg", "image/png", "image/webp"])
+
+export const createEmployeeForm = z.object({
+	...baseEmployeeForm.shape,
+	src: avatarImage
 })
 
-export const updateEmployeeSchema = z.object({
-	name: z.string().nonempty(),
-	role: z.string().optional(),
-	imageSrc: z.url().optional()
+export const updateEmployeeForm = z.object({
+	...baseEmployeeForm.shape,
+	src: z.union([avatarImage, z.undefined(), z.null()])
 })
+
 
 type ID = z.infer<typeof id>
 
-export type InsertEmployee = z.infer<typeof insertEmployeeSchema>
-export type UpdateEmployee = z.infer<typeof updateEmployeeSchema>
 export type Employee = z.infer<typeof employee>
+
+export type CreateEmployeeForm = z.infer<typeof createEmployeeForm>
+export type UpdateEmployeeForm = z.infer<typeof updateEmployeeForm>
 
 export type GetEmployeesHandler = () => Promise<Employee[]>
 export type GetEmployeeByIDHandler = (id: ID) => Promise<Employee | null>
-export type InsertEmployeeHandler = (load: InsertEmployee) => Promise<Employee>
-export type UpdateEmployeeHandler = (id: ID, load: UpdateEmployee) => Promise<Employee | null>;
+
+export type CreateEmployeeHandler = (load: CreateEmployeeForm) => Promise<Employee>
+export type UpdateEmployeeHandler = (id: ID, load: UpdateEmployeeForm) => Promise<Employee | null>;
 export type DeleteEmployeeHandler = (id: ID) => Promise<void>
+
 export type ArchiveEmployeeHandler = (id: ID) => Promise<void>
 export type RestoreEmployeeHandler = (id: ID) => Promise<void>
 
@@ -55,7 +58,7 @@ export type MoveHandler = (id: ID, direction: 1 | -1) => Promise<void>
 export type EmployeeProvider = {
 	getEmployees: GetEmployeesHandler
 	getEmployeeById: GetEmployeeByIDHandler
-	insertEmployee: InsertEmployeeHandler
+	insertEmployee: CreateEmployeeHandler
 	updateEmployee: UpdateEmployeeHandler
 	deleteEmployee: DeleteEmployeeHandler
 

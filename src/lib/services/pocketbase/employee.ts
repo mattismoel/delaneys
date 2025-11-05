@@ -1,5 +1,5 @@
 import PocketBase from "pocketbase"
-import { employee, type ArchiveEmployeeHandler, type DeleteEmployeeHandler, type Employee, type EmployeeProvider, type GetEmployeeByIDHandler, type GetEmployeesHandler, type InsertEmployeeHandler, type MoveHandler, type RestoreEmployeeHandler, type UpdateEmployeeHandler } from "$lib/features/employees/employee";
+import { employee, type ArchiveEmployeeHandler, type DeleteEmployeeHandler, type Employee, type EmployeeProvider, type GetEmployeeByIDHandler, type GetEmployeesHandler, type CreateEmployeeHandler, type MoveHandler, type RestoreEmployeeHandler, type UpdateEmployeeHandler } from "$lib/features/employees/employee";
 
 export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => {
 	const getEmployees: GetEmployeesHandler = async () => {
@@ -24,18 +24,46 @@ export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => 
 		return employee.parse(data)
 	}
 
-	const insertEmployee: InsertEmployeeHandler = async (data) => {
-		const createdEmployeeData = await pb.collection("employees").create(data)
-		return employee.parse(createdEmployeeData)
+	const insertEmployee: CreateEmployeeHandler = async (data) => {
+		const { length: employeeCount } = await pb.collection("employees").getFullList()
+
+		const record = await pb.collection("employees").create({
+			...data,
+			orderIdx: employeeCount
+		})
+
+		return employee.parse({
+			...record,
+			src: pb.files.getURL(record, record.src, { thumb: "512x0" })
+		})
 	}
 
 	const updateEmployee: UpdateEmployeeHandler = async (id, data) => {
-		const updateEmployeeData = await pb.collection("employees").update(id, data)
-		return employee.parse(updateEmployeeData)
+		const record = await pb.collection("employees").update(id, data)
+		return employee.parse({
+			...record,
+			src: pb.files.getURL(record, record.src, { thumb: "512x0" })
+		})
 	}
 
 	const deleteEmployee: DeleteEmployeeHandler = async (id) => {
-		await pb.collection("employees").delete(id)
+		const employee = await getEmployeeById(id)
+		if (!employee) throw new Error("No such employee")
+
+		const employeeRecords = await pb.collection("employees").getFullList<Employee>({
+			filter: `orderIdx>${employee.orderIdx}`
+		})
+
+		const batch = pb.createBatch()
+		batch.collection("employees").delete(id)
+
+		employeeRecords.forEach(record => {
+			batch.collection("employees").update(record.id, {
+				orderIdx: record.orderIdx - 1
+			})
+		})
+
+		await batch.send()
 	}
 
 	const archiveEmployee: ArchiveEmployeeHandler = async (id) => {
