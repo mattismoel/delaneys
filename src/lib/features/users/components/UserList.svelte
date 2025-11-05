@@ -58,7 +58,7 @@
           <p class="text-text-dark-muted">{user.email}</p>
         </div>
 
-        <div class="flex">
+        <div class="flex items-center">
           {#if rest.variant === "approved"}
             {#if !isCurrent}
               <ActionButton
