@@ -15,14 +15,13 @@
     scrollDirection = diff > 0 ? 1 : -1;
     prevScrollY = newScrollY;
   };
-
-  $inspect(scrollDirection);
 </script>
 
 <svelte:window onscroll={(e) => handleScroll(e.currentTarget.scrollY)} />
 
 <main class="min-h-svh">
-  <section class="relative -z-20 min-h-svh place-content-center bg-[black]">
+  <div class="absolute -z-10 h-full w-full bg-[black]"></div>
+  <section class="relative min-h-svh place-content-center">
     <img
       src={LandingImage}
       alt=""
