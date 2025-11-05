@@ -8,6 +8,7 @@ export const employee = z.object({
 	src: z.url().nullish(),
 	role: z.string().nullable(),
 	archived: z.boolean(),
+	orderIdx: z.int().nonnegative(),
 })
 
 export const employeeForm = z.object({
@@ -46,6 +47,11 @@ export type DeleteEmployeeHandler = (id: ID) => Promise<void>
 export type ArchiveEmployeeHandler = (id: ID) => Promise<void>
 export type RestoreEmployeeHandler = (id: ID) => Promise<void>
 
+/**
+ * @description Moves the employee of the given ID up (-1) or down (1). The ordering is ascending.
+ */
+export type MoveHandler = (id: ID, direction: 1 | -1) => Promise<void>
+
 export type EmployeeProvider = {
 	getEmployees: GetEmployeesHandler
 	getEmployeeById: GetEmployeeByIDHandler
@@ -55,6 +61,8 @@ export type EmployeeProvider = {
 
 	archiveEmployee: ArchiveEmployeeHandler
 	restoreEmployee: RestoreEmployeeHandler
+
+	move: MoveHandler
 }
 
 // export const createEmployee = async (data: z.infer<typeof employeeForm>) => {

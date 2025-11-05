@@ -22,6 +22,16 @@ export const actions: Actions = {
 		if (!id) error(400, "No employee ID provided")
 		await locals.employeeProvider.restoreEmployee(id)
 	},
+	moveEmployeeUp: async ({ locals, url }) => {
+		const id = url.searchParams.get("id")
+		if (!id) error(400, "No employee ID")
+		await locals.employeeProvider.move(id, -1)
+	},
+	moveEmployeeDown: async ({ locals, url }) => {
+		const id = url.searchParams.get("id")
+		if (!id) error(400, "No employee ID")
+		await locals.employeeProvider.move(id, 1)
+	},
 	approveUser: async ({ locals, url }) => {
 		const id = url.searchParams.get("id")
 		if (!id) error(400, "No user ID provided")
@@ -31,5 +41,5 @@ export const actions: Actions = {
 		const id = url.searchParams.get("id")
 		if (!id) error(400, "No user ID provided")
 		await locals.userProvider.deleteUser(id)
-	}
+	},
 }

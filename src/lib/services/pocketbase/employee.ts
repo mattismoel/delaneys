@@ -1,10 +1,10 @@
 import PocketBase from "pocketbase"
-import { employee, type ArchiveEmployeeHandler, type DeleteEmployeeHandler, type EmployeeProvider, type GetEmployeeByIDHandler, type GetEmployeesHandler, type InsertEmployeeHandler, type RestoreEmployeeHandler, type UpdateEmployeeHandler } from "$lib/features/employees/employee";
+import { employee, type ArchiveEmployeeHandler, type DeleteEmployeeHandler, type Employee, type EmployeeProvider, type GetEmployeeByIDHandler, type GetEmployeesHandler, type InsertEmployeeHandler, type MoveHandler, type RestoreEmployeeHandler, type UpdateEmployeeHandler } from "$lib/features/employees/employee";
 
 export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => {
 	const getEmployees: GetEmployeesHandler = async () => {
 		const records = await pb.collection("employees").getFullList({
-			sort: "name"
+			sort: "orderIdx"
 		})
 
 		const pbEmployees = records.map(record => ({
@@ -16,7 +16,11 @@ export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => 
 	}
 
 	const getEmployeeById: GetEmployeeByIDHandler = async (id) => {
-		const data = await pb.collection("employees").getOne(id)
+		const data = await pb.collection("employees").getOne(id).then(record => ({
+			...record,
+			src: pb.files.getURL(record, record.src, { thumb: "512x0" })
+		}))
+
 		return employee.parse(data)
 	}
 
@@ -47,6 +51,27 @@ export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => 
 		})
 	}
 
+	const move: MoveHandler = async (id, direction) => {
+		const employee = await getEmployeeById(id)
+		if (!employee) throw new Error("No such employee")
+
+		console.log(`move ${employee.name} from ${employee.orderIdx} to ${employee.orderIdx + direction}`)
+
+		const employees = await pb.collection("employees").getFullList<Employee>({
+			filter: `orderIdx=${employee.orderIdx}||orderIdx=${employee.orderIdx + direction}`
+		})
+
+		const batch = pb.createBatch()
+
+		employees.forEach(employee => {
+			batch.collection("employees").update(employee.id, {
+				orderIdx: employee.id === id ? employee.orderIdx + direction : employee.orderIdx - direction
+			})
+		})
+
+		await batch.send()
+	}
+
 	return {
 		getEmployees,
 		getEmployeeById,
@@ -54,6 +79,7 @@ export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => 
 		updateEmployee,
 		deleteEmployee,
 		archiveEmployee,
-		restoreEmployee
+		restoreEmployee,
+		move,
 	}
 }

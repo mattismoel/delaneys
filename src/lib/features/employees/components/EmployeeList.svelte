@@ -19,16 +19,28 @@
           variant: "employed";
           archiveAction: string;
           restoreAction?: never;
+          moveupAction: string;
+          movedownAction: string;
         }
       | {
           variant: "non-employed";
           restoreAction: string;
           archiveAction?: never;
+          moveupAction?: never;
+          movedownAction?: never;
         }
     );
 
-  let { employees, emptyText, disabled, onsubmit, onfinish, ...rest }: Props =
-    $props();
+  let {
+    employees,
+    emptyText,
+    disabled,
+    moveupAction,
+    movedownAction,
+    onsubmit,
+    onfinish,
+    ...rest
+  }: Props = $props();
 </script>
 
 {#if employees.length === 0}
@@ -66,7 +78,7 @@
           </div>
         </a>
 
-        <div class="flex p-4">
+        <div class="flex items-center p-4">
           {#if rest.variant === "employed"}
             <ActionButton
               title="Arkivér (Hall of Fame)"
@@ -109,6 +121,30 @@
           >
             <span class="icon-[lucide--trash]"></span>
           </ActionButton>
+
+          <div class="flex flex-col">
+            <ActionButton
+              title="Flyt op"
+              action="{moveupAction}&id={employee.id}"
+              class="py-1 group-first:pointer-events-none group-first:opacity-25"
+              {onsubmit}
+              {onfinish}
+              {disabled}
+            >
+              <span class="icon-[lucide--chevron-up]"></span>
+            </ActionButton>
+
+            <ActionButton
+              title="Flyt ned"
+              action="{movedownAction}&id={employee.id}"
+              class="py-1 group-last:pointer-events-none group-last:opacity-25"
+              {onsubmit}
+              {onfinish}
+              {disabled}
+            >
+              <span class="icon-[lucide--chevron-down]"></span>
+            </ActionButton>
+          </div>
         </div>
       </li>
     {/each}

@@ -29,6 +29,8 @@
           <EmployeeList
             deleteAction="?/deleteEmployee"
             archiveAction="?/archiveEmployee"
+            moveupAction="?/moveEmployeeUp"
+            movedownAction="?/moveEmployeeDown"
             employees={activeEmployees}
             variant="employed"
             emptyText="Ingen ansatte..."
