@@ -15,6 +15,6 @@
 
 <div class={["flex gap-2", rest.class]}>
   {#each srcs as { src, alt }}
-    <img {src} {alt} class="w-full min-w-52 rounded-sm object-cover" />
+    <img {src} {alt} class="h-full w-full min-w-52 rounded-sm object-cover" />
   {/each}
 </div>

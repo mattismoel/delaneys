@@ -8,8 +8,8 @@
   let { data } = $props();
 </script>
 
-<main class="py-32">
-  <section class="mx-responsive grid grid-cols-2 gap-16 pb-16">
+<main class="@container py-32">
+  <section class="mx-responsive grid grid-cols-1 gap-16 pb-16 @5xl:grid-cols-2">
     <div class="w-full">
       <h1 class="mb-4 font-serif text-2xl font-bold">Vores udvalg</h1>
       <p class="leading-relaxed text-text-dark-muted">
@@ -24,7 +24,7 @@
     </div>
 
     <ImageGrid
-      class="w-min"
+      class="w-full flex-col @lg:flex-row"
       srcs={[
         { src: TapImage, alt: "Vores haner" },
         { src: GlassImage, alt: "Øl i glas" },
@@ -32,8 +32,13 @@
     />
   </section>
 
-  <section class="mx-responsive grid grid-cols-2 gap-16 py-16">
-    <ImageGrid srcs={[{ src: FacadeImage, alt: "Vores haner" }]} />
+  <section
+    class="mx-responsive flex flex-col-reverse gap-16 py-16 @5xl:flex-row"
+  >
+    <ImageGrid
+      srcs={[{ src: FacadeImage, alt: "Vores haner" }]}
+      class="w-full"
+    />
 
     <div class="w-full">
       <h1 class="mb-4 font-serif text-2xl font-bold">Historien bag baren</h1>

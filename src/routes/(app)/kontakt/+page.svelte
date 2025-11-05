@@ -4,7 +4,7 @@
   import Map from "$lib/components/Map.svelte";
 </script>
 
-<main class="flex min-h-svh flex-col gap-16 px-8 py-32">
+<main class="flex min-h-svh flex-col gap-16 py-32">
   <section class="mx-responsive">
     <p class="leading-loose">
       Har du spørgsmål, som ikke kan besvares af <InlineLink href="#faq"
