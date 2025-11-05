@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { PropsWithClass } from "$lib/class";
+  import type { PropsWithClass } from "$lib/types";
 
   type Src = {
     src: string;
