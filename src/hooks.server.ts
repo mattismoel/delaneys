@@ -18,7 +18,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	// If it is not an admin page, we do not care for the admin dependencies.
 	// This speeds up page loads for non-admin pages, and skips the auth-check flow.
-	if (!isAdminPath(event.url.pathname)) {
+	if (!isPathOf("/admin", event.url.pathname) && !isPathOf("/auth", event.url.pathname)) {
 		const response = await resolve(event)
 		return response
 	}
@@ -41,6 +41,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	return response
 }
 
-const isAdminPath = (pathname: string): boolean => {
-	return pathname.startsWith("/admin")
+const isPathOf = (parentPath: string, pathname: string): boolean => {
+	return pathname.startsWith(parentPath)
+
 }
