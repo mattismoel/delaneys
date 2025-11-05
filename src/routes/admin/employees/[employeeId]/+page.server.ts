@@ -25,7 +25,7 @@ export const actions: Actions = {
 		if (!success) {
 			return fail(400, {
 				data: { ...data, src: undefined },
-				errors: flattenError(error).fieldErrors,
+				...flattenError(error),
 			})
 		}
 

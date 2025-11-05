@@ -8,6 +8,10 @@
   <EmployeeForm
     type="update"
     employee={data.employee}
-    form={{ data: form?.data, errors: form?.errors }}
+    form={{
+      data: form?.data,
+      fieldErrors: form?.fieldErrors,
+      formErrors: form?.formErrors,
+    }}
   />
 </main>

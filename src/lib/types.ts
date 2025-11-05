@@ -2,6 +2,12 @@ export type PropsWithClass<T = never> = T & {
 	class?: string;
 }
 
-export type ErrorType<T> = Partial<{
-	[K in keyof T]: string[] | undefined
-}>
+type FieldErrors<T> = { [K in keyof T]: (string[] | undefined) }
+
+export type Form<T = never> = {
+	form: {
+		data: Partial<T> | undefined
+		fieldErrors: FieldErrors<Partial<T>> | undefined
+		formErrors: string[] | undefined
+	}
+}

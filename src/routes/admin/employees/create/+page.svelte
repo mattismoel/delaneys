@@ -9,7 +9,8 @@
     type="create"
     form={{
       data: form?.data,
-      errors: form?.errors,
+      fieldErrors: form?.fieldErrors,
+      formErrors: form?.formErrors,
     }}
   />
 </main>

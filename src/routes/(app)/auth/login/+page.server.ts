@@ -1,4 +1,4 @@
-import z, { treeifyError } from "zod";
+import z, { flattenError } from "zod";
 import type { Actions } from "./$types";
 import { fail, redirect } from "@sveltejs/kit";
 import { ClientResponseError } from "pocketbase"
@@ -13,11 +13,13 @@ export const actions: Actions = {
 	default: async ({ request, locals }) => {
 		const formData = Object.fromEntries(await request.formData()) as LoginForm
 
-
 		try {
 			const { data, success, error } = loginForm.safeParse(formData)
 			if (!success) {
-				return fail(400, { data: formData, ...treeifyError(error) })
+				return fail(400, {
+					data: formData,
+					...flattenError(error),
+				})
 			}
 
 			await locals.authProvider.login(data)
