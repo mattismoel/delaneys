@@ -47,7 +47,7 @@
 {/snippet}
 
 <footer
-  class="relative z-100 flex flex-col gap-12 border-t border-t-border bg-surface-100 px-8 py-16"
+  class="relative z-90 flex flex-col gap-12 border-t border-t-border bg-surface-100 px-8 py-16"
 >
   <div class="mx-responsive w-full">
     <div
