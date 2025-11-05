@@ -1,0 +1,11 @@
+{
+	"name": "delaneys-website",
+	"main": "./.cloudflare/worker.js",
+	"site": {
+		"bucket": "./.cloudflare/public"
+	},
+	"build": {
+		"command": "bun run build"
+	},
+	"compatibility_date": "2021-11-12"
+}
