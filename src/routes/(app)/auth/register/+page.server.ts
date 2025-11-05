@@ -1,6 +1,6 @@
 import { flattenError } from "zod";
 import type { Actions } from "./$types";
-import { error, fail } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import { registerForm, type RegisterForm } from "$lib/features/auth/provider";
 
 export const actions: Actions = {
@@ -21,5 +21,7 @@ export const actions: Actions = {
 			console.error(e)
 			error(500, "Something went wrong")
 		}
+
+		redirect(303, "/auth/approval")
 	}
 }
