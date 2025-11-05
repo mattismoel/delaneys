@@ -37,7 +37,7 @@
 
   <button
     onclick={() => (isMenuShown = true)}
-    class="sm:hidden"
+    class="flex h-8 items-center justify-center sm:hidden"
     aria-label="Menu button"
   >
     <span class="icon-[lucide--menu]"></span>
