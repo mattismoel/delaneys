@@ -23,7 +23,7 @@
     {/if}
 
     <div class="flex flex-col items-center">
-      <h3 class="font-heading mb-2 text-xl font-bold">
+      <h3 class="mb-2 font-serif text-xl font-bold">
         {employee.name}
       </h3>
       <span class="text-center text-text-dark-muted">{employee.role}</span>
