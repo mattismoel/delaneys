@@ -58,17 +58,17 @@
         <div class="flex flex-col gap-8">
           <ul class="flex flex-col gap-2">
             {@render contactEntry(
-              "phone",
+              "tel:+45109940",
               "+45 10 99 40",
               "icon-[lucide--phone]",
             )}
             {@render contactEntry(
-              "mail",
+              "mailto:info@delaneys.dk",
               "info@delaneys.dk",
               "icon-[lucide--mail]",
             )}
             {@render contactEntry(
-              "address",
+              "https://maps.google.com?q=Delaneys%205000%20Odense%20C",
               "Tolderlundsvej 46, 5000 Odense C",
               "icon-[lucide--map-pin]",
             )}
@@ -99,6 +99,7 @@
         <h2 class="mb-4 font-serif font-bold">Åbningstider</h2>
         {@render openingHours()}
       </div>
+
       <a
         href="https://www.findsmiley.dk/1343488"
         class="flex w-full justify-center md:hidden"
