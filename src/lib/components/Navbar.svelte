@@ -54,7 +54,7 @@
 
 <aside
   class={[
-    "fixed z-100 h-svh w-full transition-[backdrop-filter,background] duration-300",
+    "fixed z-100 min-h-svh w-full transition-[backdrop-filter,background] duration-300",
     isMenuShown
       ? "bg-[black]/80 backdrop-blur-md"
       : "pointer-events-none bg-transparent backdrop-blur-none",

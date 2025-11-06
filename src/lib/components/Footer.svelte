@@ -49,7 +49,7 @@
 <footer
   class="relative z-90 flex flex-col gap-12 border-t border-t-border bg-surface-100 px-8 py-16"
 >
-  <div class="mx-responsive w-full">
+  <div class="mx-responsive flex w-full flex-col gap-8">
     <div
       class="flex flex-col justify-between gap-16 md:flex-row lg:grid-cols-2"
     >
