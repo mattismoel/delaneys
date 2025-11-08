@@ -1,5 +1,6 @@
 <script lang="ts">
   import Button from "$lib/components/Button.svelte";
+  import Input from "$lib/components/Input.svelte";
   import EmployeeList from "$lib/features/employees/components/EmployeeList.svelte";
   import UserList from "$lib/features/users/components/UserList.svelte";
 
@@ -55,6 +56,42 @@
         </section>
       </div>
     </div>
+  </section>
+
+  <section class="mx-responsive w-full">
+    <h1 class="mb-8 font-serif text-4xl font-bold">FAQ</h1>
+    <form action="?/createQuestion" class="mb-8 flex gap-2">
+      <Input name="title" placeholder="Spørgsmål" class="w-full" />
+      <Input name="description" placeholder="Svar" class="w-full" />
+      <Button><span class="icon-[lucide--plus]"></span>Tilføj</Button>
+    </form>
+
+    <ul class="flex flex-col gap-8 divide-y divide-border/50">
+      {#each data.questions as question, i}
+        <li>
+          <form
+            action="?/editQuestion&id={question.id}"
+            class="flex flex-col gap-2"
+          >
+            <div class="flex gap-2 font-serif">
+              <span>#{i + 1}</span>
+              <input
+                placeholder="Spørgsmål"
+                maxlength="50"
+                name="title"
+                value={question.title}
+                class="w-full font-bold"
+              />
+            </div>
+            <textarea
+              placeholder="Svar"
+              name="description"
+              value={question.description}
+            ></textarea>
+          </form>
+        </li>
+      {/each}
+    </ul>
   </section>
 
   <section class="mx-responsive w-full">
