@@ -62,7 +62,7 @@
       />
     </FormField>
     <Input
-      placeholder="Beskrivelse"
+      placeholder="Rolle"
       name="role"
       value={form.data?.role ?? employee?.role}
     />
