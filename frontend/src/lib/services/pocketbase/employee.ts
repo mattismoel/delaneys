@@ -12,9 +12,9 @@ export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => 
 
 		const pbEmployees = records.map(record => ({
 			...record,
-			src: createFileUrl(PUBLIC_API_BASE_URL, "employees", record.id, record.src, {
+			src: record.src ? createFileUrl(PUBLIC_API_BASE_URL, "employees", record.id, record.src, {
 				thumb: "512x0"
-			})
+			}) : undefined
 		}))
 
 		return employee.array().parse(pbEmployees)
@@ -23,9 +23,9 @@ export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => 
 	const getEmployeeById: GetEmployeeByIDHandler = async (id) => {
 		const data = await pb.collection("employees").getOne(id).then(record => ({
 			...record,
-			src: createFileUrl(PUBLIC_API_BASE_URL, "employees", record.id, record.src, {
+			src: record.src ? createFileUrl(PUBLIC_API_BASE_URL, "employees", record.id, record.src, {
 				thumb: "512x0"
-			})
+			}) : undefined
 		}))
 
 		return employee.parse(data)
@@ -41,9 +41,9 @@ export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => 
 
 		return employee.parse({
 			...record,
-			src: createFileUrl(PUBLIC_API_BASE_URL, "employees", record.id, record.src, {
+			src: record.src ? createFileUrl(PUBLIC_API_BASE_URL, "employees", record.id, record.src, {
 				thumb: "512x0"
-			})
+			}) : undefined
 		})
 	}
 
@@ -51,9 +51,9 @@ export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => 
 		const record = await pb.collection("employees").update(id, data)
 		return employee.parse({
 			...record,
-			src: createFileUrl(PUBLIC_API_BASE_URL, "employees", record.id, record.src, {
+			src: record.src ? createFileUrl(PUBLIC_API_BASE_URL, "employees", record.id, record.src, {
 				thumb: "512x0"
-			})
+			}) : undefined
 		})
 	}
 
