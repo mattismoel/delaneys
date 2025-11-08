@@ -36,6 +36,7 @@ const untappdItem = z.object({
 	style: z.string().transform(style => style.split(" - ").at(0) ?? style),
 	untappd_id: z.int().positive(),
 	untappd_beer_slug: z.string().nonempty(),
+	rating: z.coerce.number(),
 })
 
 const untappdSection = z.object({

@@ -25,6 +25,7 @@ export type LoginHandler = (data: LoginForm) => Promise<void>
 export type IsAuthenticatedHandler = () => Promise<boolean>
 export type SignOutHandler = () => Promise<void>
 export type CurrentUserHandler = () => Promise<User | null>
+export type RequestPasswordResetHandler = (email: string) => Promise<void>
 
 export type AuthProvider = {
 	login: LoginHandler
@@ -32,4 +33,5 @@ export type AuthProvider = {
 	isAuthenticated: IsAuthenticatedHandler
 	signOut: SignOutHandler
 	currentUser: CurrentUserHandler
+	requestPasswordReset: RequestPasswordResetHandler
 }

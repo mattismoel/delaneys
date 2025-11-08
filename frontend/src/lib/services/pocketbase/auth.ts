@@ -1,4 +1,4 @@
-import { type AuthProvider, type CurrentUserHandler, type IsAuthenticatedHandler, type LoginHandler, type RegisterHandler, type SignOutHandler } from "$lib/features/auth/provider";
+import { type AuthProvider, type CurrentUserHandler, type IsAuthenticatedHandler, type LoginHandler, type RegisterHandler, type RequestPasswordResetHandler, type SignOutHandler } from "$lib/features/auth/provider";
 import { user } from "$lib/features/users/user";
 import PocketBase from "pocketbase"
 
@@ -33,11 +33,20 @@ export const pocketBaseAuthProvider = (pb: PocketBase): AuthProvider => {
 		return currentUser
 	}
 
+	const requestPasswordReset: RequestPasswordResetHandler = async (email) => {
+		const sent = await pb.collection("users").requestPasswordReset(email)
+		console.log(sent)
+		if (!sent) {
+			throw new Error("Could not send email")
+		}
+	}
+
 	return {
 		login,
 		register,
 		signOut,
 		isAuthenticated,
 		currentUser,
+		requestPasswordReset
 	}
 }

@@ -1,15 +1,20 @@
 import PocketBase from "pocketbase"
 import { employee, type ArchiveEmployeeHandler, type DeleteEmployeeHandler, type Employee, type EmployeeProvider, type GetEmployeeByIDHandler, type GetEmployeesHandler, type CreateEmployeeHandler, type MoveHandler, type RestoreEmployeeHandler, type UpdateEmployeeHandler } from "$lib/features/employees/employee";
+import { createFileUrl } from "./pocketbase";
+import { PUBLIC_API_BASE_URL } from "$env/static/public";
 
 export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => {
 	const getEmployees: GetEmployeesHandler = async () => {
 		const records = await pb.collection("employees").getFullList({
 			sort: "orderIdx"
+
 		})
 
 		const pbEmployees = records.map(record => ({
 			...record,
-			src: pb.files.getURL(record, record.src, { thumb: "512x0" })
+			src: createFileUrl(PUBLIC_API_BASE_URL, "employees", record.id, record.src, {
+				thumb: "512x0"
+			})
 		}))
 
 		return employee.array().parse(pbEmployees)
@@ -18,7 +23,9 @@ export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => 
 	const getEmployeeById: GetEmployeeByIDHandler = async (id) => {
 		const data = await pb.collection("employees").getOne(id).then(record => ({
 			...record,
-			src: pb.files.getURL(record, record.src, { thumb: "512x0" })
+			src: createFileUrl(PUBLIC_API_BASE_URL, "employees", record.id, record.src, {
+				thumb: "512x0"
+			})
 		}))
 
 		return employee.parse(data)
@@ -34,7 +41,9 @@ export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => 
 
 		return employee.parse({
 			...record,
-			src: pb.files.getURL(record, record.src, { thumb: "512x0" })
+			src: createFileUrl(PUBLIC_API_BASE_URL, "employees", record.id, record.src, {
+				thumb: "512x0"
+			})
 		})
 	}
 
@@ -42,7 +51,9 @@ export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => 
 		const record = await pb.collection("employees").update(id, data)
 		return employee.parse({
 			...record,
-			src: pb.files.getURL(record, record.src, { thumb: "512x0" })
+			src: createFileUrl(PUBLIC_API_BASE_URL, "employees", record.id, record.src, {
+				thumb: "512x0"
+			})
 		})
 	}
 

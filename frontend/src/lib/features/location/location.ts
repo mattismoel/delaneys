@@ -7,6 +7,7 @@ const beer = z.object({
 	style: z.string().nonempty(),
 	abv: z.number().nonnegative(),
 	url: z.url().nonempty(),
+	rating: z.number(),
 })
 
 const menu = z.object({

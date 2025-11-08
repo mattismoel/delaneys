@@ -1,7 +1,9 @@
 <script lang="ts">
-  import type { PropsWithClass } from "$lib/class";
+  import type { PropsWithClass } from "$lib/types";
   import type { Beer, Menu } from "$lib/features/location/location";
   import { Randomiser } from "$lib/stores/random.svelte";
+
+  const MIN_EXCLUSIVE_RATING = 3.71;
 
   type Props = PropsWithClass<{
     menu: Menu;
@@ -42,6 +44,15 @@
   const leftBeers = menu.beers.slice(0, menu.beers.length / 2);
   const rightBeers = menu.beers.slice(menu.beers.length / 2);
 </script>
+
+{#snippet popularBadge()}
+  <div
+    class="flex w-fit items-center gap-1 rounded-full border border-border bg-surface-200 px-2 py-1 font-sans text-xs font-medium"
+  >
+    <span class="icon-[lucide--star]"></span>
+    <span>Populær blandt gæster</span>
+  </div>
+{/snippet}
 
 {#snippet tapList(
   beers: Beer[],
@@ -96,7 +107,7 @@
 {/snippet}
 
 {#snippet beerDescriptor(beers: Beer[], activeId: number)}
-  <div class="relative h-24 w-full">
+  <div class="relative h-32 w-full">
     {#each beers as beer, i}
       <div
         class={[
@@ -104,16 +115,18 @@
           beer.id === activeId ? "fade-in" : "fade-out",
         ]}
       >
-        <h1
-          class="mb-2 inline-block min-h-[1em] font-mono text-xl font-semibold"
-        >
+        <h1 class="mb-2 flex min-h-[1em] gap-4 font-mono text-xl font-semibold">
           {i + 1}. {beer?.name}
         </h1>
 
-        <div class="text-text-dark/85">
+        <div class="mb-2 text-text-dark/85">
           <p>{beer.brewery}</p>
           <span>{beer.style} / {beer.abv.toFixed(1)}%</span>
         </div>
+
+        {#if beer.rating > MIN_EXCLUSIVE_RATING}
+          {@render popularBadge()}
+        {/if}
       </div>
     {/each}
   </div>
