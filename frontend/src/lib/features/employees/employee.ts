@@ -24,7 +24,7 @@ const avatarImage = z
 
 export const createEmployeeForm = z.object({
 	...baseEmployeeForm.shape,
-	src: avatarImage
+	src: z.union([avatarImage, z.undefined(), z.null()])
 })
 
 export const updateEmployeeForm = z.object({
