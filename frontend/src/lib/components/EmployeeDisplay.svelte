@@ -31,8 +31,10 @@
   </li>
 {/snippet}
 
-<ul class="bg-blue flex w-full flex-wrap justify-center gap-16">
-  {#each employees as employee}
-    {@render card(employee)}
-  {/each}
-</ul>
+<div class="flex flex-col gap-16">
+  <ul class="bg-blue flex w-full flex-wrap justify-center gap-16">
+    {#each employees as employee}
+      {@render card(employee)}
+    {/each}
+  </ul>
+</div>

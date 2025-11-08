@@ -6,10 +6,17 @@
   import EmployeeDisplay from "$lib/components/EmployeeDisplay.svelte";
 
   let { data } = $props();
+
+  let archivedEmployees = $derived(data.employees.filter((e) => e.archived));
+  let nonArchivedEmployees = $derived(
+    data.employees.filter((e) => !e.archived),
+  );
 </script>
 
-<main class="@container py-32">
-  <section class="mx-responsive grid grid-cols-1 gap-16 pb-16 @5xl:grid-cols-2">
+<main class="@container">
+  <section
+    class="mx-responsive grid grid-cols-1 gap-16 pt-32 pb-16 @5xl:grid-cols-2"
+  >
     <div class="w-full">
       <h1 class="mb-4 font-serif text-2xl font-bold">Vores udvalg</h1>
       <p class="leading-relaxed text-text-dark-muted">
@@ -55,9 +62,9 @@
     </div>
   </section>
 
-  <section class="mx-responsive pt-16">
-    <div class="mb-16">
-      <h1 class="mb-4 font-serif text-2xl font-bold">Mød holdet</h1>
+  <section class="mx-responsive flex flex-col gap-16 py-16">
+    <div>
+      <h1 class="mb-8 font-serif text-4xl font-bold">Mød holdet</h1>
       <p class="leading-relaxed text-text-dark-muted">
         Bag disken finder du et passioneret hold, der brænder for god øl og gode
         oplevelser. Vi står klar til at guide dig gennem vores udvalg, og
@@ -66,6 +73,41 @@
       </p>
     </div>
 
-    <EmployeeDisplay employees={data.employees} />
+    <EmployeeDisplay employees={nonArchivedEmployees} />
+
+    <p class="mb-8 w-full leading-relaxed text-text-dark-muted">
+      Derudover en stor tak til vores tidligere {#if archivedEmployees.length > 1}
+        medarbejdere
+      {:else}
+        medarbejder
+      {/if}
+
+      <span>
+        {#if archivedEmployees.length > 1}
+          {archivedEmployees
+            .slice(0, -1)
+            .map((e) => e.name)
+            .join(", ")}
+
+          og
+
+          {archivedEmployees.at(-1)?.name}.
+        {:else}
+          {archivedEmployees[0].name}.
+        {/if}
+      </span>
+      Baren havde ikke været den samme uden {#if archivedEmployees.length > 1}dem{:else}dig{/if}.
+    </p>
   </section>
 </main>
+
+<style>
+  @keyframes slide-left {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+</style>
