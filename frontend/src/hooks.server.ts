@@ -7,6 +7,7 @@ import { untappdLocationProvider } from "$lib/services/untappd/location"
 import { pocketBaseEmployeeProvider } from "$lib/services/pocketbase/employee"
 import { pocketBaseUserProvider } from "$lib/services/pocketbase/user"
 import { pocketBaseAuthProvider } from "$lib/services/pocketbase/auth"
+import { pocketbaseFAQProvider } from "$lib/services/pocketbase/faq"
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const pb = new PocketBase(DATABASE_URL)
@@ -15,6 +16,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	event.locals.locationProvider = untappdLocationProvider(UNTAPPD_LOCATION_ID, UNTAPPD_MENU_ID)
 	event.locals.employeeProvider = pocketBaseEmployeeProvider(pb)
+	event.locals.faqProvider = pocketbaseFAQProvider(pb)
 
 	// If it is not an admin page, we do not care for the admin dependencies.
 	// This speeds up page loads for non-admin pages, and skips the auth-check flow.

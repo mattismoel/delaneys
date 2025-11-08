@@ -2,6 +2,8 @@
   import Accordion from "$lib/components/Accordion.svelte";
   import InlineLink from "$lib/components/InlineLink.svelte";
   import Map from "$lib/components/Map.svelte";
+
+  let { data } = $props();
 </script>
 
 <main class="flex min-h-svh flex-col gap-16 py-32">
@@ -25,17 +27,9 @@
     </h1>
 
     <div class="flex flex-col gap-2">
-      <Accordion title="Kan man booke bord?">
-        Ja. Hvis I kommer et større selskab kan I ringe til os, så finder vi en
-        løsning der passer jer.
-      </Accordion>
-      <Accordion title="Hvor tit får I nyt øl på hanerne?">
-        Vi skifter som udgangspunkt vores øl, så snart en forrig er kommet i
-        bund. Dog har vi også en håndfuld øl på fast.
-      </Accordion>
-      <Accordion title="Har I studierabat?">
-        Ja! Er du studerende, kan du komme ned og nyde 10% studierabat.
-      </Accordion>
+      {#each data.questions as question}
+        <Accordion title={question.title} description={question.description} />
+      {/each}
     </div>
   </section>
 

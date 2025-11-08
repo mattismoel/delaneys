@@ -2,6 +2,7 @@
 
 import type { AuthProvider } from "$lib/features/auth/provider";
 import type { EmployeeProvider } from "$lib/features/employees/employee";
+import type { FAQProvider } from "$lib/features/faq/faq";
 import type { LocationProvider } from "$lib/features/location/location";
 import type { User, UserProvider } from "$lib/features/users/user";
 
@@ -12,6 +13,7 @@ declare global {
 		interface Locals {
 			employeeProvider: EmployeeProvider
 			locationProvider: LocationProvider
+			faqProvider: FAQProvider
 			authProvider: AuthProvider
 			userProvider: UserProvider
 			user: User | undefined | null
