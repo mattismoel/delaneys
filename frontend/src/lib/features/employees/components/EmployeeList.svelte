@@ -153,8 +153,8 @@
 
 {#snippet employeeImage(src: string | undefined | null, alt: string)}
   {#if src}
-    <img {src} {alt} class="aspect-square h-20 rounded-full object-cover" />
+    <img {src} {alt} class="aspect-square h-18 rounded-full object-cover" />
   {:else}
-    <span class="icon-[lucide--circle-user-round]"></span>
+    <span class="icon-[lucide--circle-user-round] text-7xl"></span>
   {/if}
 {/snippet}
