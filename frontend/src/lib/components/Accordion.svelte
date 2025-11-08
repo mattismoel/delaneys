@@ -1,16 +1,11 @@
 <script lang="ts">
-  import type { Snippet } from "svelte";
-
   type Props = {
     title: string;
-    children: Snippet;
+    description: string;
   };
 
-  let { title, children }: Props = $props();
-
+  let { title, description }: Props = $props();
   let expanded = $state(false);
-
-  $inspect(expanded);
 </script>
 
 <div class:expanded class="group w-full">
@@ -38,7 +33,7 @@
       <div
         class="rounded-b-sm border border-border border-t-transparent bg-background p-4"
       >
-        {@render children()}
+        {description}
       </div>
     </div>
   </div>
