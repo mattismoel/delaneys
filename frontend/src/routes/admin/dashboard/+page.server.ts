@@ -2,13 +2,11 @@ import { error, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ locals }) => {
+	const currentUser = await locals.authProvider.currentUser()
+	if (!currentUser) throw redirect(301, "/auth/login")
 	const employees = await locals.employeeProvider.getEmployees()
 	const users = await locals.userProvider.getUsers()
-	const currentUser = await locals.authProvider.currentUser()
 	const questions = await locals.faqProvider.listQuestions()
-
-	if (!currentUser) throw redirect(301, "/auth/login")
-
 	return { users, currentUser, employees, questions }
 }
 
