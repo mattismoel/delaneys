@@ -55,7 +55,9 @@
 
   <section class="mx-responsive flex w-full flex-col gap-8">
     <div>
-      <h1 class="mb-4 font-serif text-4xl font-bold">FAQ</h1>
+      <h1 class="mb-4 font-serif text-4xl font-bold">
+        Ofte stillede spørgsmål
+      </h1>
       <p class="text-text-dark-muted">
         Oversigt over spørgsmålene som fremstår på <InlineLink href="/kontakt"
           >kontaktsiden</InlineLink
