@@ -66,7 +66,7 @@
 
     <FaqForm
       questions={data.questions}
-      addAction="?/createQuestion"
+      createAction="?/createQuestion"
       updateAction="?/updateQuestion"
       deleteAction="?/deleteQuestion"
       maxQuestions={MAX_QUESTION_COUNT}
