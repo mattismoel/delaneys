@@ -3,7 +3,9 @@ import PocketBase from "pocketbase"
 
 export const pocketbaseFAQProvider = (pb: PocketBase): FAQProvider => {
 	const listQuestions: ListQuestionsHandler = async () => {
-		const records = await pb.collection("questions").getFullList()
+		const records = await pb.collection("questions").getFullList({
+			sort: "-created"
+		})
 		return question.array().parse(records)
 	}
 
