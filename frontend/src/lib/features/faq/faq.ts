@@ -1,14 +1,16 @@
 import z from "zod"
 
+export const MAX_TITLE_LENGTH = 50
+
 const id = z.string()
 
 const baseQuestionForm = z.object({
-	title: z.string().nonempty().max(25),
+	title: z.string().nonempty().max(MAX_TITLE_LENGTH),
 	description: z.string().nonempty(),
 })
 
-const createQuestionForm = baseQuestionForm
-const updateQuestionForm = baseQuestionForm
+export const createQuestionForm = baseQuestionForm
+export const updateQuestionForm = baseQuestionForm
 
 export const question = z.object({
 	id: id,

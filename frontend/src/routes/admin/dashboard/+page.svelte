@@ -1,8 +1,11 @@
 <script lang="ts">
   import Button from "$lib/components/Button.svelte";
-  import Input from "$lib/components/Input.svelte";
+  import InlineLink from "$lib/components/InlineLink.svelte";
   import EmployeeList from "$lib/features/employees/components/employee-list/EmployeeList.svelte";
+  import FaqForm from "$lib/features/faq/components/FAQForm.svelte";
   import UserList from "$lib/features/users/components/UserList.svelte";
+
+  const MAX_QUESTION_COUNT = 5;
 
   let { data } = $props();
 
@@ -12,7 +15,7 @@
   let archivedEmployees = $derived(data.employees.filter((e) => e.archived));
 </script>
 
-<main class="flex flex-col gap-32 px-8 py-32">
+<main class="flex flex-col gap-32 py-32">
   <section class="mx-responsive w-full">
     <div class="@container">
       <div class="grid grid-cols-1 gap-32 @4xl:grid-cols-2">
@@ -50,40 +53,24 @@
     </div>
   </section>
 
-  <section class="mx-responsive w-full">
-    <h1 class="mb-8 font-serif text-4xl font-bold">FAQ</h1>
-    <form action="?/createQuestion" class="mb-8 flex gap-2">
-      <Input name="title" placeholder="Spørgsmål" class="w-full" />
-      <Input name="description" placeholder="Svar" class="w-full" />
-      <Button><span class="icon-[lucide--plus]"></span>Tilføj</Button>
-    </form>
+  <section class="mx-responsive flex w-full flex-col gap-8">
+    <div>
+      <h1 class="mb-4 font-serif text-4xl font-bold">FAQ</h1>
+      <p class="text-text-dark-muted">
+        Oversigt over spørgsmålene som fremstår på <InlineLink href="/kontakt"
+          >kontaktsiden</InlineLink
+        >
+        . Der er nu {data.questions.length} ud af {MAX_QUESTION_COUNT} spørgsmål
+      </p>
+    </div>
 
-    <ul class="flex flex-col gap-8 divide-y divide-border/50">
-      {#each data.questions as question, i}
-        <li>
-          <form
-            action="?/editQuestion&id={question.id}"
-            class="flex flex-col gap-2"
-          >
-            <div class="flex gap-2 font-serif">
-              <span>#{i + 1}</span>
-              <input
-                placeholder="Spørgsmål"
-                maxlength="50"
-                name="title"
-                value={question.title}
-                class="w-full font-bold"
-              />
-            </div>
-            <textarea
-              placeholder="Svar"
-              name="description"
-              value={question.description}
-            ></textarea>
-          </form>
-        </li>
-      {/each}
-    </ul>
+    <FaqForm
+      questions={data.questions}
+      addAction="?/createQuestion"
+      updateAction="?/updateQuestion"
+      deleteAction="?/deleteQuestion"
+      maxQuestions={MAX_QUESTION_COUNT}
+    />
   </section>
 
   <section class="mx-responsive w-full">

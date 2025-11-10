@@ -1,5 +1,6 @@
 import { error, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
+import { createQuestionForm, updateQuestionForm } from "$lib/features/faq/faq";
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const currentUser = await locals.authProvider.currentUser()
@@ -45,5 +46,22 @@ export const actions: Actions = {
 		const id = url.searchParams.get("id")
 		if (!id) error(400, "No user ID provided")
 		await locals.userProvider.deleteUser(id)
+	},
+	createQuestion: async ({ request, locals }) => {
+		const formData = await request.formData()
+		const data = createQuestionForm.parse(Object.fromEntries(formData))
+		await locals.faqProvider.createQuestion(data)
+	},
+	updateQuestion: async ({ request, locals, url }) => {
+		const id = url.searchParams.get("id")
+		if (!id) error(400, "No question ID provided")
+		const formData = await request.formData()
+		const data = updateQuestionForm.parse(Object.fromEntries(formData))
+		await locals.faqProvider.updateQuestion(id, data)
+	},
+	deleteQuestion: async ({ locals, url }) => {
+		const id = url.searchParams.get("id")
+		if (!id) error(400, "No question ID provided")
+		await locals.faqProvider.deleteQuestion(id)
 	},
 }
