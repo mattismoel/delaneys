@@ -1,7 +1,7 @@
 <script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import Input from "$lib/components/Input.svelte";
-  import EmployeeList from "$lib/features/employees/components/EmployeeList.svelte";
+  import EmployeeList from "$lib/features/employees/components/employee-list/EmployeeList.svelte";
   import UserList from "$lib/features/users/components/UserList.svelte";
 
   let { data } = $props();
@@ -28,8 +28,8 @@
           <EmployeeList
             deleteAction="?/deleteEmployee"
             archiveAction="?/archiveEmployee"
-            moveupAction="?/moveEmployeeUp"
-            movedownAction="?/moveEmployeeDown"
+            moveUpAction="?/moveEmployeeUp"
+            moveDownAction="?/moveEmployeeDown"
             employees={activeEmployees}
             variant="employed"
             emptyText="Ingen ansatte..."
@@ -39,7 +39,7 @@
         <section>
           <h1 class="mb-8 font-serif text-4xl font-bold">Hall of Fame</h1>
           <EmployeeList
-            variant="non-employed"
+            variant="archived"
             deleteAction="?/deleteEmployee"
             restoreAction="?/restoreEmployee"
             employees={archivedEmployees}
