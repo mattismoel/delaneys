@@ -1,5 +1,5 @@
 import type { DeleteUserHandler, GetUsersHandler, UserProvider } from "$lib/features/users/user";
-import { user, type ApproveUserHandler, type RejectUserHandler } from "$lib/features/users/user";
+import { user, type ApproveUserHandler } from "$lib/features/users/user";
 import PocketBase from "pocketbase"
 
 export const pocketBaseUserProvider = (pb: PocketBase): UserProvider => {
