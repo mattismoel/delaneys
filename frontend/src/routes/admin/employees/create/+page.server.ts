@@ -9,8 +9,6 @@ export const actions: Actions = {
 		const formData = await request.formData();
 		const { src, ...data } = Object.fromEntries(formData) as CreateEmployeeForm;
 
-		console.log(src, data)
-
 		const { data: parsedData, success, error } = createEmployeeForm.safeParse({
 			...data,
 			src: (src && src.size > 0) ? src : null

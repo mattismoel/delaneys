@@ -20,8 +20,6 @@
     ...rest
   }: Props = $props();
 
-  $effect(() => console.log(input?.value));
-
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.currentTarget.files?.item(0);
     if (!file) return;

@@ -34,11 +34,7 @@ export const pocketBaseAuthProvider = (pb: PocketBase): AuthProvider => {
 	}
 
 	const requestPasswordReset: RequestPasswordResetHandler = async (email) => {
-		const sent = await pb.collection("users").requestPasswordReset(email)
-		console.log(sent)
-		if (!sent) {
-			throw new Error("Could not send email")
-		}
+		await pb.collection("users").requestPasswordReset(email)
 	}
 
 	return {

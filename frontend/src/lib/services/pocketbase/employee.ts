@@ -94,8 +94,6 @@ export const pocketBaseEmployeeProvider = (pb: PocketBase): EmployeeProvider => 
 		const employee = await getEmployeeById(id)
 		if (!employee) throw new Error("No such employee")
 
-		console.log(`move ${employee.name} from ${employee.orderIdx} to ${employee.orderIdx + direction}`)
-
 		const employees = await pb.collection("employees").getFullList<Employee>({
 			filter: `orderIdx=${employee.orderIdx}||orderIdx=${employee.orderIdx + direction}`
 		})
