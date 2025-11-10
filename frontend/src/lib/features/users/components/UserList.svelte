@@ -6,10 +6,6 @@
     users: User[];
     currentUser: User;
     emptyText: string;
-    disabled: boolean;
-
-    onsubmit: () => void;
-    onfinish: () => void;
   };
 
   type PendingListProps = BaseProps & {
@@ -30,15 +26,7 @@
 
   type Props = PendingListProps | ApprovedListProps;
 
-  let {
-    users,
-    currentUser,
-    emptyText,
-    disabled,
-    onsubmit,
-    onfinish,
-    ...rest
-  }: Props = $props();
+  let { users, currentUser, emptyText, ...rest }: Props = $props();
 </script>
 
 {#if users.length === 0}
@@ -64,10 +52,7 @@
               <ActionButton
                 action="{rest.deleteAction}&id={user.id}"
                 title="Slet"
-                confirmation={`Slet ${user.firstName} ${user.lastName}?\n\nOBS: Handlingen kan ikke fortrydes.`}
-                {onsubmit}
-                {onfinish}
-                {disabled}
+                confirmText="Slet {user.firstName} {user.lastName}? Handlingen kan ikke fortrydes."
               >
                 <span class="icon-[lucide--trash]"></span>
               </ActionButton>
@@ -76,10 +61,7 @@
             <ActionButton
               action="{rest.approveAction}&id={user.id}"
               title="Godkend"
-              confirmation="Godkend {user.firstName} {user.lastName}?"
-              {onsubmit}
-              {onfinish}
-              {disabled}
+              confirmText="Godkend {user.firstName} {user.lastName}?"
             >
               <span class="icon-[lucide--user-check]"></span>
             </ActionButton>
@@ -87,10 +69,7 @@
             <ActionButton
               action="{rest.rejectAction}&id={user.id}"
               title="Afvis"
-              confirmation={`Afvis ${user.firstName} ${user.lastName}?`}
-              {onsubmit}
-              {onfinish}
-              {disabled}
+              confirmText="Afvis {user.firstName} {user.lastName}?"
             >
               <span class="icon-[lucide--user-x]"></span>
             </ActionButton>

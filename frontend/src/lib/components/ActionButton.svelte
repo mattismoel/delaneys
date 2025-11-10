@@ -1,54 +1,39 @@
 <script lang="ts">
-  import { enhance } from "$app/forms";
+  import { confirmation } from "$lib/attachments/confirm.svelte";
   import type { HTMLButtonAttributes } from "svelte/elements";
 
-  type Props = Omit<HTMLButtonAttributes, "type" | "onsubmit"> & {
-    confirmation?: string;
+  type Props = Omit<HTMLButtonAttributes, "title"> & {
     action: string;
-    onsubmit: () => void;
-    onfinish: () => void;
+    title: string;
+    confirmText?: string;
+    reset?: boolean;
   };
 
-  let { action, children, confirmation, onfinish, onsubmit, ...rest }: Props =
-    $props();
+  let {
+    action,
+    confirmText,
+    reset = true,
+    children,
+    ...rest
+  }: Props = $props();
 
-  let isLoading = $state(false);
+  const btnClasses =
+    "flex items-center justify-center gap-2 rounded-sm px-3 py-2 hover:not-disabled:bg-surface-200 disabled:opacity-25";
 </script>
 
-<form
-  {action}
-  method="POST"
-  use:enhance={({ cancel }) => {
-    onsubmit();
-    isLoading = true;
-
-    if (confirmation && !confirm(confirmation)) {
-      cancel();
-      onfinish();
-      isLoading = false;
-    }
-
-    return async ({ update }) => {
-      await update();
-      onfinish();
-      isLoading = false;
-    };
-  }}
->
-  <button
-    {...rest}
-    type="submit"
-    class={[
-      "rounded-sm p-2 text-lg text-text-dark/50",
-      "not-disabled:hover:bg-surface-200 not-disabled:hover:text-text-dark",
-      "disabled:hover disabled:text-text-dark/25",
-      rest.class,
-    ]}
-  >
-    {#if isLoading}
-      <span class="icon-[lucide--loader-circle] animate-spin"></span>
-    {:else}
-      {@render children?.()}
-    {/if}
+{#if rest.form}
+  <button {...rest} type="submit" class={[btnClasses, rest.class]}>
+    {@render children?.()}
   </button>
-</form>
+{:else}
+  <form
+    {action}
+    method="POST"
+    class={["flex items-center justify-center", rest.class]}
+    {@attach confirmText ? confirmation(confirmText) : undefined}
+  >
+    <button {...rest} class={[btnClasses]}>
+      {@render children?.()}
+    </button>
+  </form>
+{/if}

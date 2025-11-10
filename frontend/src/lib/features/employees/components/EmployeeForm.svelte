@@ -10,7 +10,7 @@
   import AvatarSelector from "$lib/components/AvatarSelector.svelte";
   import type { Form } from "$lib/types";
   import FormField from "$lib/components/FormField.svelte";
-  import EnhancedForm from "$lib/components/EnhancedForm.svelte";
+  import { enhance } from "$app/forms";
 
   type BaseProps = HTMLFormAttributes;
 
@@ -30,20 +30,18 @@
 
   let { type, form, employee, ...rest }: Props = $props();
 
-  let isSubmitting = $state(false);
-
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.currentTarget.files?.item(0);
     if (!file) return;
   };
 </script>
 
-<EnhancedForm
+<form
   {...rest}
   method="POST"
   enctype="multipart/form-data"
   class="flex w-full max-w-sm flex-col gap-6"
-  bind:isSubmitting
+  use:enhance
 >
   <FormField errors={form.fieldErrors?.src}>
     <AvatarSelector
@@ -68,23 +66,13 @@
     />
   </fieldset>
 
-  <Button disabled={isSubmitting}>
-    {#if isSubmitting}
-      <span class="icon-[lucide--loader-circle] animate-spin"></span>
-    {:else}
-      <span class="icon-[lucide--upload]"></span>
-    {/if}
+  <Button>
+    <span class="icon-[lucide--upload]"></span>
 
     {#if type === "update"}
-      {#if isSubmitting}
-        Opdaterer...
-      {:else}
-        Opdatér
-      {/if}
-    {:else if isSubmitting}
-      Tilføjer...
+      Opdatér
     {:else}
       Tilføj
     {/if}
   </Button>
-</EnhancedForm>
+</form>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import Button from "$lib/components/Button.svelte";
-  import EnhancedForm from "$lib/components/EnhancedForm.svelte";
+  import { enhance } from "$app/forms";
   import ErrorList from "$lib/components/ErrorList.svelte";
   import FormField from "$lib/components/FormField.svelte";
   import Input from "$lib/components/Input.svelte";
@@ -14,7 +14,7 @@
   let isSubmitting = $state(false);
 </script>
 
-<EnhancedForm class="flex w-full max-w-xs flex-col gap-6" bind:isSubmitting>
+<form class="flex w-full max-w-xs flex-col gap-6" method="POST" use:enhance>
   <h1 class="font-serif text-3xl font-bold">Log ind</h1>
 
   <fieldset class="flex flex-col gap-2">
@@ -42,4 +42,4 @@
       Log ind
     {/if}
   </Button>
-</EnhancedForm>
+</form>

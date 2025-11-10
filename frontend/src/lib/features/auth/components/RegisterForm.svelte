@@ -1,6 +1,6 @@
 <script lang="ts">
+  import { enhance } from "$app/forms";
   import Button from "$lib/components/Button.svelte";
-  import EnhancedForm from "$lib/components/EnhancedForm.svelte";
   import ErrorList from "$lib/components/ErrorList.svelte";
   import FormField from "$lib/components/FormField.svelte";
   import Input from "$lib/components/Input.svelte";
@@ -14,7 +14,7 @@
   let isSubmitting = $state(false);
 </script>
 
-<EnhancedForm class="flex w-full max-w-sm flex-col gap-8" bind:isSubmitting>
+<form method="POST" class="flex w-full max-w-sm flex-col gap-8" use:enhance>
   <h1 class="font-serif text-3xl font-bold">Registrér dig</h1>
 
   <div class="flex flex-col gap-2">
@@ -77,4 +77,4 @@
       Registrér
     {/if}
   </Button>
-</EnhancedForm>
+</form>

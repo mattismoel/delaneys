@@ -10,8 +10,6 @@
   let nonApprovedUsers = $derived(data.users.filter((u) => !u.approved));
   let activeEmployees = $derived(data.employees.filter((e) => !e.archived));
   let archivedEmployees = $derived(data.employees.filter((e) => e.archived));
-
-  let isSubmitting = $state(false);
 </script>
 
 <main class="flex flex-col gap-32 px-8 py-32">
@@ -35,9 +33,6 @@
             employees={activeEmployees}
             variant="employed"
             emptyText="Ingen ansatte..."
-            onsubmit={() => (isSubmitting = true)}
-            onfinish={() => (isSubmitting = false)}
-            disabled={isSubmitting}
           />
         </section>
 
@@ -49,9 +44,6 @@
             restoreAction="?/restoreEmployee"
             employees={archivedEmployees}
             emptyText="Intet at se her..."
-            onsubmit={() => (isSubmitting = true)}
-            onfinish={() => (isSubmitting = false)}
-            disabled={isSubmitting}
           />
         </section>
       </div>
@@ -114,9 +106,6 @@
             currentUser={data.currentUser}
             deleteAction="?/deleteUser"
             emptyText="Ingen godkendte brugere..."
-            onsubmit={() => (isSubmitting = true)}
-            onfinish={() => (isSubmitting = false)}
-            disabled={isSubmitting}
           />
         </div>
 
@@ -129,9 +118,6 @@
             approveAction="?/approveUser"
             rejectAction="?/deleteUser"
             emptyText="Ingen brugeranmodninger..."
-            onsubmit={() => (isSubmitting = true)}
-            onfinish={() => (isSubmitting = false)}
-            disabled={isSubmitting}
           />
         </div>
       </div>
