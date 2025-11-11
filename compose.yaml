@@ -14,11 +14,11 @@ services:
         target: /etc/caddy/Caddyfile
 
   frontend:
-    image: ghcr.io/mattismoel/delaneys-website/frontend:main
+    image: ghcr.io/mattismoel/delaneys/frontend:main
     restart: unless-stopped
 
   backend:
-    image: ghcr.io/mattismoel/delaneys-website/backend:main
+    image: ghcr.io/mattismoel/delaneys/backend:main
     restart: unless-stopped
     volumes:
       - pb_data:/pb/pb_data
