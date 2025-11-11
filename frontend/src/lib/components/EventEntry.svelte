@@ -38,9 +38,9 @@
   />
   <div
     class={[
-      "absolute bottom-0 h-1/2 w-full bg-linear-to-t from-[black] opacity-50 transition-opacity duration-500",
+      "absolute bottom-0 h-2/3 w-full bg-linear-to-t from-[black] opacity-100 transition-opacity duration-500 sm:opacity-50",
       "group-hover:opacity-100",
-      isVisible && "opacity-100",
+      isVisible && "sm:opacity-100",
     ]}
   ></div>
 
