@@ -14,6 +14,9 @@ FROM base AS prerelease
 COPY --from=install /temp/dev/node_modules node_modules
 COPY . .
 
+ARG UNTAPPD_ENCODED_ACCESS_KEY
+ENV UNTAPPD_ENCODED_ACCESS_KEY=$UNTAPPD_ENCODED_ACCESS_KEY
+
 ENV NODE_ENV=production
 RUN bun --bun run build
 
