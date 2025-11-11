@@ -3,6 +3,7 @@
   import Button from "$lib/components/Button.svelte";
   import ErrorList from "$lib/components/ErrorList.svelte";
   import FormField from "$lib/components/FormField.svelte";
+  import InlineLink from "$lib/components/InlineLink.svelte";
   import Input from "$lib/components/Input.svelte";
   import type { Form } from "$lib/types";
   import type { RegisterForm } from "../provider";
@@ -66,6 +67,12 @@
       />
     </FormField>
     <ErrorList errors={form?.formErrors} />
+
+    <span class="text-right text-sm"
+      >Har du allerede en bruger? <InlineLink href="/auth/login"
+        >Log ind</InlineLink
+      ></span
+    >
   </div>
 
   <Button>Registrér</Button>
