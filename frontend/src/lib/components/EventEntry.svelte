@@ -31,11 +31,7 @@
   class="group relative aspect-3/4 overflow-hidden rounded-sm"
   {@attach observer}
 >
-  <img
-    {src}
-    alt={title}
-    class="h-full w-full scale-105 transition-[scale] duration-500 group-hover:scale-100"
-  />
+  <img {src} alt={title} class="h-full w-full" />
   <div
     class={[
       "absolute bottom-0 h-2/3 w-full bg-linear-to-t from-[black] opacity-100 transition-opacity duration-500 sm:opacity-50",
