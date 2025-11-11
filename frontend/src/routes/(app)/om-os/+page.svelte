@@ -15,7 +15,7 @@
 
 <main class="@container">
   <section
-    class="mx-responsive grid grid-cols-1 gap-16 pt-32 pb-16 @5xl:grid-cols-2"
+    class="mx-responsive grid grid-cols-1 gap-16 bg-background pt-32 pb-16 @5xl:grid-cols-2"
   >
     <div class="w-full">
       <h1 class="mb-4 font-serif text-2xl font-bold">Vores udvalg</h1>
