@@ -91,6 +91,7 @@
     <div class="flex w-full @xl:w-min @xl:flex-col-reverse">
       {#if rest.variant === "update"}
         <ActionButton
+          variant="non-dependant"
           action="{rest.deleteAction}&id={rest.question.id}"
           title="Slet"
           confirmText="Er du sikker på, at du vil slette spørgsmålet?"
@@ -102,10 +103,8 @@
       {/if}
 
       <ActionButton
+        variant="form-dependant"
         disabled={!isDirty}
-        action={rest.variant === "update"
-          ? `${rest.updateAction}&id=${rest.question.id}`
-          : rest.createAction}
         title="Bekræft"
         form={rest.variant === "update"
           ? `question-form-${rest.question.id}`

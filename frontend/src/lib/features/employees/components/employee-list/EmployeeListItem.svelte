@@ -56,6 +56,7 @@
   <div class="flex items-center p-4">
     {#if rest.variant === "employed"}
       <ActionButton
+        variant="non-dependant"
         title="Arkivér"
         action="{rest.archiveAction}&id={employee.id}"
         confirmText="Flyt {employee.name} til Hall of Fame?"
@@ -64,6 +65,7 @@
       </ActionButton>
     {:else}
       <ActionButton
+        variant="non-dependant"
         title="Genansæt"
         action="{rest.restoreAction}&id={employee.id}"
         confirmText="Genansæt {employee.name}?"
@@ -73,6 +75,7 @@
     {/if}
 
     <ActionButton
+      variant="non-dependant"
       title="Slet"
       action="{deleteAction}&id={employee.id}"
       confirmText="Slet {employee.name}? Handlingen kan ikke fortrydes."
@@ -83,6 +86,7 @@
     {#if rest.variant === "employed"}
       <div class="flex flex-col">
         <ActionButton
+          variant="non-dependant"
           title="Flyt op"
           action="{rest.moveUpAction}&id={employee.id}"
           disabled={idx === 0}
@@ -91,6 +95,7 @@
         </ActionButton>
 
         <ActionButton
+          variant="non-dependant"
           title="Flyt ned"
           action="{rest.moveDownAction}&id={employee.id}"
           disabled={idx === totalCount - 1}

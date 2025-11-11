@@ -50,6 +50,7 @@
           {#if rest.variant === "approved"}
             {#if !isCurrent}
               <ActionButton
+                variant="non-dependant"
                 action="{rest.deleteAction}&id={user.id}"
                 title="Slet"
                 confirmText="Slet {user.firstName} {user.lastName}? Handlingen kan ikke fortrydes."
@@ -59,6 +60,7 @@
             {/if}
           {:else}
             <ActionButton
+              variant="non-dependant"
               action="{rest.approveAction}&id={user.id}"
               title="Godkend"
               confirmText="Godkend {user.firstName} {user.lastName}?"
@@ -67,6 +69,7 @@
             </ActionButton>
 
             <ActionButton
+              variant="non-dependant"
               action="{rest.rejectAction}&id={user.id}"
               title="Afvis"
               confirmText="Afvis {user.firstName} {user.lastName}?"
