@@ -1,0 +1,33 @@
+services:
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    configs:
+      - source: caddyfile
+        target: /etc/caddy/Caddyfile
+
+  frontend:
+    image: ghcr.io/mattismoel/delaneys-website/frontend:main
+    restart: unless-stopped
+
+  backend:
+    image: ghcr.io/mattismoel/delaneys-website/backend:main
+    restart: unless-stopped
+    volumes:
+      - pb_data:/pb/pb_data
+
+volumes:
+  caddy_data:
+  caddy_config:
+  pb_data:
+
+configs:
+  caddyfile:
+    file: ./Caddyfile

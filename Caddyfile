@@ -1,0 +1,11 @@
+www.delaneys.dk {
+	redir https://delaneys.dk{url}
+}
+
+delaneys.dk {
+	reverse_proxy frontend:5173
+}
+
+api.delaneys.dk {
+	reverse_proxy backend:8080
+}
