@@ -66,7 +66,7 @@
   >
     <nav
       class={[
-        "rounded-sm border border-border bg-surface-100 p-8 pb-16 transition-transform",
+        "rounded-sm border border-border bg-surface-100 p-8 pb-[calc((100lvh-100svh)+4rem)] transition-transform",
         isMenuShown ? "translate-y-0" : "translate-y-full",
       ]}
     >
