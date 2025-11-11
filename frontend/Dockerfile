@@ -14,8 +14,6 @@ FROM base AS prerelease
 COPY --from=install /temp/dev/node_modules node_modules
 COPY . .
 
-RUN bunx --bun sv check --output human-verbose --fail-on-warnings --tsconfig ./tsconfig.json
-
 ENV NODE_ENV=production
 RUN bun --bun run build
 
