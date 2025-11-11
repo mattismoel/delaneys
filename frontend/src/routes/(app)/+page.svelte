@@ -87,7 +87,7 @@
             <Button variant="secondary" href="/om-os" class="w-full sm:w-fit"
               >Læs mere</Button
             >
-            <Button href="/menu" class="w-full sm:w-fit">Se menu</Button>
+            <Button href="/menu" class="w-full sm:w-fit">Se ølmenu</Button>
           </div>
         </div>
       </div>
