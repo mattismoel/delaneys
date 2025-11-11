@@ -18,9 +18,7 @@
   const handleHover = (id: number | null) => {
     isHovered = id !== null;
 
-    if (id === null) {
-      return;
-    }
+    if (id === null) return;
 
     const newBeer = menu.beers.find((beer) => beer.id === id);
     if (!newBeer) {
@@ -56,7 +54,7 @@
 
 {#snippet tapList(
   beers: Beer[],
-  onHover: (id: number) => void,
+  onHover: (id: number | null) => void,
   startIdx: number = 0,
   activeId: number,
 )}
@@ -66,6 +64,7 @@
         role="listitem"
         class="group pointer-events-auto isolate flex flex-col items-center"
         onmouseover={() => onHover(beer.id)}
+        onmouseleave={() => onHover(null)}
         onfocus={() => onHover(beer.id)}
       >
         <!--  HANDLE -->
