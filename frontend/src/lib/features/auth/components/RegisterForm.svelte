@@ -10,8 +10,6 @@
   type Props = Form<RegisterForm>;
 
   let { form }: Props = $props();
-
-  let isSubmitting = $state(false);
 </script>
 
 <form method="POST" class="flex w-full max-w-sm flex-col gap-8" use:enhance>
@@ -70,11 +68,5 @@
     <ErrorList errors={form?.formErrors} />
   </div>
 
-  <Button disabled={isSubmitting}>
-    {#if isSubmitting}
-      Registrerer...
-    {:else}
-      Registrér
-    {/if}
-  </Button>
+  <Button>Registrér</Button>
 </form>
