@@ -15,9 +15,12 @@ COPY --from=install /temp/dev/node_modules node_modules
 COPY . .
 
 ARG UNTAPPD_ENCODED_ACCESS_KEY
-ENV UNTAPPD_ENCODED_ACCESS_KEY=$UNTAPPD_ENCODED_ACCESS_KEY
 
+ENV UNTAPPD_ENCODED_ACCESS_KEY=$UNTAPPD_ENCODED_ACCESS_KEY
+ENV PUBLIC_API_BASE_URL: https://api.delaneys.dk
+ENV DATABASE_URL: http://backend:8080
 ENV NODE_ENV=production
+
 RUN bun --bun run build
 
 FROM base AS release
