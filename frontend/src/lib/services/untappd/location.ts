@@ -5,27 +5,22 @@ import { UNTAPPD_ENCODED_ACCESS_KEY } from "$env/static/private"
 import { format } from "date-fns";
 import type { LocationProvider, Menu, OpeningHour } from "../../features/location/location";
 
-const untappdHour = z.object({
-	day: z.union([
-		z.literal("monday"),
-		z.literal("tuesday"),
-		z.literal("wednesday"),
-		z.literal("thursday"),
-		z.literal("friday"),
-		z.literal("saturday"),
-		z.literal("sunday"),
+const untappdHoursResponse = z.object({
+	hours: z.object({
+		day: z.union([
+			z.literal("monday"),
+			z.literal("tuesday"),
+			z.literal("wednesday"),
+			z.literal("thursday"),
+			z.literal("friday"),
+			z.literal("saturday"),
+			z.literal("sunday"),
 
-	]),
-	open_at: z.coerce.date(),
-	close_at: z.coerce.date(),
-	closed: z.boolean()
-})
-
-const untappdLocationResponse = z.object({
-	location: z.object({
-		id: z.int().positive(),
-		hours: untappdHour.array()
-	})
+		]),
+		open_at: z.coerce.date(),
+		close_at: z.coerce.date(),
+		closed: z.boolean()
+	}).array()
 })
 
 const untappdItem = z.object({
@@ -55,7 +50,9 @@ const untappdMenuReponse = z.object({
 
 export const untappdLocationProvider = (locationId: string, menuId: string): LocationProvider => {
 	const getHours = async (): Promise<OpeningHour[]> => {
-		const res = await fetch(`${UNTAPPD_BASE}/locations/${locationId}`, {
+		const url = new URL(`${UNTAPPD_BASE}/locations/${locationId}/hours`)
+
+		const res = await fetch(url, {
 			headers: { "Authorization": `Basic ${UNTAPPD_ENCODED_ACCESS_KEY}` }
 		})
 
@@ -64,9 +61,9 @@ export const untappdLocationProvider = (locationId: string, menuId: string): Loc
 			throw Error(`Could not fetch Untappd API: ${error.title}, ${error.detail}`)
 		}
 
-		const { location } = untappdLocationResponse.parse(await res.json())
+		const { hours } = untappdHoursResponse.parse(await res.json())
 
-		return location.hours
+		return hours
 			.map(hour => (hour.closed ? {
 				day: hour.day,
 				closed: true
