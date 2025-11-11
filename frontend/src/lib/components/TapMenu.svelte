@@ -79,9 +79,11 @@
         <a
           href={beer.url}
           class={[
-            "peer group z-50 flex aspect-square h-14 flex-col items-center justify-center rounded-full border bg-background font-mono outline outline-transparent transition-colors",
-            "group-hover:border-background-100 group-hover:border-2 group-hover:border-solid group-hover:bg-text-dark group-hover:font-bold group-hover:text-text-light group-hover:outline-text-dark",
-            activeId === beer.id && "border-2 border-solid font-bold",
+            "peer group z-50 flex aspect-square h-14 flex-col items-center justify-center rounded-full border bg-background outline outline-transparent transition-colors",
+            "group-hover:border-background-100 group-hover:border-2 group-hover:border-solid group-hover:bg-text-dark group-hover:font-extrabold group-hover:text-text-light group-hover:outline-text-dark",
+            activeId === beer.id
+              ? "border-2 border-solid font-extrabold"
+              : "font-medium",
           ]}
         >
           {startIdx + i}
@@ -114,8 +116,8 @@
           beer.id === activeId ? "fade-in" : "fade-out",
         ]}
       >
-        <h1 class="mb-2 flex min-h-[1em] gap-4 font-mono text-xl font-semibold">
-          {i + 1}. {beer?.name}
+        <h1 class="mb-2 flex min-h-[1em] gap-4 text-2xl font-semibold">
+          {beer?.name}
         </h1>
 
         <div class="mb-2 text-text-dark/85">
@@ -124,7 +126,9 @@
         </div>
 
         {#if beer.rating > MIN_EXCLUSIVE_RATING}
-          {@render popularBadge()}
+          <div class="absolute top-0 right-0">
+            {@render popularBadge()}
+          </div>
         {/if}
       </div>
     {/each}
