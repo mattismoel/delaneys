@@ -1,7 +1,8 @@
 import PocketBase from "pocketbase"
 import { error, type Handle } from "@sveltejs/kit"
 
-import { DATABASE_URL, UNTAPPD_LOCATION_ID, UNTAPPD_MENU_ID } from "$env/static/private"
+import { env } from "$env/dynamic/private"
+import { DATABASE_URL } from "$env/static/private"
 
 import { untappdLocationProvider } from "$lib/services/untappd/location"
 import { pocketBaseEmployeeProvider } from "$lib/services/pocketbase/employee"
@@ -14,7 +15,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	pb.authStore.loadFromCookie(event.request.headers.get("cookie") || "")
 
-	event.locals.locationProvider = untappdLocationProvider(UNTAPPD_LOCATION_ID, UNTAPPD_MENU_ID)
+	event.locals.locationProvider = untappdLocationProvider(env.UNTAPPD_LOCATION_ID, env.UNTAPPD_MENU_ID)
 	event.locals.employeeProvider = pocketBaseEmployeeProvider(pb)
 	event.locals.faqProvider = pocketbaseFAQProvider(pb)
 
@@ -45,5 +46,4 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 const isPathOf = (parentPath: string, pathname: string): boolean => {
 	return pathname.startsWith(parentPath)
-
 }
