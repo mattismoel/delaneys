@@ -5,6 +5,9 @@
   import Button from "$lib/components/Button.svelte";
   import EventEntry from "$lib/components/EventEntry.svelte";
   import Logo from "$lib/components/Logo.svelte";
+  import type { Beer } from "$lib/features/location/location.js";
+
+  let { data } = $props();
 
   let prevScrollY = $state(0);
 
@@ -15,9 +18,34 @@
     scrollDirection = diff > 0 ? 1 : -1;
     prevScrollY = newScrollY;
   };
+
+  const topBeers = $derived(
+    data.menu.beers
+      .sort((a, b) => b.rating - a.rating)
+      .filter((beer) => beer.rating > 3.7)
+      .slice(0, 3),
+  );
 </script>
 
 <svelte:window onscroll={(e) => handleScroll(e.currentTarget.scrollY)} />
+
+{#snippet leaderboardEntry(beer: Beer, idx: number)}
+  <li class="group flex flex-col items-center justify-center">
+    <a href={beer.url} class="flex flex-col">
+      <span
+        class={[
+          "font-bold whitespace-nowrap transition-[scale]",
+          idx === 1 && "mb-4 font-serif text-6xl font-extrabold",
+        ]}>{beer.name}</span
+      >
+
+      <div class="flex flex-col items-center text-text-dark-muted">
+        <span>{beer.brewery}</span>
+        <span>{beer.style} / {beer.abv}%</span>
+      </div>
+    </a>
+  </li>
+{/snippet}
 
 <main class="min-h-svh">
   <div class="absolute -z-10 h-full w-full bg-[black]"></div>
@@ -76,8 +104,26 @@
     </div>
   </section>
 
-  <section class="mx-responsive py-16">
-    <p class="leading-relaxed">
+  {#if topBeers.length >= 3}
+    <section
+      class="border-t border-b border-border bg-radial-[at_50%_75%] from-surface-100 to-surface-200 py-16"
+    >
+      <div class="mx-responsive">
+        <h1 class="mb-16 text-center font-medium text-text-dark-muted">
+          Ugens mest populære
+        </h1>
+
+        <ul class="flex justify-center gap-32">
+          {@render leaderboardEntry(topBeers[1], 0)}
+          {@render leaderboardEntry(topBeers[0], 1)}
+          {@render leaderboardEntry(topBeers[2], 2)}
+        </ul>
+      </div>
+    </section>
+  {/if}
+
+  <section class="mx-responsive flex items-center gap-16 py-16">
+    <p class="w-full leading-relaxed">
       Hos Delaney's er der plads til alle der sætter pris på god stemning og et
       nøje udvalgt sortiment af øl — alt fra kolde fadøl til spændende udvalg af
       flasker og dåser. Det er et sted, hvor gode minder skabes, om end til en
