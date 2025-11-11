@@ -137,9 +137,11 @@
     <div>
       <h1 class="mb-4 font-serif text-2xl font-bold">Events på baren</h1>
       <p class="leading-relaxed">
-        På Delaney’s kan du opleve alt fra quiz-aftener og live-musik til
-        ølsmagninger. Hold øje på vores sociale medier for kommende events, og
-        vær med til nogle hyggelige stunder!
+        Hos Delaney’s kan du opleve en bred vifte af spændende arrangementer –
+        lige fra underholdende quiz-aftener og stemningsfuld live-musik til
+        inspirerende ølsmagninger. Følg os på vores sociale medier for at holde
+        dig opdateret om kommende events, og vær en del af de mange gode
+        stunder, vi skaber sammen på Delaney’s.
       </p>
     </div>
 
