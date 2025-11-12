@@ -44,6 +44,16 @@
 			opacity: 100;
 		}
 	}
+
+	@keyframes slide-left {
+		from {
+			transform: translateX(0%);
+		}
+
+		to {
+			transform: translateX(-100%);
+		}
+	}
 }
 
 @utility mx-responsive {

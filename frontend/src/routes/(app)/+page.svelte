@@ -2,10 +2,14 @@
   import LandingImage from "$lib/assets/landing.jpg";
   import ChairsImage from "$lib/assets/bar-2.jpg";
   import TapImage from "$lib/assets/bar-3.jpg";
+  import GlassImage from "$lib/assets/glass.jpg";
   import Button from "$lib/components/Button.svelte";
   import EventEntry from "$lib/components/EventEntry.svelte";
   import Logo from "$lib/components/Logo.svelte";
   import type { Beer } from "$lib/features/location/location.js";
+  import LeaderboardDisplay from "$lib/components/leaderboard-display/LeaderboardDisplay.svelte";
+
+  const MIN_LEADERBOARD_RATING = 3.7;
 
   let { data } = $props();
 
@@ -18,34 +22,9 @@
     scrollDirection = diff > 0 ? 1 : -1;
     prevScrollY = newScrollY;
   };
-
-  const topBeers = $derived(
-    data.menu.beers
-      .sort((a, b) => b.rating - a.rating)
-      .filter((beer) => beer.rating > 3.7)
-      .slice(0, 3),
-  );
 </script>
 
 <svelte:window onscroll={(e) => handleScroll(e.currentTarget.scrollY)} />
-
-{#snippet leaderboardEntry(beer: Beer, idx: number)}
-  <li class="group flex flex-col items-center justify-center">
-    <a href={beer.url} class="flex flex-col">
-      <span
-        class={[
-          "font-bold whitespace-nowrap transition-[scale]",
-          idx === 1 && "mb-4 font-serif text-6xl font-extrabold",
-        ]}>{beer.name}</span
-      >
-
-      <div class="flex flex-col items-center text-text-dark-muted">
-        <span>{beer.brewery}</span>
-        <span>{beer.style} / {beer.abv}%</span>
-      </div>
-    </a>
-  </li>
-{/snippet}
 
 <main class="min-h-svh">
   <div class="absolute -z-10 h-full w-full bg-[black]"></div>
@@ -84,7 +63,7 @@
           </p>
 
           <div class="flex flex-col-reverse gap-2 sm:flex-row">
-            <Button variant="secondary" href="/om-os" class="w-full sm:w-fit"
+            <Button variant="ghost" href="/om-os" class="w-full sm:w-fit"
               >Læs mere</Button
             >
             <Button href="/menu" class="w-full sm:w-fit">Se ølmenu</Button>
@@ -95,47 +74,42 @@
 
     <div
       class={[
-        "absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center text-text-light transition-opacity",
-        scrollDirection === -1 && "opacity-0",
+        "absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-text-light transition-[opacity,translate] duration-400",
+        scrollDirection === -1 && "-translate-y-full opacity-0",
       ]}
     >
-      <span class="animate-bounce">Scroll ned</span>
-      <span class="icon-[lucide--chevron-down] animate-bounce text-2xl"></span>
+      <span class="animate-bounce">Scoll ned</span>
+      <span
+        class="icon-[lucide--mouse] animate-[bounce_1s_linear_50ms_infinite] text-4xl"
+      ></span>
     </div>
   </section>
 
-  {#if topBeers.length >= 3}
-    <section
-      class="border-t border-b border-border bg-radial-[at_50%_75%] from-surface-100 to-surface-200 py-16"
-    >
-      <div class="mx-responsive">
-        <h1 class="mb-16 text-center font-medium text-text-dark-muted">
-          Ugens mest populære
-        </h1>
+  <!-- <section class="mx-responsive flex items-center gap-32 py-16"> -->
+  <!--   <h1 -->
+  <!--     class="mb-4 max-w-50 font-serif text-4xl leading-[1.2] font-bold wrap-break-word" -->
+  <!--   > -->
+  <!--     Brug for at slukke tørsten? -->
+  <!--   </h1> -->
+  <!--   <p class="mb-8 w-full max-w-xl leading-relaxed text-text-dark-muted"> -->
+  <!--     Hos os er der plads til alle, der sætter pris på den gode stemning og et -->
+  <!--     nøje udvalgt sortiment af øl — alt fra kolde fadøl til spændende udvalg af -->
+  <!--     flasker og dåser. Det er et sted, hvor gode minder -->
+  <!--     skabes&nbsp;&mdash;&nbsp;omend til en quiz-aften, til live-musik eller -->
+  <!--     blot en hyggelig snak i baren. -->
+  <!--   </p> -->
+  <!-- </section> -->
 
-        <ul class="flex justify-center gap-32">
-          {@render leaderboardEntry(topBeers[1], 0)}
-          {@render leaderboardEntry(topBeers[0], 1)}
-          {@render leaderboardEntry(topBeers[2], 2)}
-        </ul>
-      </div>
-    </section>
-  {/if}
-
-  <section class="mx-responsive flex items-center gap-16 py-16">
-    <p class="w-full leading-relaxed">
-      Hos Delaney's er der plads til alle der sætter pris på god stemning og et
-      nøje udvalgt sortiment af øl — alt fra kolde fadøl til spændende udvalg af
-      flasker og dåser. Det er et sted, hvor gode minder skabes, om end til en
-      quiz-aften, til live-musik eller blot en hyggelig snak i baren.
-    </p>
-  </section>
+  <LeaderboardDisplay
+    beers={data.menu.beers}
+    minRating={MIN_LEADERBOARD_RATING}
+  />
 
   <section
-    class="mx-responsive grid grid-cols-1 gap-16 py-16 md:grid-cols-[1fr_2fr]"
+    class="@container mx-responsive grid grid-cols-1 gap-16 py-16 md:grid-cols-[1fr_2fr]"
   >
     <div>
-      <h1 class="mb-4 font-serif text-2xl font-bold">Events på baren</h1>
+      <h1 class="mb-4 font-serif text-2xl font-bold">Noget med vennerne?</h1>
       <p class="leading-relaxed">
         Hos Delaney’s kan du opleve en bred vifte af spændende arrangementer –
         lige fra underholdende quiz-aftener og stemningsfuld live-musik til
@@ -145,7 +119,7 @@
       </p>
     </div>
 
-    <div class="flex gap-4">
+    <div class="flex flex-col gap-4 @xl:flex-row">
       <EventEntry
         title="Quiz"
         src={ChairsImage}

@@ -4,7 +4,7 @@
     HTMLButtonAttributes,
   } from "svelte/elements";
 
-  type Variant = "primary" | "secondary";
+  type Variant = "primary" | "ghost" | "outline-dark";
 
   type BaseProps = {
     variant?: Variant;
@@ -26,8 +26,10 @@
   const variantClasses: Record<Variant, string> = {
     primary:
       "bg-primary text-text-dark border-border font-medium hover:not-disabled:brightness-80 disabled:text-text-dark/50",
-    secondary:
+    ghost:
       "bg-primary/10 text-text-light border-primary/15 hover:bg-primary/15",
+    "outline-dark":
+      "border-border font-medium hover:bg-text-dark hover:text-text-light",
   };
 
   let { variant = "primary", children, ...rest }: Props = $props();
