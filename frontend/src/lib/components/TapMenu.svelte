@@ -109,7 +109,7 @@
 
 {#snippet beerDescriptor(beers: Beer[], activeId: number)}
   <div class="relative h-32 w-full">
-    {#each beers as beer, i}
+    {#each beers as beer}
       <div
         class={[
           "text-zinc-950 absolute top-0 left-0 flex w-full flex-col",
