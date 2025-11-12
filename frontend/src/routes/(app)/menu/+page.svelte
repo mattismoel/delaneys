@@ -7,7 +7,9 @@
 <main
   class="@container mx-responsive flex min-h-svh items-center justify-center py-20 pt-28"
 >
-  <TapMenu menu={data.menu} class="hidden @4xl:flex" />
+  <div class="hidden flex-col items-center gap-16 @4xl:flex">
+    <TapMenu menu={data.menu} />
+  </div>
 
   <ul
     class="flex w-full flex-col divide-y divide-border/50 font-mono @4xl:hidden"
