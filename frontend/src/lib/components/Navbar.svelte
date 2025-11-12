@@ -29,7 +29,7 @@
 {/snippet}
 
 <header
-  class="fixed z-100 flex min-h-16 w-full items-center justify-between border-b border-border bg-surface-100 px-10 sm:px-16"
+  class="fixed z-100 flex min-h-16 w-full items-center justify-between border-b border-border bg-surface-100 px-10 drop-shadow-md drop-shadow-[black]/5 sm:px-16"
 >
   <a href="/">
     <Logo height="2rem" />
