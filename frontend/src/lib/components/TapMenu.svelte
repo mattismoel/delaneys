@@ -116,9 +116,13 @@
           beer.id === activeId ? "fade-in" : "fade-out",
         ]}
       >
-        <h1 class="mb-2 flex min-h-[1em] gap-4 text-2xl font-semibold">
-          {beer?.name}
-        </h1>
+        <a href={beer.url} class="w-fit">
+          <h1
+            class="mb-2 flex min-h-[1em] max-w-sm gap-4 text-2xl font-semibold hover:underline"
+          >
+            {beer?.name}
+          </h1>
+        </a>
 
         <div class="mb-2 text-text-dark/85">
           <p>{beer.brewery}</p>
