@@ -10,13 +10,14 @@
 
 {#snippet navItem(title: string, href: string)}
   {@const isCurrent = page.url.pathname === href}
-
-  <li>
+  <li class="inline-block">
     <a
       {href}
       onclick={() => (isMenuShown = false)}
+      {title}
       class={[
-        "inline-flex p-2 text-2xl decoration-2 underline-offset-3",
+        "inline-block p-2 text-center text-2xl decoration-2 underline-offset-3",
+        "before:invisible before:block before:h-0 before:overflow-hidden before:font-bold before:content-[attr(title)]",
         "sm:p-4 sm:text-lg",
         "hover:underline",
         isCurrent && "font-bold underline",
