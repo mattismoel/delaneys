@@ -58,8 +58,8 @@
         <div class="flex flex-col gap-8">
           <ul class="flex flex-col gap-2">
             {@render contactEntry(
-              "tel:+45109940",
-              "+45 10 99 40",
+              "tel:+4541109940",
+              "+45 41 10 99 40",
               "icon-[lucide--phone]",
             )}
             {@render contactEntry(
