@@ -48,7 +48,7 @@
     />
 
     <div class="w-full">
-      <h1 class="mb-8 font-serif text-4xl font-bold">Historien bag baren</h1>
+      <h1 class="mb-8 font-serif text-4xl font-bold">Vores historie</h1>
       <p class="leading-relaxed text-text-dark-muted">
         Før Delaney's slog dørene op i 2023, lå på addressen den klassiske
         bodega
