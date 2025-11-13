@@ -12,7 +12,7 @@
   <button
     type="button"
     class={[
-      "flex w-full items-center gap-4 rounded-sm border border-border bg-surface-100 px-4 py-2 text-left transition-colors hover:bg-surface-200",
+      "flex w-full items-center gap-4 rounded-sm border border-border bg-surface-100 px-4 py-2 text-left font-medium transition-colors hover:bg-surface-200",
       expanded && "rounded-b-none bg-surface-200",
     ]}
     onclick={() => (expanded = !expanded)}
@@ -31,7 +31,7 @@
   >
     <div class="overflow-hidden">
       <div
-        class="rounded-b-sm border border-border border-t-transparent bg-background p-4"
+        class="rounded-b-sm border border-border border-t-transparent bg-background px-12 py-6 text-text-dark-muted"
       >
         {description}
       </div>
