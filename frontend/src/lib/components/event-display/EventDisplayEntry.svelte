@@ -51,7 +51,7 @@
   />
   <div
     class={[
-      "pointer-events-none absolute bottom-0 left-0 flex h-full w-full flex-col-reverse bg-linear-to-t from-[black] p-8 text-text-light transition-[opacity,translate]",
+      "pointer-events-none absolute bottom-0 left-0 flex h-2/3 w-full flex-col-reverse bg-linear-to-t from-[black] p-8 text-text-light transition-[opacity,translate]",
       "translate-y-full group-[.in-view]:translate-y-0 sm:group-[.in-view]:translate-y-full sm:group-[.in-view]:group-hover:translate-y-0 sm:group-[.in-view]:group-[.is-current]:translate-y-0",
     ]}
   >
