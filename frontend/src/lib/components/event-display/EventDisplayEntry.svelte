@@ -56,7 +56,9 @@
     ]}
   >
     <div>
-      <h1 class="mb-8 font-serif text-4xl font-extrabold @sm:text-6xl">
+      <h1
+        class="mb-8 font-serif text-4xl font-extrabold text-shadow-md @sm:text-6xl"
+      >
         {title}
       </h1>
       <p class="max-w-lg leading-relaxed text-text-light-muted">
