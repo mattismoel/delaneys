@@ -80,7 +80,7 @@
     >
       <span class="animate-bounce">Scoll ned</span>
       <span
-        class="icon-[lucide--mouse] animate-[bounce_1s_linear_50ms_infinite] text-4xl"
+        class="icon-[lucide--mouse] animate-[bounce_1s_linear_50ms_infinite] text-2xl"
       ></span>
     </div>
   </section>
