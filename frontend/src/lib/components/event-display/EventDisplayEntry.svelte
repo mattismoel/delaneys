@@ -40,7 +40,7 @@
 >
   <img
     {src}
-    alt=""
+    alt={title}
     onmouseover={onHover}
     onfocus={onHover}
     class={[
