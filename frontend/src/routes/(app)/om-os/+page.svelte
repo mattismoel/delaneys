@@ -18,7 +18,7 @@
     class="mx-responsive grid grid-cols-1 gap-16 bg-background pt-32 pb-16 @5xl:grid-cols-2"
   >
     <div class="w-full">
-      <h1 class="mb-4 font-serif text-2xl font-bold">Vores udvalg</h1>
+      <h1 class="mb-8 font-serif text-4xl font-bold">Vores udvalg</h1>
       <p class="leading-relaxed text-text-dark-muted">
         På baren har vi et bredt sortiment af øl, som løbende ændres fra uge til
         uge. Når en fustage løber tør, erstattes den af en oftest ny og
@@ -48,7 +48,7 @@
     />
 
     <div class="w-full">
-      <h1 class="mb-4 font-serif text-2xl font-bold">Historien bag baren</h1>
+      <h1 class="mb-8 font-serif text-4xl font-bold">Historien bag baren</h1>
       <p class="leading-relaxed text-text-dark-muted">
         Før Delaney's slog dørene op i 2023, lå på addressen den klassiske
         bodega
