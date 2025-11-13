@@ -4,10 +4,9 @@
   import TapImage from "$lib/assets/bar-3.jpg";
   import GlassImage from "$lib/assets/glass.jpg";
   import Button from "$lib/components/Button.svelte";
-  import EventEntry from "$lib/components/EventEntry.svelte";
   import Logo from "$lib/components/Logo.svelte";
-  import type { Beer } from "$lib/features/location/location.js";
   import LeaderboardDisplay from "$lib/components/leaderboard-display/LeaderboardDisplay.svelte";
+  import EventDisplay from "$lib/components/event-display/EventDisplay.svelte";
 
   const MIN_LEADERBOARD_RATING = 3.7;
 
@@ -105,34 +104,58 @@
     minRating={MIN_LEADERBOARD_RATING}
   />
 
-  <section
-    class="@container mx-responsive grid grid-cols-1 gap-16 py-16 md:grid-cols-[1fr_2fr]"
-  >
-    <div>
-      <h1 class="mb-4 font-serif text-2xl font-bold">Noget med vennerne?</h1>
-      <p class="leading-relaxed">
-        Hos Delaney’s kan du opleve en bred vifte af spændende arrangementer –
-        lige fra underholdende quiz-aftener og stemningsfuld live-musik til
-        inspirerende ølsmagninger. Følg os på vores sociale medier for at holde
-        dig opdateret om kommende events, og vær en del af de mange gode
-        stunder, vi skaber sammen på Delaney’s.
-      </p>
-    </div>
-
-    <div class="flex flex-col gap-4 @xl:flex-row">
-      <EventEntry
-        title="Quiz"
-        src={ChairsImage}
-        description="Hyggelige quiz-aftener, med temaer i øst og vest. Kom og vær med!"
-      />
-
-      <EventEntry
-        title="Ølsmagning"
-        src={TapImage}
-        description="Kom og vær med til, at smage nye spændende special-øl."
-      />
-    </div>
+  <section>
+    <EventDisplay
+      events={[
+        {
+          title: "Quiz",
+          description:
+            "Vi afholder quiz-aftener med temaer i øst og vest. Kom og vær med! Yderligere information om aftenerne kan findes på vores sociale medier.",
+          src: TapImage,
+        },
+        {
+          title: "Brætspil",
+          description:
+            "Hvis du er den spillende type, har vi et stort udvalg af brætspil, som er frit tilgængelige.",
+          src: ChairsImage,
+        },
+        {
+          title: "Ølsmagning",
+          description:
+            "På baren afholder vi ølsmagninger - ofte i direkte samarbejde med bryggerierne og leverandørene selv. Kom og vær med til, at smage nye spændende special-øl.",
+          src: GlassImage,
+        },
+      ]}
+    />
   </section>
+
+  <!-- <section -->
+  <!--   class="@container mx-responsive grid grid-cols-1 gap-16 py-16 md:grid-cols-[1fr_2fr]" -->
+  <!-- > -->
+  <!--   <div> -->
+  <!--     <h1 class="mb-4 font-serif text-2xl font-bold">Noget med vennerne?</h1> -->
+  <!--     <p class="leading-relaxed"> -->
+  <!--       Hos Delaney’s kan du opleve en bred vifte af spændende arrangementer – -->
+  <!--       lige fra underholdende quiz-aftener og stemningsfuld live-musik til -->
+  <!--       inspirerende ølsmagninger. Følg os på vores sociale medier for at holde -->
+  <!--       dig opdateret om kommende events, og vær en del af de mange gode -->
+  <!--       stunder, vi skaber sammen på Delaney’s. -->
+  <!--     </p> -->
+  <!--   </div> -->
+  <!--   <div class="flex flex-col gap-4 @xl:flex-row"> -->
+  <!--     <EventEntry -->
+  <!--       title="Quiz" -->
+  <!--       src={ChairsImage} -->
+  <!--       description="Hyggelige quiz-aftener, med temaer i øst og vest. Kom og vær med!" -->
+  <!--     /> -->
+  <!---->
+  <!--     <EventEntry -->
+  <!--       title="Ølsmagning" -->
+  <!--       src={TapImage} -->
+  <!--       description="Kom og vær med til, at smage nye spændende special-øl." -->
+  <!--     /> -->
+  <!--   </div> -->
+  <!-- </section> -->
 </main>
 
 <style>
