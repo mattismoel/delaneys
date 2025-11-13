@@ -29,7 +29,7 @@
 
     <div class="flex flex-col items-center text-text-dark-muted">
       <span class="text-center">{beer.brewery}</span>
-      <span>{beer.style} / {beer.abv}%</span>
+      <span>{beer.style} / {beer.abv.toFixed(1)}%</span>
     </div>
   </a>
 </li>
