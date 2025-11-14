@@ -20,13 +20,15 @@
     <div class="w-full">
       <h1 class="mb-8 font-serif text-4xl font-bold">Vores udvalg</h1>
       <p class="leading-relaxed text-text-dark-muted">
-        På baren har vi et bredt sortiment af øl, som løbende ændres fra uge til
-        uge. Når en fustage løber tør, erstattes den af en oftest ny og
-        spændende øl, som du ikke finder andres steder.
+        På baren er vi stolte af at kunne tilbyde et bredt og varierende
+        sortiment af specialøl. Vi stræber efter kvalitet&nbsp;&mdash;&nbsp;både
+        det nyeste nye, men også klassikere. Som resultat af dette ser
+        menukortet også forskelligt ud fra uge til uge. Når en fustage løber
+        tør, erstattes den oftest med en ny og spændende øl, som du ikke finder
+        andres steder.
         <br /><br />
-
-        Vi er stolte af, at handle direkte med distributørerne og forhandlerne
-        for at sikre dig de nyeste og mest spændende øl.
+        Vi er stolte af at handle direkte med distributørerne og forhandlerne, for
+        at sikre dig de nyeste og mest spændende øl.
       </p>
     </div>
 
@@ -50,10 +52,9 @@
     <div class="w-full">
       <h1 class="mb-8 font-serif text-4xl font-bold">Vores historie</h1>
       <p class="leading-relaxed text-text-dark-muted">
-        Før Delaney's slog dørene op i 2023, lå på addressen den klassiske
-        bodega
-        <i>Vikingen</i>&nbsp;&mdash;&nbsp;et brunt værtshus, hvor havnearbejdere
-        samledes over en øl.
+        Før Delaney's slog dørene op i 2023, lå den klassiske bodega
+        <i>Vikingen</i> på addressen&nbsp;&mdash;&nbsp;et brunt værtshus, hvor
+        havnearbejdere samledes over en øl.
         <br />
         <br />
         I dag har vi forvandlet rummet fra dets mørke vægge og tunge gardiner til
