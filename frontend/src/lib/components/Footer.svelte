@@ -81,7 +81,7 @@
             )}
           </ul>
 
-          <ul class="flex items-center gap-2">
+          <ul class="flex items-center gap-4">
             {@render socialEntry(
               "Instagram",
               "https://www.instagram.com/delaneysodense/",
