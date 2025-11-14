@@ -124,7 +124,7 @@
           </h1>
         </a>
 
-        <div class="mb-2 text-text-dark/85">
+        <div class="mb-2 text-text-dark-muted">
           <p>{beer.brewery}</p>
           <span>{beer.style} / {beer.abv.toFixed(1)}%</span>
         </div>
