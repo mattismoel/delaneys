@@ -27,7 +27,13 @@
 
 {#snippet contactEntry(href: string, value: string, icon: string)}
   <li>
-    <a {href} class={["flex items-center gap-4", "hover:underline"]}>
+    <a
+      {href}
+      class={[
+        "flex items-center gap-4 text-text-dark-muted",
+        "hover:text-text-dark hover:underline",
+      ]}
+    >
       <span class={icon}></span>
       {value}
     </a>
