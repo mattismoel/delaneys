@@ -40,9 +40,10 @@
   </li>
 {/snippet}
 
-{#snippet socialEntry(href: string, icon: string)}
+{#snippet socialEntry(title: string, href: string, icon: string)}
   <li>
     <a
+      {title}
       {href}
       aria-label="Icon"
       class={["h-8 text-text-dark/80", "hover:text-text-dark"]}
@@ -82,10 +83,12 @@
 
           <ul class="flex items-center gap-2">
             {@render socialEntry(
+              "Instagram",
               "https://www.instagram.com/delaneysodense/",
               "icon-[simple-icons--instagram]",
             )}
             {@render socialEntry(
+              "Facebook",
               "https://www.facebook.com/profile.php?id=100090615901671",
               "icon-[simple-icons--facebook]",
             )}
