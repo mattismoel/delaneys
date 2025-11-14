@@ -11,11 +11,16 @@
 {#snippet card(employee: Employee)}
   <li class="flex flex-col items-center gap-8">
     {#if employee.src}
-      <img
-        src={employee.src}
-        alt={employee.name}
-        class="h-48 w-48 rounded-full object-cover"
-      />
+      <div class="relative">
+        <img
+          src={employee.src}
+          alt={employee.name}
+          class="h-48 w-48 rounded-full object-cover"
+        />
+        <div
+          class="absolute top-0 left-0 h-full w-full rounded-full border border-[black]/25 mix-blend-overlay"
+        ></div>
+      </div>
     {:else}
       <span
         class="text-background-300 icon-[lucide--circle-user-round] h-48 w-48"
