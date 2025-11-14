@@ -57,7 +57,7 @@
   >
     <div>
       <h1
-        class="mb-8 font-serif text-4xl font-extrabold text-shadow-md @sm:text-6xl"
+        class="mb-8 font-serif text-4xl font-extrabold text-shadow-md @md:text-6xl"
       >
         {title}
       </h1>
