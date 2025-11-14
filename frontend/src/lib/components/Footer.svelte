@@ -46,7 +46,7 @@
       {title}
       {href}
       aria-label="Icon"
-      class={["h-8 text-text-dark/80", "hover:text-text-dark"]}
+      class={["text-xl text-text-dark/80", "hover:text-text-dark"]}
     >
       <span class={icon}></span>
     </a>
