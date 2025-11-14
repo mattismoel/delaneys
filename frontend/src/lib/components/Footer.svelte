@@ -92,6 +92,11 @@
               "https://www.facebook.com/profile.php?id=100090615901671",
               "icon-[simple-icons--facebook]",
             )}
+            {@render socialEntry(
+              "Untappd",
+              "https://untappd.com/v/delaneys-bar-and-bottleshop/12068958",
+              "icon-[simple-icons--untappd]",
+            )}
           </ul>
         </div>
 
