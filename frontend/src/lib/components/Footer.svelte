@@ -126,7 +126,7 @@
       </a>
     </div>
 
-    <p class="text-center text-sm">
+    <p class="text-center text-sm text-text-dark-muted/50">
       &copy;&nbsp;Delaney's Bar & Bottleshop {new Date().getFullYear()}
     </p>
   </div>
