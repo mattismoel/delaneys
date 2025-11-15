@@ -73,6 +73,7 @@
             <span class="text-sm text-text-dark-muted">{beer.brewery}</span>
           </div>
         {/each}
+        <div></div>
       </Slider>
     </div>
 
