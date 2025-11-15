@@ -77,7 +77,7 @@
         scrollDirection === -1 && "-translate-y-full opacity-0",
       ]}
     >
-      <span class="animate-bounce">Scoll ned</span>
+      <span class="animate-bounce">Scroll ned</span>
       <span
         class="icon-[lucide--mouse] animate-[bounce_1s_linear_50ms_infinite] text-2xl"
       ></span>
