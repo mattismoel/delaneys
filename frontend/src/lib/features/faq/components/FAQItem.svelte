@@ -78,7 +78,7 @@
       <textarea
         placeholder="Svar"
         name="description"
-        class="max-h-32 min-h-4 w-full"
+        class="max-h-32 min-h-4 w-full resize-none"
         rows="2"
         value={rest.variant === "update"
           ? rest.question.description
