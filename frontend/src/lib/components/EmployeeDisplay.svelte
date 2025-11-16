@@ -16,6 +16,7 @@
           src={employee.src}
           alt={employee.name}
           class="h-48 w-48 rounded-full object-cover"
+          loading="lazy"
         />
         <div
           class="absolute top-0 left-0 h-full w-full rounded-full border border-[black]/25 mix-blend-overlay"
