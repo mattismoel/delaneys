@@ -63,43 +63,45 @@
     </div>
   </section>
 
-  <section class="mx-responsive flex flex-col gap-16 py-16">
-    <div>
-      <h1 class="mb-8 font-serif text-4xl font-bold">Mød holdet</h1>
-      <p class="leading-relaxed text-text-dark-muted">
-        Bag disken finder du et passioneret hold, der brænder for god øl og gode
-        oplevelser. Vi står klar til at guide dig gennem vores udvalg, og
-        forhåbentlig finde din næste favoritøl. Vi er her for at gøre din
-        oplevelse lidt bedre, én skænk ad gangen.
-      </p>
-    </div>
+  {#if archivedEmployees.length > 0}
+    <section class="mx-responsive flex flex-col gap-16 py-16">
+      <div>
+        <h1 class="mb-8 font-serif text-4xl font-bold">Mød holdet</h1>
+        <p class="leading-relaxed text-text-dark-muted">
+          Bag disken finder du et passioneret hold, der brænder for god øl og
+          gode oplevelser. Vi står klar til at guide dig gennem vores udvalg, og
+          forhåbentlig finde din næste favoritøl. Vi er her for at gøre din
+          oplevelse lidt bedre, én skænk ad gangen.
+        </p>
+      </div>
 
-    <EmployeeDisplay employees={nonArchivedEmployees} />
+      <EmployeeDisplay employees={nonArchivedEmployees} />
 
-    <p class="mb-8 w-full leading-relaxed text-text-dark-muted">
-      Derudover en stor tak til vores tidligere {#if archivedEmployees.length > 1}
-        medarbejdere
-      {:else}
-        medarbejder
-      {/if}
-
-      <span>
-        {#if archivedEmployees.length > 1}
-          {archivedEmployees
-            .slice(0, -1)
-            .map((e) => e.name)
-            .join(", ")}
-
-          og
-
-          {archivedEmployees.at(-1)?.name}.
+      <p class="mb-8 w-full leading-relaxed text-text-dark-muted">
+        Derudover en stor tak til vores tidligere {#if archivedEmployees.length > 1}
+          medarbejdere
         {:else}
-          {archivedEmployees[0].name}.
+          medarbejder
         {/if}
-      </span>
-      Baren havde ikke været den samme uden {#if archivedEmployees.length > 1}dem{:else}dig{/if}.
-    </p>
-  </section>
+
+        <span>
+          {#if archivedEmployees.length > 1}
+            {archivedEmployees
+              .slice(0, -1)
+              .map((e) => e.name)
+              .join(", ")}
+
+            og
+
+            {archivedEmployees.at(-1)?.name}.
+          {:else}
+            {archivedEmployees[0].name}.
+          {/if}
+        </span>
+        Baren havde ikke været den samme uden {#if archivedEmployees.length > 1}dem{:else}dig{/if}.
+      </p>
+    </section>
+  {/if}
 </main>
 
 <style>
