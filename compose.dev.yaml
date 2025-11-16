@@ -14,7 +14,8 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./frontend:/usr/src/app
-      - ./frontend/node_modules/:/usr/src/app/node_modules
+      - node_modules:/usr/src/app/node_modules
+    command: sh -c "bun install && bun run dev"
     depends_on:
       - backend
       - caddy
@@ -29,3 +30,4 @@ services:
 
 volumes:
   pb_data:
+  node_modules:
