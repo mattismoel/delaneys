@@ -68,7 +68,7 @@
         value={rest.variant === "update" ? rest.question.title : undefined}
         bind:this={titleInput}
         name="title"
-        class="mb-4 w-full font-serif font-bold"
+        class="mb-4 w-full resize-none font-medium"
         oninput={(e) => (title = e.currentTarget.value)}
         {@attach (element) => {
           rest.variant === "create" && element.focus();
