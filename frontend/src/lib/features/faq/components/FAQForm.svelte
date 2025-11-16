@@ -41,7 +41,9 @@
     {/if}
   </div>
 
-  <h2 class="mb-4 font-serif font-bold">Nuværende</h2>
+  {#if questions.length > 1}
+    <h2 class="mb-4 font-serif font-bold">Nuværende</h2>
+  {/if}
 
   <ul class="flex flex-col gap-2">
     {#each questions as question, idx (question.id)}
