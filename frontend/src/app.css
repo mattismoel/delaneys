@@ -21,8 +21,8 @@
 	--color-primary: oklch(100% 20% 50);
 	--color-background: oklch(from var(--color-primary) l 14% h);
 
-	--color-surface-100: oklch(from var(--color-primary) 100% 20% h);
-	--color-surface-200: oklch(from var(--color-primary) 95% c h);
+	--color-surface-100: oklch(from var(--color-primary) 100% 17% h);
+	--color-surface-200: oklch(from var(--color-primary) 96% 16% h);
 	--color-surface-300: oklch(from var(--color-primary) 89% c h);
 
 	--color-border: oklch(from var(--color-primary) 80% c h);
