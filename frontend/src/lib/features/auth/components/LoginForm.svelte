@@ -24,10 +24,16 @@
         placeholder="Email"
         name="email"
         value={form.data?.email}
+        class="w-full"
       />
     </FormField>
     <FormField errors={form.fieldErrors?.password}>
-      <Input type="password" placeholder="Adgangskode" name="password" />
+      <Input
+        type="password"
+        placeholder="Adgangskode"
+        name="password"
+        class="w-full"
+      />
     </FormField>
     <a href="/auth/reset-password" class="text-right text-sm hover:underline">
       Glemt din adgangskode?
