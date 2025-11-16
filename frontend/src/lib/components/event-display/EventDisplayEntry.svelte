@@ -23,7 +23,7 @@
   const observer: Attachment = (element) => {
     const observer = new IntersectionObserver(handleVisible, {
       threshold: 1.0,
-      rootMargin: "196px 0px 0px 0px",
+      rootMargin: "196px 0px 64px 0px",
     });
 
     observer.observe(element);
