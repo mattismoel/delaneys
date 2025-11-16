@@ -33,14 +33,19 @@
       endnu bedre&nbsp;&mdash;&nbsp;se dig i baren!
     </p>
 
-    <h2 class="mb-4 font-serif text-2xl font-bold" id="faq">
-      Ofte stillede spørgsmål
-    </h2>
+    {#if data.questions.length > 0}
+      <h2 class="mb-4 font-serif text-2xl font-bold" id="faq">
+        Ofte stillede spørgsmål
+      </h2>
 
-    <div class="flex flex-col gap-2">
-      {#each data.questions as question}
-        <Accordion title={question.title} description={question.description} />
-      {/each}
-    </div>
+      <div class="flex flex-col gap-2">
+        {#each data.questions as question}
+          <Accordion
+            title={question.title}
+            description={question.description}
+          />
+        {/each}
+      </div>
+    {/if}
   </section>
 </main>
