@@ -1,5 +1,6 @@
 <script lang="ts">
   import ActionButton from "$lib/components/ActionButton.svelte";
+  import { fade } from "svelte/transition";
   import type { Employee } from "../../employee";
 
   type BaseProps = {
@@ -35,7 +36,8 @@
 {/snippet}
 
 <li
-  class="group flex w-full items-center rounded-sm border border-border/75 hover:bg-surface-100"
+  transition:fade={{ duration: 500 }}
+  class="group flex w-full items-center rounded-sm border border-border/75 bg-surface-100 hover:bg-surface-200"
 >
   <a
     href="/admin/employees/{employee.id}"

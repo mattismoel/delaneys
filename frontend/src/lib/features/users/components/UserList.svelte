@@ -1,5 +1,6 @@
 <script lang="ts">
   import ActionButton from "$lib/components/ActionButton.svelte";
+  import { fade } from "svelte/transition";
   import type { User } from "../user";
 
   type BaseProps = {
@@ -36,7 +37,10 @@
     {#each users as user}
       {@const isCurrent = currentUser.id === user.id}
 
-      <li class="flex rounded-sm border border-border p-4">
+      <li
+        transition:fade={{ duration: 200 }}
+        class="flex rounded-sm border border-border bg-surface-100 px-8 py-4"
+      >
         <div class="flex-1">
           <h2 class="">
             {user.firstName}

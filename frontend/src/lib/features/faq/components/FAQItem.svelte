@@ -3,6 +3,7 @@
   import ActionButton from "$lib/components/ActionButton.svelte";
   import { enhance } from "$app/forms";
   import { MAX_TITLE_LENGTH, type Question } from "../faq";
+  import { fade } from "svelte/transition";
 
   type BaseProps = {
     idx: number;
@@ -42,9 +43,9 @@
   );
 </script>
 
-<div class="@container">
+<div transition:fade={{ duration: 100 }} class="@container">
   <li
-    class="flex flex-col items-center gap-8 rounded-sm border border-border p-8 @xl:flex-row"
+    class="flex flex-col items-center gap-8 rounded-sm border border-border bg-surface-100 p-8 @xl:flex-row"
   >
     <form
       id={rest.variant === "update"
