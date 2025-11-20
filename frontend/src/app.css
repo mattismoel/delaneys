@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import "tailwindcss";
+@plugin "@iconify/tailwind4";
+
+:root {
+	--heading-duration: 2s;
+
+	--check-spacing: 2px;
+	--check-thickness: 1px;
+	--checked-gradient: repeating-linear-gradient(-45deg,
+			transparent,
+			transparent var(--check-spacing),
+			var(--color-border) var(--check-spacing),
+			var(--color-border) calc(var(--check-spacing) + var(--check-thickness)));
+}
+
+@theme {
+	--color-*: initial;
+
+	--color-primary: oklch(100% 20% 50);
+	--color-background: oklch(from var(--color-primary) l 14% h);
+
+	--color-surface-100: oklch(from var(--color-primary) 100% 17% h);
+	--color-surface-200: oklch(from var(--color-primary) 96% 16% h);
+	--color-surface-300: oklch(from var(--color-primary) 89% c h);
+
+	--color-border: oklch(from var(--color-primary) 80% c h);
+
+	--color-text-dark: oklch(from var(--color-primary) 20% c h);
+	--color-text-dark-muted: oklch(from var(--color-text-dark) 35% c h);
+
+	--color-text-light: oklch(from var(--color-primary) 100% 10% h);
+	--color-text-light-muted: oklch(from var(--color-text-light) 80% 10% h);
+
+	--font-sans: "Poppins", sans-serif;
+	--font-serif: "Literata", serif;
+
+
+	@keyframes fade-out {
+		from {
+			opacity: 100%;
+		}
+
+		to {
+			opacity: 0%;
+		}
+	}
+
+	@keyframes fade-in {
+		from {
+			opacity: 0%;
+		}
+
+		to {
+			opacity: 100%;
+		}
+	}
+
+	@keyframes slide-left {
+		from {
+			transform: translateX(0%);
+		}
+
+		to {
+			transform: translateX(-100%);
+		}
+	}
+}
+
+@utility mx-responsive {
+	--max-content-width: 55em;
+	--min-padding: 3rem;
+
+	max-width: min(var(--max-content-width), 100% - var(--min-padding));
+	margin: 0 auto;
+}
+
+@utility fade-in-* {
+	animation: fade-in --value([*]);
+}
+
+@utility fade-out-* {
+	animation: fade-out --value([*]);
+}
+
+@utility hatch-v {
+	&::after {
+		content: "";
+		background: var(--checked-gradient);
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 25%;
+		height: 100%;
+		border-right: var(--color-border) solid 1px;
+	}
+}
+
+@utility hatch-h {
+	&::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		width: 100%;
+		height: 25%;
+		border-top: var(--color-border) solid 1px;
+		background: var(--checked-gradient);
+	}
+}

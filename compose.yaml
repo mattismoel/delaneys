@@ -1,0 +1,39 @@
+services:
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    configs:
+      - source: caddyfile
+        target: /etc/caddy/Caddyfile
+
+  frontend:
+    image: ghcr.io/mattismoel/delaneys/frontend:edge
+    restart: unless-stopped
+    environment:
+      - PUBLIC_API_BASE_URL=https://api.delaneys.dk
+      - DATABASE_URL=http://backend:8080
+      - UNTAPPD_ENCODED_ACCESS_KEY=$UNTAPPD_ENCODED_ACCESS_KEY
+      - UNTAPPD_LOCATION_ID=44148
+      - UNTAPPD_MENU_ID=198848
+
+  backend:
+    image: ghcr.io/mattismoel/delaneys/backend:edge
+    restart: unless-stopped
+    volumes:
+      - pb_data:/pb/pb_data
+
+volumes:
+  caddy_data:
+  caddy_config:
+  pb_data:
+
+configs:
+  caddyfile:
+    file: ./Caddyfile
