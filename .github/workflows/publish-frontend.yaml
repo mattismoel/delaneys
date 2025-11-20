@@ -3,7 +3,6 @@ name: Publish frontend
 env:
   REGISTRY: ghcr.io
   PACKAGE_NAME: frontend
-
 on:
   pull_request:
     branches: ["main", "dev", "edge"]
@@ -37,6 +36,9 @@ jobs:
         with:
           build-args: |
             UNTAPPD_ENCODED_ACCESS_KEY=${{ secrets.UNTAPPD_ENCODED_ACCESS_KEY }}
+            DATABASE_URL=${{ vars.DATABASE_URL }}
+            UNTAPPD_LOCATION_ID=${{ vars.UNTAPPD_LOCATION_ID }}
+            UNTAPPD_MENU_ID=${{ vars.UNTAPPD_MENU_ID }}
           context: ./frontend
           push: true
           tags: |
