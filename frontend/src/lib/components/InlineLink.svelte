@@ -6,6 +6,6 @@
   let { children, ...rest }: Props = $props();
 </script>
 
-<a class={["font-medium underline", rest.class]} {...rest}>
+<a {...rest} class={["font-medium underline", rest.class]}>
   {@render children?.()}
 </a>
