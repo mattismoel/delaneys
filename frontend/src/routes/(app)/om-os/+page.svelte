@@ -63,7 +63,7 @@
     </div>
   </section>
 
-  {#if archivedEmployees.length > 0}
+  {#if nonArchivedEmployees.length > 0}
     <section class="mx-responsive flex flex-col gap-16 py-16">
       <div>
         <h1 class="mb-8 font-serif text-4xl font-bold">Mød holdet</h1>
@@ -77,29 +77,31 @@
 
       <EmployeeDisplay employees={nonArchivedEmployees} />
 
-      <p class="mb-8 w-full leading-relaxed text-text-dark-muted">
-        Derudover en stor tak til vores tidligere {#if archivedEmployees.length > 1}
-          medarbejdere
-        {:else}
-          medarbejder
-        {/if}
-
-        <span>
-          {#if archivedEmployees.length > 1}
-            {archivedEmployees
-              .slice(0, -1)
-              .map((e) => e.name)
-              .join(", ")}
-
-            og
-
-            {archivedEmployees.at(-1)?.name}.
+      {#if archivedEmployees.length > 0}
+        <p class="mb-8 w-full leading-relaxed text-text-dark-muted">
+          Derudover en stor tak til vores tidligere {#if archivedEmployees.length > 1}
+            medarbejdere
           {:else}
-            {archivedEmployees[0].name}.
+            medarbejder
           {/if}
-        </span>
-        Baren havde ikke været den samme uden {#if archivedEmployees.length > 1}dem{:else}dig{/if}.
-      </p>
+
+          <span>
+            {#if archivedEmployees.length > 1}
+              {archivedEmployees
+                .slice(0, -1)
+                .map((e) => e.name)
+                .join(", ")}
+
+              og
+
+              {archivedEmployees.at(-1)?.name}.
+            {:else}
+              {archivedEmployees[0].name}.
+            {/if}
+          </span>
+          Baren havde ikke været den samme uden {#if archivedEmployees.length > 1}dem{:else}dig{/if}.
+        </p>
+      {/if}
     </section>
   {/if}
 </main>
