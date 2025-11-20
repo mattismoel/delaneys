@@ -15,6 +15,11 @@
 			var(--color-border) calc(var(--check-spacing) + var(--check-thickness)));
 }
 
+html,
+body {
+	background-color: var(--color-background);
+}
+
 @theme {
 	--color-*: initial;
 

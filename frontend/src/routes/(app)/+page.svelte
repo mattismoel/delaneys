@@ -26,12 +26,12 @@
 <svelte:window onscroll={(e) => handleScroll(e.currentTarget.scrollY)} />
 
 <main class="min-h-svh">
-  <div class="absolute -z-10 h-full w-full bg-[black]"></div>
+  <div class="absolute h-full w-full bg-[black]"></div>
   <section class="relative min-h-svh place-content-center">
     <img
       src={LandingImage}
       alt=""
-      class="absolute top-0 left-0 -z-10 h-full w-full fade-in-[4s] object-cover brightness-30"
+      class="absolute top-0 left-0 h-full w-full fade-in-[4s] object-cover brightness-30"
     />
 
     <div class="mx-responsive">
