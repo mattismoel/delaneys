@@ -22,6 +22,6 @@ export const actions: Actions = {
 			error(500, "Something went wrong")
 		}
 
-		redirect(303, "/auth/approval")
+		redirect(303, `/auth/verification?email=${formData.email}`)
 	}
 }

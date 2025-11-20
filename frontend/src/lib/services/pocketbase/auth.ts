@@ -9,6 +9,7 @@ export const pocketBaseAuthProvider = (pb: PocketBase): AuthProvider => {
 
 	const register: RegisterHandler = async (data) => {
 		await pb.collection("users").create({ ...data, emailVisibility: true })
+		await pb.collection("users").requestVerification(data.email)
 	}
 
 	const signOut: SignOutHandler = async () => {

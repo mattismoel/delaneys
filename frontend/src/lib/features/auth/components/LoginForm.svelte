@@ -6,6 +6,7 @@
   import Input from "$lib/components/Input.svelte";
   import type { Form } from "$lib/types";
   import type { LoginForm } from "../provider";
+  import InlineLink from "$lib/components/InlineLink.svelte";
 
   type Props = Form<LoginForm>;
 
@@ -35,9 +36,9 @@
         class="w-full"
       />
     </FormField>
-    <a href="/auth/reset-password" class="text-right text-sm hover:underline">
+    <InlineLink href="/auth/reset-password" class="text-right text-sm">
       Glemt din adgangskode?
-    </a>
+    </InlineLink>
   </fieldset>
 
   <ErrorList errors={form.formErrors} />
