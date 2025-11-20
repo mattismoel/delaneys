@@ -84,6 +84,19 @@
     </div>
   </section>
 
+  <section class="grid h-12 w-full grid-cols-5 text-sm">
+    <div class="bg-primary">primary</div>
+    <div class="bg-background">bg-background</div>
+    <div class="bg-surface-100">bg-surface-100</div>
+    <div class="bg-surface-200">bg-surface-200</div>
+    <div class="bg-surface-300">bg-surface-300</div>
+    <div class="bg-border">bg-border</div>
+    <div class="bg-text-dark">bg-text-dark</div>
+    <div class="bg-text-dark-muted">bg-text-muted</div>
+    <div class="bg-text-light">bg-text-light</div>
+    <div class="bg-text-light-muted">bg-text-light-muted</div>
+  </section>
+
   <!-- <section class="mx-responsive flex items-center gap-32 py-16"> -->
   <!--   <h1 -->
   <!--     class="mb-4 max-w-50 font-serif text-4xl leading-[1.2] font-bold wrap-break-word" -->

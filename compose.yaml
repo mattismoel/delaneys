@@ -14,7 +14,7 @@ services:
         target: /etc/caddy/Caddyfile
 
   frontend:
-    image: ghcr.io/mattismoel/delaneys/frontend:edge
+    image: ghcr.io/mattismoel/delaneys/frontend:dev
     restart: unless-stopped
     environment:
       - PUBLIC_API_BASE_URL=https://api.delaneys.dk
@@ -24,7 +24,7 @@ services:
       - UNTAPPD_MENU_ID=198848
 
   backend:
-    image: ghcr.io/mattismoel/delaneys/backend:edge
+    image: ghcr.io/mattismoel/delaneys/backend:dev
     restart: unless-stopped
     volumes:
       - pb_data:/pb/pb_data
