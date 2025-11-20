@@ -24,7 +24,7 @@
             {(i + 1).toString().padStart(2, "0")}.
           </span>
           <div class="flex flex-col">
-            <span class="text-sm font-semibold">{beer.name}</span>
+            <span class="line-clamp-1 text-sm font-semibold">{beer.name}</span>
             <span class="text-sm text-text-dark-muted/75">{beer.brewery}</span>
           </div>
         </a>
