@@ -16,6 +16,12 @@ services:
   frontend:
     image: ghcr.io/mattismoel/delaneys/frontend:main
     restart: unless-stopped
+    environment:
+      - PUBLIC_API_BASE_URL=https://api.delaneys.dk
+      - DATABASE_URL=http://backend:8080
+      - UNTAPPD_ENCODED_ACCESS_KEY=$UNTAPPD_ENCODED_ACCESS_KEY
+      - UNTAPPD_LOCATION_ID=44148
+      - UNTAPPD_MENU_ID=198848
 
   backend:
     image: ghcr.io/mattismoel/delaneys/backend:main

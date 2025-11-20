@@ -2,7 +2,6 @@ import PocketBase from "pocketbase"
 import { error, type Handle } from "@sveltejs/kit"
 
 import { env } from "$env/dynamic/private"
-import { DATABASE_URL } from "$env/static/private"
 
 import { untappdLocationProvider } from "$lib/services/untappd/location"
 import { pocketBaseEmployeeProvider } from "$lib/services/pocketbase/employee"
@@ -11,7 +10,7 @@ import { pocketBaseAuthProvider } from "$lib/services/pocketbase/auth"
 import { pocketbaseFAQProvider } from "$lib/services/pocketbase/faq"
 
 export const handle: Handle = async ({ event, resolve }) => {
-	const pb = new PocketBase(DATABASE_URL)
+	const pb = new PocketBase(env.DATABASE_URL)
 
 	pb.authStore.loadFromCookie(event.request.headers.get("cookie") || "")
 
