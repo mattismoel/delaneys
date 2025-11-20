@@ -22,7 +22,7 @@
       class={[
         "text-center leading-[1.2] transition-[scale]",
         isHighlight
-          ? "mb-6 font-serif text-6xl font-extrabold"
+          ? "mb-6 font-serif text-4xl font-extrabold sm:text-6xl"
           : "mb-2 font-medium",
       ]}>{beer.name}</span
     >
