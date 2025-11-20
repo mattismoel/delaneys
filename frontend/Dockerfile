@@ -24,6 +24,6 @@ ENV NODE_ENV=production
 RUN bun --bun run build
 
 FROM base AS release
-COPY --from=prerelease /usr/src/app/build .
+COPY --from=prerelease /usr/src/app/build ./build
 
 ENTRYPOINT [ "bun", "./build/index.js" ]
