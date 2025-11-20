@@ -37,13 +37,23 @@
 	--font-serif: "Literata", serif;
 
 
-	@keyframes fade-in {
+	@keyframes fade-out {
 		from {
-			opacity: 0;
+			opacity: 100%;
 		}
 
 		to {
-			opacity: 100;
+			opacity: 0%;
+		}
+	}
+
+	@keyframes fade-in {
+		from {
+			opacity: 0%;
+		}
+
+		to {
+			opacity: 100%;
 		}
 	}
 
@@ -68,6 +78,10 @@
 
 @utility fade-in-* {
 	animation: fade-in --value([*]);
+}
+
+@utility fade-out-* {
+	animation: fade-out --value([*]);
 }
 
 @utility hatch-v {
