@@ -13,7 +13,7 @@
   );
 </script>
 
-<main class="@container bg-background">
+<main class="@container bg-[#cccccc]">
   <section
     class="mx-responsive grid grid-cols-1 gap-16 pt-32 pb-16 @5xl:grid-cols-2"
   >
