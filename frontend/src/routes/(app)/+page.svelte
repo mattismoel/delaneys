@@ -45,7 +45,7 @@
             />
           </div>
           <div
-            class="subtitle flex justify-center text-2xl font-semibold text-text-light lg:justify-start"
+            class="subtitle flex justify-center font-medium text-text-light sm:text-2xl lg:justify-start"
           >
             <span>Bar</span>
             <span>&nbsp;&amp;&nbsp;</span>
@@ -54,9 +54,7 @@
         </div>
 
         <div class="action-container">
-          <p
-            class="mb-12 max-w-2xl text-center leading-relaxed text-text-light-muted sm:text-left"
-          >
+          <p class="mb-12 max-w-2xl leading-relaxed text-text-light-muted">
             En hjemmelig specialøl-bar i hjertet af Skibhuskvarteret. Kom og nyd
             en lækker øl med dine venner og bekendte.
           </p>
