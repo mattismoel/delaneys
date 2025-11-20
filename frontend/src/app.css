@@ -18,20 +18,20 @@
 @theme {
 	--color-*: initial;
 
-	--color-primary: oklch(100% 20% 50);
-	--color-background: oklch(from var(--color-primary) l 14% h);
+	--color-primary: #fff0cf;
+	--color-background: #fff3d7;
 
-	--color-surface-100: oklch(from var(--color-primary) 100% 17% h);
-	--color-surface-200: oklch(from var(--color-primary) 96% 16% h);
-	--color-surface-300: oklch(from var(--color-primary) 89% c h);
+	--color-surface-100: #fff3d7;
+	--color-surface-200: #ffe6cc;
+	--color-surface-300: #ffccac;
 
-	--color-border: oklch(from var(--color-primary) 80% c h);
+	--color-border: #e9af90;
 
-	--color-text-dark: oklch(from var(--color-primary) 20% c h);
-	--color-text-dark-muted: oklch(from var(--color-text-dark) 35% c h);
+	--color-text-dark: #300500;
+	--color-text-dark-muted: #845f42;
 
-	--color-text-light: oklch(from var(--color-primary) 100% 10% h);
-	--color-text-light-muted: oklch(from var(--color-text-light) 80% 10% h);
+	--color-text-light: #fff8e8;
+	--color-text-light-muted: #5b2c0d;
 
 	--font-sans: "Poppins", sans-serif;
 	--font-serif: "Literata", serif;
