@@ -71,13 +71,13 @@
 
     <div
       class={[
-        "absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-text-light transition-[opacity,translate] duration-400",
+        "absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col-reverse items-center gap-2 text-text-light transition-[opacity,translate] duration-400 sm:flex-col",
         scrollDirection === -1 && "-translate-y-full opacity-0",
       ]}
     >
       <span class="animate-bounce">Scroll ned</span>
       <span
-        class="icon-[lucide--mouse] animate-[bounce_1s_linear_50ms_infinite] text-2xl"
+        class="icon-[lucide--pointer] animate-[bounce_1s_linear_50ms_infinite] text-2xl sm:icon-[lucide--mouse]"
       ></span>
     </div>
   </section>
