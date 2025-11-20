@@ -18,20 +18,20 @@
 @theme {
 	--color-*: initial;
 
-	--color-primary: #fff0cf;
-	--color-background: #fff3d7;
+	--color-primary: hsl(41.25deg 100% 90.59%);
+	--color-background: hsl(from var(--color-primary) h s 96%);
 
-	--color-surface-100: #fff3d7;
-	--color-surface-200: #ffe6cc;
+	--color-surface-100: hsl(from var(--color-primary) h s 94%);
+	--color-surface-200: hsl(from var(--color-surface-100) calc(h - 10) s calc(l - 3));
 	--color-surface-300: #ffccac;
 
-	--color-border: #e9af90;
+	--color-border: hsl(from var(--color-primary) calc(h - 15) calc(s - 30) calc(l - 15));
 
-	--color-text-dark: #300500;
-	--color-text-dark-muted: #845f42;
+	--color-text-dark: hsl(from var(--color-primary) calc(h - 40) s calc(l - 83));
+	--color-text-dark-muted: hsl(from var(--color-text-dark) calc(h + 15) calc(s - 35) calc(l + 12));
 
-	--color-text-light: #fff8e8;
-	--color-text-light-muted: #5b2c0d;
+	--color-text-light: hsl(from var(--color-primary) h 50% l);
+	--color-text-light-muted: hsl(from var(--color-text-light) calc(h - 10) calc(s - 30) calc(l - 15));
 
 	--font-sans: "Poppins", sans-serif;
 	--font-serif: "Literata", serif;
