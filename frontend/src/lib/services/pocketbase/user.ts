@@ -4,7 +4,10 @@ import PocketBase from "pocketbase"
 
 export const pocketBaseUserProvider = (pb: PocketBase): UserProvider => {
 	const getUsers: GetUsersHandler = async () => {
-		const users = await pb.collection("users").getFullList()
+		const users = await pb.collection("users").getFullList({
+			filter: "verified=true"
+		})
+
 		return user.array().parse(users)
 	}
 
