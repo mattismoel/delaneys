@@ -1,23 +1,9 @@
 <script lang="ts">
   import Accordion from "$lib/components/Accordion.svelte";
   import InlineLink from "$lib/components/InlineLink.svelte";
-  // import Map from "$lib/components/Map.svelte";
-
   let { data } = $props();
 </script>
 
-{#snippet contactEntry(title: string, text: string, href: string | undefined)}
-  <div class="flex flex-col items-center">
-    <h3 class="font-serif font-bold">{title}</h3>
-    {#if href}
-      <a {href}>
-        {text}
-      </a>
-    {:else}
-      <span>{text}</span>
-    {/if}
-  </div>
-{/snippet}
 
 <main class="flex min-h-svh flex-col py-32">
   <section class="mx-responsive pb-8">
