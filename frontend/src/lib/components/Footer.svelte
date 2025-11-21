@@ -61,7 +61,7 @@
       class="flex flex-col justify-between gap-16 md:flex-row lg:grid-cols-2"
     >
       <div class="flex flex-col justify-between gap-6">
-        <Logo variant="dark" height="3rem" width="min-content" />
+        <Logo variant="dark" height="3rem" class="w-min" />
         <div class="flex flex-col gap-8">
           <ul class="flex flex-col gap-2">
             {@render contactEntry(
