@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LandingImage from "$lib/assets/landing.jpg";
+  import LandingImage from "$lib/assets/bar-3.jpg";
   import ChairsImage from "$lib/assets/bar-2.jpg";
   import TapImage from "$lib/assets/bar-3.jpg";
   import GlassImage from "$lib/assets/glass.jpg";
@@ -34,12 +34,12 @@
 <svelte:window onscroll={(e) => handleScroll(e.currentTarget.scrollY)} />
 
 <main class="min-h-svh">
-  <div class="absolute h-full w-full bg-[black]"></div>
+  <div class="absolute h-full w-full bg-[black] sm:block hidden"></div>
   <section class="relative min-h-svh place-content-center">
     <img
       src={LandingImage}
-      alt=""
-      class="absolute top-0 left-0 h-full w-full fade-in-[4s] object-cover brightness-30"
+      alt="Hanerne på baren"
+      class="absolute top-0 left-0 hidden h-full w-full fade-in-[4s] object-cover brightness-30 sm:block"
     />
 
     <div class="mx-responsive">
@@ -49,11 +49,17 @@
             <Logo
               trace
               variant="light"
-              class="translate-x-0 drop-shadow-xl drop-shadow-[black]/25 lg:-translate-x-[12%]"
+              class="hidden sm:block translate-x-0 drop-shadow-xl drop-shadow-[black]/25 lg:-translate-x-[12%]"
+            />
+
+            <Logo
+              trace
+              variant="dark"
+              class="sm:hidden translate-x-0 drop-shadow-xl drop-shadow-[black]/25 lg:-translate-x-[12%]"
             />
           </div>
           <div
-            class="subtitle flex justify-center font-medium text-text-light sm:text-2xl lg:justify-start"
+            class="subtitle flex justify-center font-medium sm:text-text-light sm:text-2xl lg:justify-start"
           >
             <span>Bar</span>
             <span>&nbsp;&amp;&nbsp;</span>
@@ -62,15 +68,22 @@
         </div>
 
         <div class="action-container">
-          <p class="mb-12 max-w-2xl leading-relaxed text-text-light-muted">
+          <p class="mb-12 max-w-2xl leading-relaxed text-text-dark-muted sm:text-text-light-muted">
             En hjemmelig specialøl-bar i hjertet af Skibhuskvarteret. Kom og nyd
             en lækker øl med dine venner og bekendte.
           </p>
 
           <div class="flex flex-col-reverse gap-2 sm:flex-row">
-            <Button variant="ghost" href="/om-os" class="w-full sm:w-fit"
+
+            <Button variant="ghost" href="/om-os" class="hidden sm:flex w-full sm:w-fit"
               >Læs mere</Button
             >
+
+            <Button variant="outline-dark" href="/om-os" class="sm:hidden w-full sm:w-fit"
+              >Læs mere</Button
+            >
+
+
             <Button href="/menu" class="w-full sm:w-fit">Se ølmenu</Button>
           </div>
         </div>
