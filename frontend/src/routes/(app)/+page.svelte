@@ -23,6 +23,14 @@
   };
 </script>
 
+<svelte:head>
+  <title>Delaney's Bar&nbsp;&amp;&nbsp;Bottleshop</title>
+  <meta
+    name="description"
+    content="En hjemmelig specialøl-bar i hjertet af Skibhuskvarteret. Kom og nyd en lækker øl med dine venner og bekendte."
+  />
+</svelte:head>
+
 <svelte:window onscroll={(e) => handleScroll(e.currentTarget.scrollY)} />
 
 <main class="min-h-svh">

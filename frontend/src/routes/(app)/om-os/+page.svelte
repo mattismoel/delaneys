@@ -13,6 +13,14 @@
   );
 </script>
 
+<svelte:head>
+  <title>Delaney's | Om os</title>
+  <meta
+    name="description"
+    content="Lær mere om historien om vores bar, samt vores brede sortiment af øl"
+  />
+</svelte:head>
+
 <main class="@container bg-background">
   <section
     class="mx-responsive grid grid-cols-1 gap-16 pt-32 pb-16 @5xl:grid-cols-2"
