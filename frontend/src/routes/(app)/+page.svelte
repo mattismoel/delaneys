@@ -26,12 +26,12 @@
 <svelte:window onscroll={(e) => handleScroll(e.currentTarget.scrollY)} />
 
 <main class="min-h-svh">
-  <div class="absolute -z-10 h-full w-full bg-[black]"></div>
+  <div class="absolute h-full w-full bg-[black]"></div>
   <section class="relative min-h-svh place-content-center">
     <img
       src={LandingImage}
       alt=""
-      class="absolute top-0 left-0 -z-10 h-full w-full fade-in-[4s] object-cover brightness-30"
+      class="absolute top-0 left-0 h-full w-full fade-in-[4s] object-cover brightness-30"
     />
 
     <div class="mx-responsive">
@@ -45,7 +45,7 @@
             />
           </div>
           <div
-            class="subtitle flex justify-center text-2xl font-semibold text-text-light lg:justify-start"
+            class="subtitle flex justify-center font-medium text-text-light sm:text-2xl lg:justify-start"
           >
             <span>Bar</span>
             <span>&nbsp;&amp;&nbsp;</span>
@@ -54,9 +54,7 @@
         </div>
 
         <div class="action-container">
-          <p
-            class="mb-12 max-w-2xl text-center leading-relaxed text-text-light-muted sm:text-left"
-          >
+          <p class="mb-12 max-w-2xl leading-relaxed text-text-light-muted">
             En hjemmelig specialøl-bar i hjertet af Skibhuskvarteret. Kom og nyd
             en lækker øl med dine venner og bekendte.
           </p>
@@ -73,31 +71,16 @@
 
     <div
       class={[
-        "absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-text-light transition-[opacity,translate] duration-400",
-        scrollDirection === -1 && "-translate-y-full opacity-0",
+        "absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col-reverse items-center gap-2 text-text-light transition-[opacity,translate] duration-400 sm:flex-col",
+        scrollDirection === -1 ? "-translate-y-full opacity-0" : "opacity-65",
       ]}
     >
-      <span class="animate-bounce">Scroll ned</span>
+      <span class="animate-bounce text-sm">Scroll ned</span>
       <span
-        class="icon-[lucide--mouse] animate-[bounce_1s_linear_50ms_infinite] text-2xl"
+        class="icon-[lucide--pointer] animate-[bounce_1s_linear_50ms_infinite] text-xl sm:icon-[lucide--mouse]"
       ></span>
     </div>
   </section>
-
-  <!-- <section class="mx-responsive flex items-center gap-32 py-16"> -->
-  <!--   <h1 -->
-  <!--     class="mb-4 max-w-50 font-serif text-4xl leading-[1.2] font-bold wrap-break-word" -->
-  <!--   > -->
-  <!--     Brug for at slukke tørsten? -->
-  <!--   </h1> -->
-  <!--   <p class="mb-8 w-full max-w-xl leading-relaxed text-text-dark-muted"> -->
-  <!--     Hos os er der plads til alle, der sætter pris på den gode stemning og et -->
-  <!--     nøje udvalgt sortiment af øl — alt fra kolde fadøl til spændende udvalg af -->
-  <!--     flasker og dåser. Det er et sted, hvor gode minder -->
-  <!--     skabes&nbsp;&mdash;&nbsp;omend til en quiz-aften, til live-musik eller -->
-  <!--     blot en hyggelig snak i baren. -->
-  <!--   </p> -->
-  <!-- </section> -->
 
   <LeaderboardDisplay
     beers={data.menu.beers}

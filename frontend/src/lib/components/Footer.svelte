@@ -34,7 +34,7 @@
         "hover:text-text-dark hover:underline",
       ]}
     >
-      <span class={icon}></span>
+      <span class="{icon} shrink-0"></span>
       {value}
     </a>
   </li>

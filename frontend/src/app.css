@@ -18,20 +18,20 @@
 @theme {
 	--color-*: initial;
 
-	--color-primary: oklch(100% 20% 50);
-	--color-background: oklch(from var(--color-primary) l 14% h);
+	--color-primary: hsl(41.25deg 100% 90.59%);
+	--color-background: hsl(from var(--color-primary) h s 96%);
 
-	--color-surface-100: oklch(from var(--color-primary) 100% 17% h);
-	--color-surface-200: oklch(from var(--color-primary) 96% 16% h);
-	--color-surface-300: oklch(from var(--color-primary) 89% c h);
+	--color-surface-100: hsl(from var(--color-primary) h s 94%);
+	--color-surface-200: hsl(from var(--color-surface-100) calc(h - 10) s calc(l - 3));
+	--color-surface-300: #ffccac;
 
-	--color-border: oklch(from var(--color-primary) 80% c h);
+	--color-border: hsl(from var(--color-primary) calc(h - 15) calc(s - 30) calc(l - 15));
 
-	--color-text-dark: oklch(from var(--color-primary) 20% c h);
-	--color-text-dark-muted: oklch(from var(--color-text-dark) 35% c h);
+	--color-text-dark: hsl(from var(--color-primary) calc(h - 40) s calc(l - 83));
+	--color-text-dark-muted: hsl(from var(--color-text-dark) calc(h + 15) calc(s - 35) calc(l + 12));
 
-	--color-text-light: oklch(from var(--color-primary) 100% 10% h);
-	--color-text-light-muted: oklch(from var(--color-text-light) 80% 10% h);
+	--color-text-light: hsl(from var(--color-primary) h 50% l);
+	--color-text-light-muted: hsl(from var(--color-text-light) calc(h - 10) calc(s - 30) calc(l - 15));
 
 	--font-sans: "Poppins", sans-serif;
 	--font-serif: "Literata", serif;

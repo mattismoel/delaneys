@@ -16,7 +16,7 @@
       onclick={() => (isMenuShown = false)}
       {title}
       class={[
-        "inline-block p-2 text-center text-2xl decoration-2 underline-offset-3",
+        "inline-block p-2 text-center text-3xl decoration-2 underline-offset-3",
         "before:invisible before:block before:h-0 before:overflow-hidden before:font-bold before:content-[attr(title)]",
         "sm:p-4 sm:text-lg",
         "hover:underline",
@@ -67,7 +67,7 @@
   >
     <nav
       class={[
-        "rounded-sm border border-border bg-surface-100 p-8 pb-[calc((100lvh-100svh)+4rem)] transition-transform",
+        "rounded-t-sm border border-border bg-surface-100 px-8 pt-12 pb-[calc((100lvh-100svh)+4rem)] transition-transform",
         isMenuShown ? "translate-y-0" : "translate-y-full",
       ]}
     >
