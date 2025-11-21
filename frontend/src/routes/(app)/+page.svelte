@@ -55,7 +55,7 @@
             <Logo
               trace
               variant="dark"
-              class="sm:hidden translate-x-0 drop-shadow-xl drop-shadow-[black]/25 lg:-translate-x-[12%]"
+              class="sm:hidden translate-x-0 lg:-translate-x-[12%]"
             />
           </div>
           <div
