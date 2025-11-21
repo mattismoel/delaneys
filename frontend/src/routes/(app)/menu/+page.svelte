@@ -4,6 +4,14 @@
   let { data } = $props();
 </script>
 
+<svelte:head>
+  <title>Delaney's | Ølmenu</title>
+  <meta
+    name="description"
+    content="Se hvad vi har af spænende øl på hanerne. Vi skifter ofte ud, så hold øje med hvad der er nyt hér."
+  />
+</svelte:head>
+
 <main
   class="@container mx-responsive flex min-h-svh items-center justify-center py-20 pt-28"
 >

@@ -4,6 +4,13 @@
   let { data } = $props();
 </script>
 
+<svelte:head>
+  <title>Delaney's | Kontakt os</title>
+  <meta
+    name="description"
+    content="Er du nysgerrig eller i tvivl om noget, så kontakt os endelig!"
+  />
+</svelte:head>
 
 <main class="flex min-h-svh flex-col py-32">
   <section class="mx-responsive pb-8">
