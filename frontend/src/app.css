@@ -19,7 +19,7 @@
 	--color-*: initial;
 
 	--color-primary: hsl(37deg 100% 88%);
-	--color-background: hsl(from var(--color-primary) h s 96%);
+	--color-background: hsl(from var(--color-primary) h s 95%);
 
 	--color-surface-100: hsl(from var(--color-primary) h s 94%);
 	--color-surface-200: hsl(from var(--color-surface-100) calc(h - 10) s calc(l - 3));
