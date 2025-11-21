@@ -45,7 +45,7 @@
     <div class="mx-responsive">
       <div>
         <div class="logo-container mb-12">
-          <div class="flex w-full items-center justify-center">
+          <div class="flex w-full items-center justify-center min-h-32">
             <Logo
               trace
 							height="100%"
@@ -55,9 +55,9 @@
 
             <Logo
               trace
-							height="100%"
+							height="12rem"
               variant="dark"
-              class="sm:hidden translate-x-0 lg:-translate-x-[12%]"
+              class="bg-[red] sm:hidden translate-x-0 lg:-translate-x-[12%]"
             />
           </div>
           <div
