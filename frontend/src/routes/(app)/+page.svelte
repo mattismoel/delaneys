@@ -55,7 +55,7 @@
             <Logo
               trace
               variant="dark"
-              class="sm:hidden translate-x-0 drop-shadow-xl drop-shadow-[black]/25 lg:-translate-x-[12%]"
+              class="sm:hidden translate-x-0 lg:-translate-x-[12%]"
             />
           </div>
           <div
@@ -92,7 +92,7 @@
 
     <div
       class={[
-        "absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col-reverse items-center gap-2 text-text-light transition-[opacity,translate] duration-400 sm:flex-col",
+        "absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col-reverse items-center gap-2 sm:text-text-light transition-[opacity,translate] duration-400 sm:flex-col",
         scrollDirection === -1 ? "-translate-y-full opacity-0" : "opacity-65",
       ]}
     >
