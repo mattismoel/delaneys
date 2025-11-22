@@ -57,7 +57,7 @@
               trace
 							height="12rem"
               variant="dark"
-              class="bg-[red] sm:hidden translate-x-0 lg:-translate-x-[12%]"
+              class="sm:hidden translate-x-0 lg:-translate-x-[12%]"
             />
           </div>
           <div
