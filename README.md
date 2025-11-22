@@ -12,8 +12,8 @@ though only setup files for automatically setting up the dockerised instance
 upon build.
 
 In *frontend* the website itself resides, containing a
-[SvelteKit](https://sveltekit.dev) web application which again is dockerised
-to a node server using [Bun](https://bun.dev).
+[SvelteKit](https://svelte.dev/docs/kit) web application which again is dockerised
+to a node server using [Bun](https://bun.sh).
 
 
 # Building
@@ -57,6 +57,9 @@ The development setup is as easy as running:
 ```
 docker compose -f ./compose.dev.yaml up
 ```
+
+> The development Docker commands are assumed to be run in the "default" Docker 
+> context, which can be used running `docker context use default`.
 
 Now the dev website can be opened on *https://localhost*. The PocketBase API
 can be found on *https://api.localhost*, and the dashboard on 
