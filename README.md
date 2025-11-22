@@ -16,7 +16,7 @@ In *frontend* the website itself resides, containing a
 to a node server using [Bun](https://bun.sh).
 
 
-# Building
+# Deployment
 
 The project is built with 
 [Docker Swarm](https://https://docs.docker.com/engine/swarm/) and 
@@ -38,6 +38,22 @@ docker context use <context_nane>
 ```
 
 Now all Docker commands are run directly on the remote machine.
+
+## CI/CD
+
+The project makes use of GitHub Actions for a simple CI/CD workflow. Whenever
+there are changes to either files in *frontend* or *backend*, the respective
+deployment workflow runs, resulting in an image being published to the 
+GitHub Conatainer Registry of this repository:
+
+
+**Frontend**: ghcr.io/mattismoel/delaneys/*frontend:[branch]*
+
+**Backend**: ghcr.io/mattismoel/delaneys/*backend:[branch]*
+
+
+Whenever the image deployment workflows have finished, you are ready to deploy
+to the remote host server.
 
 Assuming you are in the project working directory, where the *compose.yaml* file
 exists, simply run:
@@ -64,3 +80,4 @@ docker compose -f ./compose.dev.yaml up
 Now the dev website can be opened on *https://localhost*. The PocketBase API
 can be found on *https://api.localhost*, and the dashboard on 
 *https://api.localhost/_/*.
+
