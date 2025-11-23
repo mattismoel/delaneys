@@ -98,7 +98,7 @@
 
 <style>
   .strokes {
-    --heading-duration: 2s;
+    --heading-duration: 1.8s;
     /* D-line */
     --duration-fraction-1: 0.1;
 
