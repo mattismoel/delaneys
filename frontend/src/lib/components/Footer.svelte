@@ -2,6 +2,7 @@
   import { dayName, type OpeningHour } from "$lib/features/location/location";
   import KontrolRapport from "$lib/assets/kontrol-rapport.gif";
   import Logo from "./Logo.svelte";
+  import InlineLink from "./InlineLink.svelte";
 
   type Props = {
     hours: OpeningHour[];
@@ -26,17 +27,11 @@
 {/snippet}
 
 {#snippet contactEntry(href: string, value: string, icon: string)}
-  <li>
-    <a
-      {href}
-      class={[
-        "flex items-center gap-4 text-text-dark-muted",
-        "hover:text-text-dark hover:underline",
-      ]}
-    >
-      <span class="{icon} shrink-0"></span>
+  <li class="flex items-center gap-4">
+    <span class="{icon} shrink-0"></span>
+    <InlineLink {href} class={["w-fit text-text-dark-muted"]}>
       {value}
-    </a>
+    </InlineLink>
   </li>
 {/snippet}
 

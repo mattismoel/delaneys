@@ -16,11 +16,11 @@
       onclick={() => (isMenuShown = false)}
       {title}
       class={[
-        "inline-block p-2 text-center text-3xl decoration-2 underline-offset-3",
+        "inline-block p-2 text-center text-3xl underline decoration-transparent decoration-1 underline-offset-3 transition-colors",
         "before:invisible before:block before:h-0 before:overflow-hidden before:font-bold before:content-[attr(title)]",
         "sm:p-4 sm:text-lg",
-        "hover:underline",
-        isCurrent && "font-bold underline",
+        "hover:decoration-text-dark/30",
+        isCurrent && "font-bold",
       ]}
       aria-current={isCurrent ? "page" : undefined}
     >
@@ -41,7 +41,12 @@
     class="flex h-8 items-center justify-center sm:hidden"
     aria-label="Menu button"
   >
-    <span class={["icon-[lucide--menu] transition-[rotate]", isMenuShown && "-rotate-90"]}></span>
+    <span
+      class={[
+        "icon-[lucide--menu] transition-[rotate]",
+        isMenuShown && "-rotate-90",
+      ]}
+    ></span>
   </button>
 
   <nav class="hidden sm:flex">
