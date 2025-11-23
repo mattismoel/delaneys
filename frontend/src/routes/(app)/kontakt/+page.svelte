@@ -19,7 +19,7 @@
       Hvis du er i tvivl om noget, eller blot er nysgerrig er du altid velkommen
       til at tage fat i os på <InlineLink href="mailto:info@delaneys.dk"
         >info@delaneys.dk</InlineLink
-      >, eller <InlineLink href="tel:+4541109940">+45 41 10 99 40</InlineLink>.
+      > eller <InlineLink href="tel:+4541109940">+45 41 10 99 40</InlineLink>.
       Da vi får mange henvendelser anbefaler vi først og fremmest at tage et kig
       under
       <i>ofte stillede spørgsmål</i>. Vi glæder os til at høre fra dig, eller

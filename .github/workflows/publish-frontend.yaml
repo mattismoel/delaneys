@@ -4,10 +4,6 @@ env:
   REGISTRY: ghcr.io
   PACKAGE_NAME: frontend
 on:
-  pull_request:
-    branches: ["main", "dev", "edge"]
-    paths:
-      - "frontend/**"
   push:
     branches: ["main", "dev", "edge"]
     paths:

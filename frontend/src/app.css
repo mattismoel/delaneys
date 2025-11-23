@@ -4,7 +4,7 @@
 @plugin "@iconify/tailwind4";
 
 :root {
-	--heading-duration: 2s;
+	--heading-duration: 1.6s;
 
 	--check-spacing: 2px;
 	--check-thickness: 1px;
@@ -22,7 +22,7 @@
 	--color-background: hsl(from var(--color-primary) h s 95%);
 
 	--color-surface-100: hsl(from var(--color-primary) h s 94%);
-	--color-surface-200: hsl(from var(--color-surface-100) calc(h - 10) s calc(l - 3));
+	--color-surface-200: hsl(from var(--color-surface-100) calc(h - 5) s calc(l - 3));
 	--color-surface-300: #ffccac;
 
 	--color-border: hsl(from var(--color-primary) calc(h - 15) calc(s - 30) calc(l - 15));

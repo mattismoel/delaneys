@@ -2,6 +2,7 @@
   import type { PropsWithClass } from "$lib/types";
   import type { Beer, Menu } from "$lib/features/location/location";
   import { Randomiser } from "$lib/stores/random.svelte";
+  import InlineLink from "./InlineLink.svelte";
 
   const MIN_EXCLUSIVE_RATING = 3.71;
 
@@ -91,16 +92,16 @@
 
         <!-- LABEL HOLDER -->
         <div
-          class="hatch-v relative h-2 w-2.5 border-r border-l bg-surface-300"
+          class="hatch-v relative h-2 w-2.5 border-r border-l bg-surface-200"
         ></div>
 
         <div
-          class="hatch-h relative aspect-square h-(--dispenser-thickness) w-16 border-t-2 border-b-2 bg-surface-200 group-first:border-l-2 group-last:border-r-2"
+          class="hatch-h relative aspect-square h-(--dispenser-thickness) w-16 border-t-2 border-b-2 bg-surface-100 group-first:border-l-2 group-last:border-r-2"
         ></div>
 
         <!-- TAP END -->
         <div
-          class="hatch-v relative h-3 w-2 rounded-b-xs border-r border-b border-l bg-surface-200"
+          class="hatch-v relative h-3 w-2 rounded-b-xs border-r border-b border-l bg-surface-100"
         ></div>
       </div>
     {/each}
@@ -116,13 +117,11 @@
           beer.id === activeId ? "fade-in" : "fade-out",
         ]}
       >
-        <a href={beer.url} class="w-fit">
-          <h1
-            class="mb-2 flex min-h-[1em] max-w-sm gap-4 text-2xl font-semibold hover:underline"
-          >
+        <InlineLink href={beer.url} class="mb-2 w-fit">
+          <h1 class="flex min-h-[1em] max-w-sm gap-4 text-2xl font-semibold">
             {beer?.name}
           </h1>
-        </a>
+        </InlineLink>
 
         <div class="mb-2 text-text-dark-muted">
           <p>{beer.brewery}</p>
@@ -146,7 +145,7 @@
   <div class="relative">
     <!-- MIDDLE POLE -->
     <div
-      class="hatch-v absolute -bottom-2 left-1/2 z-10 h-20 w-[calc(var(--dispenser-thickness)+5px)] -translate-x-1/2 rounded-t-xs border-2 bg-surface-200"
+      class="hatch-v absolute -bottom-2 left-1/2 z-10 h-20 w-[calc(var(--dispenser-thickness)+5px)] -translate-x-1/2 rounded-t-xs border-2 bg-surface-100"
     ></div>
 
     <div class="flex gap-(--dispenser-thickness)">

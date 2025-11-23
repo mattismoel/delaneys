@@ -1,6 +1,6 @@
 <script lang="ts">
   import LandingImage from "$lib/assets/photos/DSCF2840.JPG";
-  import GamesImage from "$lib/assets/photos/DSCF2841.JPG";
+  import GamesImage from "$lib/assets/photos/DSCF2841.webp";
   import QuizImage from "$lib/assets/bar-2.jpg";
   import TastingImage from "$lib/assets/photos/DSCF2829.JPG";
   import Button from "$lib/components/Button.svelte";
@@ -169,14 +169,14 @@
 
 <style>
   :root {
-    --subtitle-duration: 0.6s;
-    --subtitle-delay: 0.4s;
+    --subtitle-duration: 0.55s;
+    --subtitle-delay: 0.3s;
   }
 
   .subtitle {
     span {
       opacity: 0;
-      animation: word-pop-in 0.5s linear forwards;
+      animation: word-pop-in 0.45s linear forwards;
     }
 
     span:nth-of-type(1) {
@@ -200,7 +200,7 @@
 
   .logo-container {
     transform: translateY(20%);
-    animation: logo-move-up 0.5s ease-in-out
+    animation: logo-move-up 0.45s ease-in-out
       calc(
         var(--heading-duration) + var(--subtitle-duration) +
           var(--subtitle-delay)
@@ -213,7 +213,7 @@
     opacity: 0;
     animation: action-slide-in 0.7s ease-out forwards;
     animation-delay: calc(
-      var(--heading-duration) + var(--subtitle-duration) + 0.85s
+      var(--heading-duration) + var(--subtitle-duration) + 0.5s
     );
   }
 
