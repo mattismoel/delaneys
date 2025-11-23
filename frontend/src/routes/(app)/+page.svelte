@@ -34,7 +34,7 @@
 <svelte:window onscroll={(e) => handleScroll(e.currentTarget.scrollY)} />
 
 <main class="min-h-svh">
-  <div class="absolute h-full w-full bg-[black] sm:block hidden"></div>
+  <div class="absolute hidden h-full w-full bg-[black] sm:block"></div>
   <section class="relative min-h-svh place-content-center">
     <img
       src={LandingImage}
@@ -45,23 +45,22 @@
     <div class="mx-responsive">
       <div>
         <div class="logo-container mb-12">
-          <div class="flex w-full items-center justify-center min-h-32">
+          <div class="flex min-h-32 w-full items-center justify-center">
             <Logo
               trace
-							height="100%"
               variant="light"
-              class="hidden sm:block translate-x-0 drop-shadow-xl drop-shadow-[black]/25 lg:-translate-x-[12%]"
+              class="hidden h-full w-full translate-x-0 drop-shadow-xl drop-shadow-[black]/25 sm:block lg:-translate-x-[12%]"
             />
 
             <Logo
               trace
-							height="12rem"
+              height="12rem"
               variant="dark"
-              class="sm:hidden translate-x-0 lg:-translate-x-[12%]"
+              class="translate-x-0 sm:hidden lg:-translate-x-[12%]"
             />
           </div>
           <div
-            class="subtitle flex justify-center font-medium sm:text-text-light sm:text-2xl lg:justify-start"
+            class="subtitle flex justify-center font-medium sm:text-2xl sm:text-text-light lg:justify-start"
           >
             <span>Bar</span>
             <span>&nbsp;&amp;&nbsp;</span>
@@ -70,21 +69,25 @@
         </div>
 
         <div class="action-container">
-          <p class="mb-12 max-w-xl leading-relaxed text-text-dark-muted sm:text-text-light-muted">
+          <p
+            class="mb-12 max-w-xl leading-relaxed text-text-dark-muted sm:text-text-light-muted"
+          >
             En hjemmelig specialøl-bar i hjertet af Skibhuskvarteret. Kom og nyd
             en lækker øl med dine venner og bekendte.
           </p>
 
           <div class="flex flex-col-reverse gap-2 sm:flex-row">
-
-            <Button variant="ghost" href="/om-os" class="hidden sm:flex w-full sm:w-fit"
-              >Læs mere</Button
+            <Button
+              variant="ghost"
+              href="/om-os"
+              class="hidden w-full sm:flex sm:w-fit">Læs mere</Button
             >
 
-            <Button variant="outline-dark" href="/om-os" class="sm:hidden w-full sm:w-fit"
-              >Læs mere</Button
+            <Button
+              variant="outline-dark"
+              href="/om-os"
+              class="w-full sm:hidden sm:w-fit">Læs mere</Button
             >
-
 
             <Button href="/menu" class="w-full sm:w-fit">Se ølmenu</Button>
           </div>
@@ -94,7 +97,7 @@
 
     <div
       class={[
-        "absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col-reverse items-center gap-2 sm:text-text-light transition-[opacity,translate] duration-400 sm:flex-col",
+        "absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col-reverse items-center gap-2 transition-[opacity,translate] duration-400 sm:flex-col sm:text-text-light",
         scrollDirection === -1 ? "-translate-y-full opacity-0" : "opacity-65",
       ]}
     >
