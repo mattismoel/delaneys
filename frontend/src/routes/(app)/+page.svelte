@@ -1,6 +1,6 @@
 <script lang="ts">
   import LandingImage from "$lib/assets/photos/DSCF2840.JPG";
-  import GamesImage from "$lib/assets/photos/DSCF2841.JPG";
+  import GamesImage from "$lib/assets/photos/DSCF2841.webp";
   import QuizImage from "$lib/assets/bar-2.jpg";
   import TastingImage from "$lib/assets/photos/DSCF2829.JPG";
   import Button from "$lib/components/Button.svelte";
