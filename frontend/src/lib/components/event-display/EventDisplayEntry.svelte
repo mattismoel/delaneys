@@ -46,7 +46,7 @@
     loading="lazy"
     class={[
       "h-full w-full scale-105 object-cover transition-[filter,scale] ease-in-out",
-      "brightness-30 group-[.in-view]:brightness-100 sm:group-[.in-view]:brightness-30 sm:group-[.in-view]:group-hover:scale-101 sm:group-[.in-view]:group-hover:brightness-100",
+      "brightness-50 group-[.in-view]:brightness-100 sm:group-[.in-view]:brightness-50 sm:group-[.in-view]:group-hover:scale-101 sm:group-[.in-view]:group-hover:brightness-100",
       isCurrent && "sm:group-[.in-view]:brightness-100",
     ]}
   />
