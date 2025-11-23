@@ -29,7 +29,7 @@
     ghost:
       "bg-primary/10 text-text-light border-primary/15 hover:bg-primary/15",
     "outline-dark":
-      "border-border font-medium hover:bg-text-dark hover:text-text-light",
+      "border-border font-medium hover:bg-text-dark hover:text-text-light hover:border-text-dark",
   };
 
   let { variant = "primary", children, ...rest }: Props = $props();
