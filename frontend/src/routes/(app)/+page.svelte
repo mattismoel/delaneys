@@ -1,8 +1,8 @@
 <script lang="ts">
-  import LandingImage from "$lib/assets/bar-3.jpg";
-  import ChairsImage from "$lib/assets/bar-2.jpg";
-  import TapImage from "$lib/assets/bar-3.jpg";
-  import GlassImage from "$lib/assets/glass.jpg";
+  import LandingImage from "$lib/assets/photos/DSCF2840.JPG";
+  import GamesImage from "$lib/assets/photos/DSCF2841.JPG";
+  import QuizImage from "$lib/assets/bar-2.jpg";
+  import TastingImage from "$lib/assets/photos/DSCF2829.JPG";
   import Button from "$lib/components/Button.svelte";
   import Logo from "$lib/components/Logo.svelte";
   import LeaderboardDisplay from "$lib/components/leaderboard-display/LeaderboardDisplay.svelte";
@@ -117,19 +117,19 @@
           title: "Quiz",
           description:
             "Vi afholder quiz-aftener med temaer i øst og vest. Kom og vær med! Yderligere information om aftenerne kan findes på vores sociale medier.",
-          src: TapImage,
+          src: QuizImage,
         },
         {
           title: "Brætspil",
           description:
             "Hvis du er den spillende type, har vi et stort udvalg af brætspil, som er frit tilgængelige.",
-          src: ChairsImage,
+          src: GamesImage,
         },
         {
           title: "Ølsmagning",
           description:
             "På baren afholder vi ølsmagninger - ofte i direkte samarbejde med bryggerierne og leverandørene selv. Kom og vær med til, at smage nye spændende special-øl.",
-          src: GlassImage,
+          src: TastingImage,
         },
       ]}
     />
