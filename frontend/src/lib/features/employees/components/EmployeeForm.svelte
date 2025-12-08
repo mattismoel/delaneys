@@ -1,75 +1,77 @@
 <script lang="ts">
-  import type { ChangeEventHandler, HTMLFormAttributes } from "svelte/elements";
-  import {
-    type Employee,
-    type CreateEmployeeForm,
-    type UpdateEmployeeForm,
-  } from "../employee";
+  import type { ChangeEventHandler } from "svelte/elements";
+  import { type Employee } from "../employee";
   import Input from "$lib/components/Input.svelte";
   import Button from "$lib/components/Button.svelte";
   import AvatarSelector from "$lib/components/AvatarSelector.svelte";
-  import type { Form } from "$lib/types";
   import FormField from "$lib/components/FormField.svelte";
-  import { enhance } from "$app/forms";
+  import type { createEmployee, updateEmployee } from "../employees.remote";
+  import ErrorList from "$lib/components/ErrorList.svelte";
 
-  type BaseProps = HTMLFormAttributes;
+  type CreateProps = {
+    variant: "create";
+    form: typeof createEmployee;
+  };
 
-  type CreateProps = BaseProps &
-    Form<CreateEmployeeForm> & {
-      type: "create";
-      employee?: never;
-    };
-
-  type UpdateProps = BaseProps &
-    Form<UpdateEmployeeForm> & {
-      type: "update";
-      employee: Employee;
-    };
+  type UpdateProps = {
+    variant: "update";
+    form: typeof updateEmployee;
+    employee: Employee;
+  };
 
   type Props = CreateProps | UpdateProps;
 
-  let { type, form, employee, ...rest }: Props = $props();
+  let { ...rest }: Props = $props();
+
+  const { name, role, src } = $derived(rest.form.fields);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.currentTarget.files?.item(0);
     if (!file) return;
   };
+
+  $effect(() => {
+    if (rest.variant === "create") return;
+    rest.form.fields.set({
+      ...rest.employee,
+      employeeId: rest.employee.id,
+      src: undefined,
+    });
+  });
 </script>
 
 <form
-  {...rest}
-  method="POST"
+  {...rest.form}
   enctype="multipart/form-data"
   class="flex w-full max-w-sm flex-col gap-6"
-  use:enhance
 >
-  <FormField errors={form.fieldErrors?.src}>
+  {#if rest.variant === "update"}
+    <input {...rest.form.fields.employeeId.as("hidden", rest.employee.id)} />
+  {/if}
+
+  <FormField errors={src.issues()?.map((i) => i.message)}>
     <AvatarSelector
-      name="src"
-      src={employee?.src || undefined}
+      {...src.as("file")}
+      src={rest.variant === "update" ? rest.employee.src : undefined}
       onchange={handleChange}
     />
   </FormField>
 
   <fieldset class="flex flex-col gap-2">
-    <FormField errors={form.fieldErrors?.name}>
-      <Input
-        placeholder="Navn"
-        name="name"
-        value={form.data?.name ?? employee?.name}
-      />
+    <FormField errors={name.issues()?.map((i) => i.message)}>
+      <Input {...name.as("text")} placeholder="Navn" />
     </FormField>
-    <Input
-      placeholder="Rolle"
-      name="role"
-      value={form.data?.role ?? employee?.role}
-    />
+    <FormField errors={role.issues()?.map((i) => i.message)}>
+      <Input {...role.as("text")} placeholder="Rolle" />
+    </FormField>
   </fieldset>
+
+  <ErrorList errors={rest.form.fields.issues()?.map((i) => i.message)} />
 
   <Button>
     <span class="icon-[lucide--upload]"></span>
 
-    {#if type === "update"}
+    {#if rest.variant === "update"}
       Opdatér
     {:else}
       Tilføj
