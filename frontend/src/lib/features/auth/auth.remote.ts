@@ -26,10 +26,8 @@ export const requestPasswordReset = form(
     const { locals } = getRequestEvent();
     try {
       await locals.authProvider.requestPasswordReset(email);
-      console.log("HEOOOO");
       return { success: true };
     } catch (_) {
-      console.log("nOOOO");
       return { success: false };
     }
   },
