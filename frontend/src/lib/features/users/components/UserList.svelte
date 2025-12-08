@@ -28,7 +28,7 @@
 
       <li
         transition:fade={{ duration: 200 }}
-        class="flex rounded-sm border border-border bg-surface-100 px-8 py-4"
+        class="flex rounded-lg border border-border bg-surface-100 px-8 py-4"
       >
         <div class="flex-1">
           <h2 class="">
