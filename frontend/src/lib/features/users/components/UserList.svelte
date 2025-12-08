@@ -2,10 +2,10 @@
   import ActionButton from "$lib/components/ActionButton.svelte";
   import { fade } from "svelte/transition";
   import type { User } from "../user";
+  import { getCurrentUser } from "$lib/features/auth/auth.remote";
 
   type BaseProps = {
     users: User[];
-    currentUser: User;
     emptyText: string;
   };
 
@@ -27,7 +27,9 @@
 
   type Props = PendingListProps | ApprovedListProps;
 
-  let { users, currentUser, emptyText, ...rest }: Props = $props();
+  let { users, emptyText, ...rest }: Props = $props();
+
+  const currentUser = $derived(await getCurrentUser());
 </script>
 
 {#if users.length === 0}
@@ -35,7 +37,7 @@
 {:else}
   <ul class="mb-8 flex flex-col gap-2">
     {#each users as user}
-      {@const isCurrent = currentUser.id === user.id}
+      {@const isCurrent = currentUser?.id === user.id}
 
       <li
         transition:fade={{ duration: 200 }}
