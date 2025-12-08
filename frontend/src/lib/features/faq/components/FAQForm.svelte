@@ -41,7 +41,7 @@
     {/if}
   </div>
 
-  {#if questions.length > 1}
+  {#if questions.length > 0}
     <h2 class="mb-4 font-serif font-bold">Nuværende</h2>
   {/if}
 
