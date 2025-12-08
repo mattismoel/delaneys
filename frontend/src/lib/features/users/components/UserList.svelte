@@ -11,7 +11,7 @@
   type Props = {
     users: User[];
     emptyText: string;
-		variant: "pending" | "approved"
+    variant: "pending" | "approved";
   };
 
   let { users, emptyText, ...rest }: Props = $props();
@@ -34,7 +34,7 @@
           <h2 class="">
             {user.firstName}
             {user.lastName}
-            {isCurrent ? "(Mig)" : ""}
+            {#if isCurrent}(Mig){/if}
           </h2>
           <p class="text-text-dark-muted">{user.email}</p>
         </div>
