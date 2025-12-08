@@ -2,7 +2,11 @@
   import ActionButton from "$lib/components/ActionButton.svelte";
   import { fade } from "svelte/transition";
   import type { User } from "../user";
-  import { getCurrentUser } from "$lib/features/auth/auth.remote";
+  import {
+    approveUser,
+    deleteUser,
+    getCurrentUser,
+  } from "$lib/features/auth/auth.remote";
 
   type BaseProps = {
     users: User[];
@@ -56,29 +60,26 @@
           {#if rest.variant === "approved"}
             {#if !isCurrent}
               <ActionButton
-                variant="non-dependant"
-                action="{rest.deleteAction}&id={user.id}"
+                onclick={() => deleteUser(user.id)}
                 title="Slet"
-                confirmText="Slet {user.firstName} {user.lastName}? Handlingen kan ikke fortrydes."
+                prompt="Slet {user.firstName} {user.lastName}? Handlingen kan ikke fortrydes."
               >
                 <span class="icon-[lucide--trash]"></span>
               </ActionButton>
             {/if}
           {:else}
             <ActionButton
-              variant="non-dependant"
-              action="{rest.approveAction}&id={user.id}"
               title="Godkend"
-              confirmText="Godkend {user.firstName} {user.lastName}?"
+              prompt="Godkend {user.firstName} {user.lastName}?"
+              onclick={() => approveUser(user.id)}
             >
               <span class="icon-[lucide--user-check]"></span>
             </ActionButton>
 
             <ActionButton
-              variant="non-dependant"
-              action="{rest.rejectAction}&id={user.id}"
               title="Afvis"
-              confirmText="Afvis {user.firstName} {user.lastName}?"
+              prompt="Afvis {user.firstName} {user.lastName}?"
+              onclick={() => deleteUser(user.id)}
             >
               <span class="icon-[lucide--user-x]"></span>
             </ActionButton>

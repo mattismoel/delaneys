@@ -1,4 +1,4 @@
-import { form, getRequestEvent, query } from "$app/server";
+import { command, form, getRequestEvent, query } from "$app/server";
 import { redirect } from "@sveltejs/kit";
 import { loginForm, registerForm } from "./provider";
 import z from "zod";
@@ -45,4 +45,18 @@ export const getCurrentUser = query(async () => {
   const { locals } = getRequestEvent();
   const user = await locals.authProvider.currentUser();
   return user;
+});
+
+export const deleteUser = command(z.string(), async (id) => {
+  const { locals } = getRequestEvent();
+  await locals.userProvider.deleteUser(id);
+  getUsers().refresh();
+});
+
+export const approveUser = command(z.string(), async (id) => {
+  const { locals } = getRequestEvent();
+  await locals.userProvider.approveUser(id);
+
+  getUsers().refresh();
+  getCurrentUser().refresh();
 });
