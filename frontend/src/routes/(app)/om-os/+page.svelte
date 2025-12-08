@@ -4,13 +4,12 @@
   import FacadeImage from "$lib/assets/outside-night.jpg";
   import ImageGrid from "$lib/components/ImageGrid.svelte";
   import EmployeeDisplay from "$lib/components/EmployeeDisplay.svelte";
+  import { getEmployees } from "$lib/features/employees/employees.remote";
 
-  let { data } = $props();
+  const employees = $derived(await getEmployees());
 
-  let archivedEmployees = $derived(data.employees.filter((e) => e.archived));
-  let nonArchivedEmployees = $derived(
-    data.employees.filter((e) => !e.archived),
-  );
+  let archivedEmployees = $derived(employees.filter((e) => e.archived));
+  let nonArchivedEmployees = $derived(employees.filter((e) => !e.archived));
 </script>
 
 <svelte:head>
