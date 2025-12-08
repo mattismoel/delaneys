@@ -62,5 +62,4 @@ export const deleteEmployee = command(z.string(), async (id) => {
   await locals.employeeProvider.deleteEmployee(id);
 
   getEmployees().refresh();
-  getEmployee(id).refresh();
 });
