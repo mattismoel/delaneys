@@ -8,28 +8,11 @@
     getCurrentUser,
   } from "$lib/features/auth/auth.remote";
 
-  type BaseProps = {
+  type Props = {
     users: User[];
     emptyText: string;
+		variant: "pending" | "approved"
   };
-
-  type PendingListProps = BaseProps & {
-    variant: "pending";
-    rejectAction: string;
-    approveAction: string;
-
-    deleteAction?: never;
-  };
-
-  type ApprovedListProps = BaseProps & {
-    variant: "approved";
-    deleteAction: string;
-
-    approveAction?: never;
-    rejectAction?: never;
-  };
-
-  type Props = PendingListProps | ApprovedListProps;
 
   let { users, emptyText, ...rest }: Props = $props();
 
