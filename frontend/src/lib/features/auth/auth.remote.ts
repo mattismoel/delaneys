@@ -1,6 +1,7 @@
 import { form, getRequestEvent, query } from "$app/server";
 import { redirect } from "@sveltejs/kit";
 import { loginForm, registerForm } from "./provider";
+import z from "zod";
 
 export const isAuthenticated = query(async () => {
   const { locals } = getRequestEvent();
@@ -18,6 +19,21 @@ export const login = form(loginForm, async (data) => {
   await locals.authProvider.login(data);
   redirect(303, "/admin/dashboard");
 });
+
+export const requestPasswordReset = form(
+  z.object({ email: z.email() }),
+  async ({ email }) => {
+    const { locals } = getRequestEvent();
+    try {
+      await locals.authProvider.requestPasswordReset(email);
+      console.log("HEOOOO");
+      return { success: true };
+    } catch (_) {
+      console.log("nOOOO");
+      return { success: false };
+    }
+  },
+);
 
 export const getUsers = query(async () => {
   const { locals } = getRequestEvent();
