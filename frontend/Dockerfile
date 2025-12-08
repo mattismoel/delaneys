@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 
 FROM base AS builder
 
-COPY pacakge.json package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
 RUN npm run build
