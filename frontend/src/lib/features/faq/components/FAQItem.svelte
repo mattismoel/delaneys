@@ -4,6 +4,7 @@
   import { fade } from "svelte/transition";
   import { deleteQuestion, updateQuestion } from "../faq.remote";
   import Button from "$lib/components/Button.svelte";
+  import ActionButton from "$lib/components/ActionButton.svelte";
 
   type Props = {
     question: Question;
@@ -28,7 +29,7 @@
 
 <div transition:fade={{ duration: 100 }} class="@container">
   <li
-    class="flex flex-col items-center gap-8 rounded-sm border border-border bg-surface-100 p-8 @xl:flex-row"
+    class="flex flex-col items-center gap-8 rounded-lg border border-border bg-surface-100 p-8 @xl:flex-row"
   >
     <form
       {...form}
@@ -41,9 +42,10 @@
           {...title.as("text")}
           placeholder="Spørgsmål"
           maxlength={MAX_TITLE_LENGTH}
-          class="mb-4 w-full resize-none font-medium focus:outline-none"
+          class="mb-4 w-full resize-none font-serif font-bold focus:outline-none"
           {@attach autoGrow}
         ></textarea>
+
         <textarea
           {...description.as("text")}
           placeholder="Svar"
@@ -53,8 +55,8 @@
         ></textarea>
       </div>
 
-      <div class="flex w-full gap-4 @xl:w-min @xl:flex-col-reverse">
-        <Button
+      <div class="flex w-full gap-2 @xl:w-min">
+        <ActionButton
           type="button"
           title="Slet spørgsmål"
           onclick={() =>
@@ -63,10 +65,13 @@
           class="flex-1"
         >
           <p class="icon-[lucide--trash]"></p>
-        </Button>
+          <p class="@xl:hidden">Slet</p>
+        </ActionButton>
 
         <Button title="Opdatér" class="flex-1" disabled={!isDirty}>
           <p class="icon-[lucide--check]"></p>
+
+          <p class="@xl:hidden">Redigér</p>
         </Button>
       </div>
     </form>
