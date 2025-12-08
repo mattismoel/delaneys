@@ -6,7 +6,7 @@
 
   let input = $state<HTMLInputElement>();
 
-  type Props = Omit<HTMLInputAttributes, "type"> & {
+  type Props = HTMLInputAttributes & {
     src?: string;
     emptyText?: string;
     changeText?: string;
