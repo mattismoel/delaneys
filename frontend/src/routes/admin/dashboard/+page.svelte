@@ -37,10 +37,6 @@
           </div>
 
           <EmployeeList
-            deleteAction="?/deleteEmployee"
-            archiveAction="?/archiveEmployee"
-            moveUpAction="?/moveEmployeeUp"
-            moveDownAction="?/moveEmployeeDown"
             employees={activeEmployees}
             variant="employed"
             emptyText="Ingen ansatte..."
@@ -51,8 +47,6 @@
           <h1 class="mb-8 font-serif text-4xl font-bold">Hall of Fame</h1>
           <EmployeeList
             variant="archived"
-            deleteAction="?/deleteEmployee"
-            restoreAction="?/restoreEmployee"
             employees={archivedEmployees}
             emptyText="Intet at se her..."
           />
@@ -63,10 +57,8 @@
 
   <section class="mx-responsive flex w-full flex-col gap-8">
     <div>
-      <div class="flex justify-between">
-        <h1 class="mb-4 font-serif text-4xl font-bold">
-          Ofte stillede spørgsmål
-        </h1>
+      <div class="mb-8 flex justify-between">
+        <h1 class="font-serif text-4xl font-bold">Ofte stillede spørgsmål</h1>
 
         <Button
           type="button"
@@ -90,15 +82,17 @@
       <FaqForm />
     {/if}
 
-    {#if questions.length > 0}
-      <h2 class="mb-4 font-serif font-bold">Nuværende</h2>
-    {/if}
+    <div>
+      {#if questions.length > 0}
+        <h2 class="mb-4 font-serif font-bold">Nuværende</h2>
+      {/if}
 
-    <ul class="flex flex-col gap-2">
-      {#each questions as question, idx (question.id)}
-        <FAQItem {question} {idx} />
-      {/each}
-    </ul>
+      <ul class="flex flex-col gap-2">
+        {#each questions as question, idx (question.id)}
+          <FAQItem {question} {idx} />
+        {/each}
+      </ul>
+    </div>
   </section>
 
   <section class="mx-responsive w-full">
