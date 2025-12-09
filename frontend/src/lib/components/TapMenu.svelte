@@ -2,6 +2,7 @@
   import type { PropsWithClass } from "$lib/types";
   import type { Beer, Menu } from "$lib/features/location/location";
   import { Randomiser } from "$lib/stores/random.svelte";
+  import InlineLink from "./InlineLink.svelte";
 
   const MIN_EXCLUSIVE_RATING = 3.71;
 
@@ -92,7 +93,7 @@
 
         <!-- LABEL HOLDER -->
         <div
-          class="hatch-v relative h-2 w-2.5 border-r border-l bg-surface-300"
+          class="hatch-v relative h-2 w-2.5 border-r border-l bg-surface-200"
         ></div>
 
         <div
@@ -122,13 +123,11 @@
           beer.id === activeId ? "fade-in" : "fade-out",
         ]}
       >
-        <a href={beer.url} class="w-fit">
-          <h1
-            class="mb-2 flex min-h-[1em] max-w-sm gap-4 text-2xl font-semibold hover:underline"
-          >
+        <InlineLink href={beer.url} class="mb-2 w-fit">
+          <h1 class="flex min-h-[1em] max-w-sm gap-4 text-2xl font-semibold">
             {beer?.name}
           </h1>
-        </a>
+        </InlineLink>
 
         <div class="mb-2 text-text-dark-muted">
           <p>{beer.brewery}</p>

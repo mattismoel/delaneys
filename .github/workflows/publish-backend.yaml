@@ -5,10 +5,6 @@ env:
   PACKAGE_NAME: backend
 
 on:
-  pull_request:
-    branches: ["main", "dev", "edge"]
-    paths:
-      - "backend/**"
   push:
     branches: ["main", "dev", "edge"]
     paths:
