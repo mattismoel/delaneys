@@ -4,14 +4,58 @@
   import FacadeImage from "$lib/assets/outside-night.jpg";
   import ImageGrid from "$lib/components/ImageGrid.svelte";
   import EmployeeDisplay from "$lib/components/EmployeeDisplay.svelte";
-
-  let { data } = $props();
-
-  let archivedEmployees = $derived(data.employees.filter((e) => e.archived));
-  let nonArchivedEmployees = $derived(
-    data.employees.filter((e) => !e.archived),
-  );
+  import { getEmployees } from "$lib/features/employees/employees.remote";
+  import { type Employee } from "$lib/features/employees/employee";
 </script>
+
+{#snippet employeeSection(employees: Employee[])}
+  {@const archivedEmployees = employees.filter((e) => e.archived)}
+  {@const nonArchivedEmployees = employees.filter((e) => !e.archived)}
+
+  {#if nonArchivedEmployees.length > 0}
+    <section class="mx-responsive flex flex-col gap-16 py-16">
+      <div>
+        <h1 class="mb-8 font-serif text-4xl font-bold">Mød holdet</h1>
+        <p class="leading-relaxed text-text-dark-muted">
+          Bag disken finder du et passioneret hold, der brænder for god øl og
+          gode oplevelser. Vi står klar til at guide dig gennem vores udvalg, og
+          forhåbentlig finde din næste favoritøl. Vi er her for at gøre din
+          oplevelse lidt bedre, én skænk ad gangen.
+        </p>
+      </div>
+
+      <EmployeeDisplay employees={nonArchivedEmployees} />
+    </section>
+  {/if}
+
+  {#if archivedEmployees.length > 0}
+    <section class="mx-responsive">
+      <p class="mb-8 w-full leading-relaxed text-text-dark-muted">
+        Derudover en stor tak til vores tidligere {#if archivedEmployees.length > 1}
+          medarbejdere
+        {:else}
+          medarbejder
+        {/if}
+
+        <span>
+          {#if archivedEmployees.length > 1}
+            {archivedEmployees
+              .slice(0, -1)
+              .map((e) => e.name)
+              .join(", ")}
+
+            og
+
+            {archivedEmployees.at(-1)?.name}.
+          {:else}
+            {archivedEmployees[0].name}.
+          {/if}
+        </span>
+        Baren havde ikke været den samme uden {#if archivedEmployees.length > 1}dem{:else}dig{/if}.
+      </p>
+    </section>
+  {/if}
+{/snippet}
 
 <svelte:head>
   <title>Delaney's | Om os</title>
@@ -71,47 +115,9 @@
     </div>
   </section>
 
-  {#if nonArchivedEmployees.length > 0}
-    <section class="mx-responsive flex flex-col gap-16 py-16">
-      <div>
-        <h1 class="mb-8 font-serif text-4xl font-bold">Mød holdet</h1>
-        <p class="leading-relaxed text-text-dark-muted">
-          Bag disken finder du et passioneret hold, der brænder for god øl og
-          gode oplevelser. Vi står klar til at guide dig gennem vores udvalg, og
-          forhåbentlig finde din næste favoritøl. Vi er her for at gøre din
-          oplevelse lidt bedre, én skænk ad gangen.
-        </p>
-      </div>
-
-      <EmployeeDisplay employees={nonArchivedEmployees} />
-
-      {#if archivedEmployees.length > 0}
-        <p class="mb-8 w-full leading-relaxed text-text-dark-muted">
-          Derudover en stor tak til vores tidligere {#if archivedEmployees.length > 1}
-            medarbejdere
-          {:else}
-            medarbejder
-          {/if}
-
-          <span>
-            {#if archivedEmployees.length > 1}
-              {archivedEmployees
-                .slice(0, -1)
-                .map((e) => e.name)
-                .join(", ")}
-
-              og
-
-              {archivedEmployees.at(-1)?.name}.
-            {:else}
-              {archivedEmployees[0].name}.
-            {/if}
-          </span>
-          Baren havde ikke været den samme uden {#if archivedEmployees.length > 1}dem{:else}dig{/if}.
-        </p>
-      {/if}
-    </section>
-  {/if}
+  {#await getEmployees() then employees}
+    {@render employeeSection(employees)}
+  {/await}
 </main>
 
 <style>

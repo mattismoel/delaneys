@@ -6,67 +6,52 @@
   import InlineLink from "$lib/components/InlineLink.svelte";
   import Input from "$lib/components/Input.svelte";
   import type { Form } from "$lib/types";
+  import { register } from "../auth.remote";
   import type { RegisterForm } from "../provider";
 
-  type Props = Form<RegisterForm>;
-
-  let { form }: Props = $props();
+  const { email, firstName, lastName, password, passwordConfirm } =
+    register.fields;
 </script>
 
-<form method="POST" class="flex w-full max-w-sm flex-col gap-8" use:enhance>
+<form {...register} class="flex w-full max-w-sm flex-col gap-8">
   <h1 class="font-serif text-3xl font-bold">Registrér dig</h1>
 
   <div class="flex flex-col gap-2">
-    <FormField errors={form.fieldErrors?.email}>
-      <Input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={form.data?.email}
-        class="w-full"
-      />
+    <FormField errors={email.issues()?.map((i) => i.message)}>
+      <Input {...email.as("email")} placeholder="Email" class="w-full" />
     </FormField>
 
     <fieldset class="flex gap-2">
-      <FormField errors={form.fieldErrors?.firstName}>
-        <Input
-          type="text"
-          name="firstName"
-          placeholder="Fornavn"
-          value={form.data?.firstName}
-          class="w-full"
-        />
+      <FormField errors={firstName.issues()?.map((i) => i.message)}>
+        <Input {...firstName.as("text")} placeholder="Fornavn" class="w-full" />
       </FormField>
 
-      <FormField errors={form.fieldErrors?.lastName}>
+      <FormField errors={lastName.issues()?.map((i) => i.message)}>
         <Input
-          type="text"
-          name="lastName"
+          {...lastName.as("text")}
           placeholder="Efternavn"
-          value={form.data?.lastName}
           class="w-full"
         />
       </FormField>
     </fieldset>
 
-    <FormField errors={form?.fieldErrors?.password}>
+    <FormField errors={password.issues()?.map((i) => i.message)}>
       <Input
-        type="password"
-        name="password"
+        {...password.as("password")}
         placeholder="Adgangskode"
         class="w-full"
       />
     </FormField>
 
-    <FormField errors={form?.fieldErrors?.passwordConfirm}>
+    <FormField errors={passwordConfirm.issues()?.map((i) => i.message)}>
       <Input
-        type="password"
-        name="passwordConfirm"
+        {...passwordConfirm.as("password")}
         placeholder="Gentag adgangskode"
         class="w-full"
       />
     </FormField>
-    <ErrorList errors={form?.formErrors} />
+
+    <ErrorList errors={register.fields.issues()?.map((i) => i.message)} />
 
     <span class="text-right text-sm"
       >Har du allerede en bruger? <InlineLink href="/auth/login"

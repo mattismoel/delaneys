@@ -1,12 +1,12 @@
-FROM oven/bun:1 AS base
+FROM node:25-alpine AS base
 WORKDIR /usr/src/app
 
 FROM base AS installer
 COPY package.json .
-RUN bun install
+RUN npm install
 
 FROM base AS builder
 COPY . .
 
 EXPOSE 24678
-CMD ["bun" , "run", "dev"]
+CMD ["npm" , "run", "dev"]
