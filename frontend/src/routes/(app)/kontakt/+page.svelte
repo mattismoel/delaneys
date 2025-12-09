@@ -1,7 +1,9 @@
 <script lang="ts">
   import Accordion from "$lib/components/Accordion.svelte";
   import InlineLink from "$lib/components/InlineLink.svelte";
-  let { data } = $props();
+  import { getQuestions } from "$lib/features/faq/faq.remote.js";
+
+  const questions = $derived(await getQuestions());
 </script>
 
 <svelte:head>
@@ -26,13 +28,13 @@
       endnu bedre&nbsp;&mdash;&nbsp;se dig i baren!
     </p>
 
-    {#if data.questions.length > 0}
+    {#if questions.length > 0}
       <h2 class="mb-4 font-serif text-2xl font-bold" id="faq">
         Ofte stillede spørgsmål
       </h2>
 
       <div class="flex flex-col gap-2">
-        {#each data.questions as question}
+        {#each questions as question}
           <Accordion
             title={question.title}
             description={question.description}

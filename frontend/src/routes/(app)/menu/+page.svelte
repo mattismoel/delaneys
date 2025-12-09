@@ -1,7 +1,8 @@
 <script lang="ts">
   import TapMenu from "$lib/components/TapMenu.svelte";
+  import { getMenu } from "$lib/features/location/location.remote.js";
 
-  let { data } = $props();
+  const menu = $derived(await getMenu());
 </script>
 
 <svelte:head>
@@ -16,13 +17,13 @@
   class="@container mx-responsive flex min-h-svh items-center justify-center py-20 pt-28"
 >
   <div class="hidden flex-col items-center gap-16 @4xl:flex">
-    <TapMenu menu={data.menu} />
+    <TapMenu {menu} />
   </div>
 
   <ul
     class="flex w-full flex-col divide-y divide-border/50 font-mono @4xl:hidden"
   >
-    {#each data.menu.beers as beer, i}
+    {#each menu.beers as beer, i}
       <li class="group">
         <a
           href={beer.url}

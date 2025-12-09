@@ -1,18 +1,26 @@
 <script lang="ts">
   import Button from "$lib/components/Button.svelte";
   import InlineLink from "$lib/components/InlineLink.svelte";
+  import { getUsers } from "$lib/features/auth/auth.remote.js";
   import EmployeeList from "$lib/features/employees/components/employee-list/EmployeeList.svelte";
+  import { getEmployees } from "$lib/features/employees/employees.remote.js";
   import FaqForm from "$lib/features/faq/components/FAQForm.svelte";
+  import FAQItem from "$lib/features/faq/components/FAQItem.svelte";
+  import { getQuestions } from "$lib/features/faq/faq.remote.js";
   import UserList from "$lib/features/users/components/UserList.svelte";
 
   const MAX_QUESTION_COUNT = 5;
 
-  let { data } = $props();
+  const users = $derived(await getUsers());
+  const employees = $derived(await getEmployees());
+  const questions = $derived(await getQuestions());
 
-  let approvedUsers = $derived(data.users.filter((u) => u.approved));
-  let nonApprovedUsers = $derived(data.users.filter((u) => !u.approved));
-  let activeEmployees = $derived(data.employees.filter((e) => !e.archived));
-  let archivedEmployees = $derived(data.employees.filter((e) => e.archived));
+  let approvedUsers = $derived(users.filter((u) => u.approved));
+  let nonApprovedUsers = $derived(users.filter((u) => !u.approved));
+  let activeEmployees = $derived(employees.filter((e) => !e.archived));
+  let archivedEmployees = $derived(employees.filter((e) => e.archived));
+
+  let showQuestionForm = $state(false);
 </script>
 
 <main class="flex flex-col gap-32 py-32">
@@ -29,10 +37,6 @@
           </div>
 
           <EmployeeList
-            deleteAction="?/deleteEmployee"
-            archiveAction="?/archiveEmployee"
-            moveUpAction="?/moveEmployeeUp"
-            moveDownAction="?/moveEmployeeDown"
             employees={activeEmployees}
             variant="employed"
             emptyText="Ingen ansatte..."
@@ -43,8 +47,6 @@
           <h1 class="mb-8 font-serif text-4xl font-bold">Hall of Fame</h1>
           <EmployeeList
             variant="archived"
-            deleteAction="?/deleteEmployee"
-            restoreAction="?/restoreEmployee"
             employees={archivedEmployees}
             emptyText="Intet at se her..."
           />
@@ -55,24 +57,42 @@
 
   <section class="mx-responsive flex w-full flex-col gap-8">
     <div>
-      <h1 class="mb-4 font-serif text-4xl font-bold">
-        Ofte stillede spørgsmål
-      </h1>
+      <div class="mb-8 flex justify-between">
+        <h1 class="font-serif text-4xl font-bold">Ofte stillede spørgsmål</h1>
+
+        <Button
+          type="button"
+          onclick={() => (showQuestionForm = true)}
+          disabled={questions.length >= MAX_QUESTION_COUNT}
+          class="h-min w-fit"
+          ><span class="icon-[lucide--plus]"></span>
+          Tilføj
+        </Button>
+      </div>
+
       <p class="text-text-dark-muted">
         Oversigt over spørgsmålene som fremstår på <InlineLink href="/kontakt"
           >kontaktsiden</InlineLink
         >
-        . Der er nu {data.questions.length} ud af {MAX_QUESTION_COUNT} spørgsmål
+        . Der er nu {questions.length} ud af {MAX_QUESTION_COUNT} spørgsmål
       </p>
     </div>
 
-    <FaqForm
-      questions={data.questions}
-      createAction="?/createQuestion"
-      updateAction="?/updateQuestion"
-      deleteAction="?/deleteQuestion"
-      maxQuestions={MAX_QUESTION_COUNT}
-    />
+    {#if showQuestionForm}
+      <FaqForm />
+    {/if}
+
+    <div>
+      {#if questions.length > 0}
+        <h2 class="mb-4 font-serif font-bold">Nuværende</h2>
+      {/if}
+
+      <ul class="flex flex-col gap-2">
+        {#each questions as question, idx (question.id)}
+          <FAQItem {question} {idx} />
+        {/each}
+      </ul>
+    </div>
   </section>
 
   <section class="mx-responsive w-full">
@@ -92,8 +112,6 @@
           <UserList
             variant="approved"
             users={approvedUsers}
-            currentUser={data.currentUser}
-            deleteAction="?/deleteUser"
             emptyText="Ingen godkendte brugere..."
           />
         </div>
@@ -103,9 +121,6 @@
           <UserList
             variant="pending"
             users={nonApprovedUsers}
-            currentUser={data.currentUser}
-            approveAction="?/approveUser"
-            rejectAction="?/deleteUser"
             emptyText="Ingen brugeranmodninger..."
           />
         </div>

@@ -6,8 +6,8 @@
 :root {
 	--heading-duration: 1.6s;
 
-	--check-spacing: 2px;
-	--check-thickness: 1px;
+	--check-spacing: 3px;
+	--check-thickness: 2px;
 	--checked-gradient: repeating-linear-gradient(-45deg,
 			transparent,
 			transparent var(--check-spacing),

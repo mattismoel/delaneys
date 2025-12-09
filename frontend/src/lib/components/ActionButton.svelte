@@ -1,45 +1,28 @@
 <script lang="ts">
-  import { confirmation } from "$lib/attachments/confirm.svelte";
   import type { HTMLButtonAttributes } from "svelte/elements";
+  import Button from "./Button.svelte";
 
-  type BaseProps = {
+  type Props = Omit<HTMLButtonAttributes, "title" | "onclick"> & {
     title: string;
-    confirmText?: string;
+    prompt?: string;
+    onclick: () => void;
+    variant?: "primary" | "transparent";
   };
 
-  type DependantProps = BaseProps &
-    Omit<HTMLButtonAttributes, "form" | "title"> & {
-      variant: "form-dependant";
-      form: string;
-    };
+  let { prompt, variant = "transparent", children, ...rest }: Props = $props();
 
-  type NonDependantProps = BaseProps &
-    Omit<HTMLButtonAttributes, "form" | "title" | "action"> & {
-      variant: "non-dependant";
-      action: string;
-    };
-
-  type Props = DependantProps | NonDependantProps;
-
-  let { confirmText, children, ...rest }: Props = $props();
-
-  const btnClasses =
-    "flex items-center justify-center gap-2 rounded-sm px-3 py-2 hover:not-disabled:bg-surface-200 disabled:opacity-25";
+  const handleClick = () => {
+    if (prompt && !confirm(prompt)) return;
+    rest.onclick();
+  };
 </script>
 
-{#if rest.variant === "form-dependant"}
-  <button {...rest} type="submit" class={[btnClasses, rest.class]}>
-    {@render children?.()}
-  </button>
-{:else}
-  <form
-    action={rest.action}
-    method="POST"
-    class={["flex items-center justify-center", rest.class]}
-    {@attach confirmText ? confirmation(confirmText) : undefined}
-  >
-    <button {...rest} class={[btnClasses]}>
-      {@render children?.()}
-    </button>
-  </form>
-{/if}
+<Button
+  {...rest}
+  type="button"
+  onclick={handleClick}
+  {variant}
+  class={rest.class}
+>
+  {@render children?.()}
+</Button>

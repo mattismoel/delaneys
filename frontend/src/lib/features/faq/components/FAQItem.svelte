@@ -1,120 +1,79 @@
 <script lang="ts">
   import { autoGrow } from "$lib/attachments/auto-grow.svelte";
-  import ActionButton from "$lib/components/ActionButton.svelte";
-  import { enhance } from "$app/forms";
   import { MAX_TITLE_LENGTH, type Question } from "../faq";
   import { fade } from "svelte/transition";
+  import { deleteQuestion, updateQuestion } from "../faq.remote";
+  import Button from "$lib/components/Button.svelte";
+  import ActionButton from "$lib/components/ActionButton.svelte";
 
-  type BaseProps = {
+  type Props = {
+    question: Question;
     idx: number;
   };
 
-  type CreateProps = BaseProps & {
-    variant: "create";
-    createAction: string;
-  };
+  let { question }: Props = $props();
 
-  type UpdateProps = BaseProps & {
-    variant: "update";
-    question: Question;
-    updateAction: string;
-    deleteAction: string;
-  };
+  const form = $derived(updateQuestion.for(question.id));
 
-  type Props = CreateProps | UpdateProps;
-
-  let { idx, ...rest }: Props = $props();
-
-  let titleInput = $state<HTMLTextAreaElement>();
-
-  let title = $state(
-    rest.variant === "update" ? rest.question.title : undefined,
-  );
-
-  let description = $state(
-    rest.variant === "update" ? rest.question.description : undefined,
-  );
+  const { title, description, questionId } = $derived(form.fields);
 
   let isDirty = $derived(
-    rest.variant === "create"
-      ? true
-      : title !== rest.question.title ||
-          description !== rest.question.description,
+    title.value() !== question.title ||
+      description.value() !== question.description,
   );
+
+  $effect(() => {
+    form.fields.set({ ...question, questionId: question.id });
+  });
 </script>
 
 <div transition:fade={{ duration: 100 }} class="@container">
   <li
-    class="flex flex-col items-center gap-8 rounded-sm border border-border bg-surface-100 p-8 @xl:flex-row"
+    class="flex flex-col items-center gap-8 rounded-lg border border-border bg-surface-100 p-8 @xl:flex-row"
   >
     <form
-      id={rest.variant === "update"
-        ? `question-form-${rest.question.id}`
-        : "question-form-create"}
-      class="w-full"
-      action={rest.variant === "update"
-        ? `${rest.updateAction}&id=${rest.question.id}`
-        : rest.createAction}
-      method="POST"
-      use:enhance={() => {
-        return async ({ update }) => {
-          await update({ reset: rest.variant === "create" });
-          rest.variant === "create" && titleInput?.focus();
-        };
-      }}
+      {...form}
+      class="flex w-full flex-col items-center gap-4 @xl:flex-row"
     >
-      <textarea
-        placeholder="Spørgsmål"
-        maxlength={MAX_TITLE_LENGTH}
-        value={rest.variant === "update" ? rest.question.title : undefined}
-        bind:this={titleInput}
-        name="title"
-        class="mb-4 w-full resize-none font-medium"
-        oninput={(e) => (title = e.currentTarget.value)}
-        {@attach (element) => {
-          rest.variant === "create" && element.focus();
-        }}
-        {@attach autoGrow}
-      ></textarea>
-      <textarea
-        placeholder="Svar"
-        name="description"
-        class="max-h-32 min-h-4 w-full resize-none"
-        rows="2"
-        value={rest.variant === "update"
-          ? rest.question.description
-          : undefined}
-        oninput={(e) => (description = e.currentTarget.value)}
-        {@attach autoGrow}
-      ></textarea>
-    </form>
+      <input {...questionId.as("hidden", question.id)} />
 
-    <div class="flex w-full @xl:w-min @xl:flex-col-reverse">
-      {#if rest.variant === "update"}
+      <div class="flex w-full flex-col">
+        <textarea
+          {...title.as("text")}
+          placeholder="Spørgsmål"
+          maxlength={MAX_TITLE_LENGTH}
+          class="mb-4 w-full resize-none font-serif font-bold focus:outline-none"
+          {@attach autoGrow}
+        ></textarea>
+
+        <textarea
+          {...description.as("text")}
+          placeholder="Svar"
+          class="max-h-32 min-h-4 w-full resize-none focus:outline-none"
+          rows="2"
+          {@attach autoGrow}
+        ></textarea>
+      </div>
+
+      <div class="flex w-full gap-2 @xl:w-min">
         <ActionButton
-          variant="non-dependant"
-          action="{rest.deleteAction}&id={rest.question.id}"
-          title="Slet"
-          confirmText="Er du sikker på, at du vil slette spørgsmålet?"
-          class="flex-1 @xl:w-fit"
+          type="button"
+          title="Slet spørgsmål"
+          onclick={() =>
+            confirm("Er du sikker på, at du vil slette spørgsmålet?") &&
+            deleteQuestion(question.id)}
+          class="flex-1"
         >
-          <span class="icon-[lucide--trash]"></span>
-          <span class="@xl:hidden">Slet</span>
+          <p class="icon-[lucide--trash]"></p>
+          <p class="@xl:hidden">Slet</p>
         </ActionButton>
-      {/if}
 
-      <ActionButton
-        variant="form-dependant"
-        disabled={!isDirty}
-        title="Bekræft"
-        form={rest.variant === "update"
-          ? `question-form-${rest.question.id}`
-          : "question-form-create"}
-        class="flex-1 @xl:w-fit"
-      >
-        <span class="icon-[lucide--check]"></span>
-        <span class="@xl:hidden">Bekræft</span>
-      </ActionButton>
-    </div>
+        <Button title="Opdatér" class="flex-1" disabled={!isDirty}>
+          <p class="icon-[lucide--check]"></p>
+
+          <p class="@xl:hidden">Redigér</p>
+        </Button>
+      </div>
+    </form>
   </li>
 </div>

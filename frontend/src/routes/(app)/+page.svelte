@@ -7,10 +7,9 @@
   import Logo from "$lib/components/Logo.svelte";
   import LeaderboardDisplay from "$lib/components/leaderboard-display/LeaderboardDisplay.svelte";
   import EventDisplay from "$lib/components/event-display/EventDisplay.svelte";
+  import { getMenu } from "$lib/features/location/location.remote";
 
   const MIN_LEADERBOARD_RATING = 3.7;
-
-  let { data } = $props();
 
   let prevScrollY = $state(0);
 
@@ -108,10 +107,9 @@
     </div>
   </section>
 
-  <LeaderboardDisplay
-    beers={data.menu.beers}
-    minRating={MIN_LEADERBOARD_RATING}
-  />
+  {#await getMenu() then { beers }}
+    <LeaderboardDisplay {beers} minRating={MIN_LEADERBOARD_RATING} />
+  {/await}
 
   <section>
     <EventDisplay
