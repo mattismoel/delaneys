@@ -95,7 +95,10 @@
           </ul>
         </div>
 
-        <a href="https://www.findsmiley.dk/1343488">
+        <a
+          href="https://www.findsmiley.dk/1343488"
+          aria-label="Se kontrolrapport"
+        >
           <img
             src={KontrolRapport}
             alt="Se kontrolrapport"
