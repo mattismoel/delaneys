@@ -20,8 +20,6 @@
     scrollDirection = diff > 0 ? 1 : -1;
     prevScrollY = newScrollY;
   };
-
-  const menu = $derived(await getMenu());
 </script>
 
 <svelte:head>
@@ -109,7 +107,9 @@
     </div>
   </section>
 
-  <LeaderboardDisplay beers={menu.beers} minRating={MIN_LEADERBOARD_RATING} />
+  {#await getMenu() then { beers }}
+    <LeaderboardDisplay {beers} minRating={MIN_LEADERBOARD_RATING} />
+  {/await}
 
   <section>
     <EventDisplay
