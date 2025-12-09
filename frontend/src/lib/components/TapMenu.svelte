@@ -13,7 +13,7 @@
 
   let isHovered = $state(false);
 
-  const randomiser = new Randomiser(menu.beers);
+  const randomiser = $derived(new Randomiser(menu.beers));
 
   const handleHover = (id: number | null) => {
     isHovered = id !== null;
