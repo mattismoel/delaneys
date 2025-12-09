@@ -1,8 +1,8 @@
 <script lang="ts">
-  import LandingImage from "$lib/assets/photos/DSCF2840.JPG";
+  import LandingImage from "$lib/assets/photos/DSCF2840.webp";
   import GamesImage from "$lib/assets/photos/DSCF2841.webp";
   import QuizImage from "$lib/assets/bar-2.jpg";
-  import TastingImage from "$lib/assets/photos/DSCF2829.JPG";
+  import TastingImage from "$lib/assets/photos/DSCF2829.webp";
   import Button from "$lib/components/Button.svelte";
   import Logo from "$lib/components/Logo.svelte";
   import LeaderboardDisplay from "$lib/components/leaderboard-display/LeaderboardDisplay.svelte";
