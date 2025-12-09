@@ -112,7 +112,6 @@
           <UserList
             variant="approved"
             users={approvedUsers}
-            deleteAction="?/deleteUser"
             emptyText="Ingen godkendte brugere..."
           />
         </div>
@@ -122,8 +121,6 @@
           <UserList
             variant="pending"
             users={nonApprovedUsers}
-            approveAction="?/approveUser"
-            rejectAction="?/deleteUser"
             emptyText="Ingen brugeranmodninger..."
           />
         </div>
