@@ -4,8 +4,6 @@
   import Logo from "./Logo.svelte";
 
   let isMenuShown = $state(false);
-
-  $inspect(isMenuShown);
 </script>
 
 {#snippet navItem(title: string, href: string)}
