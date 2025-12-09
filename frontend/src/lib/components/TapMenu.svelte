@@ -39,8 +39,8 @@
     return () => clearInterval(interval);
   });
 
-  const leftBeers = menu.beers.slice(0, menu.beers.length / 2);
-  const rightBeers = menu.beers.slice(menu.beers.length / 2);
+  const leftBeers = $derived(menu.beers.slice(0, menu.beers.length / 2));
+  const rightBeers = $derived(menu.beers.slice(menu.beers.length / 2));
 </script>
 
 {#snippet popularBadge()}
@@ -57,6 +57,7 @@
   onHover: (id: number | null) => void,
   startIdx: number = 0,
   activeId: number,
+	side: "left" | "right"
 )}
   <ul class="flex justify-between">
     {#each beers as beer, i}
@@ -71,7 +72,7 @@
         <div
           class={[
             "left-1/2",
-            "h-12 w-4 rounded-xs border bg-text-dark transition-transform",
+            "h-12 w-4 rounded-sm border bg-text-dark transition-transform",
             activeId === beer.id ? "translate-y-[20%]" : "translate-y-1/2",
           ]}
         ></div>
@@ -95,12 +96,17 @@
         ></div>
 
         <div
-          class="hatch-h relative aspect-square h-(--dispenser-thickness) w-16 border-t-2 border-b-2 bg-surface-200 group-first:border-l-2 group-last:border-r-2"
+          class={[
+            "hatch-h relative aspect-square h-(--dispenser-thickness) w-16 overflow-hidden border-t-2 border-b-2 bg-surface-200",
+            side === "right"
+              ? "group-last:rounded-r-lg group-last:border-r-2"
+              : "group-first:rounded-l-lg group-first:border-l-2",
+          ]}
         ></div>
 
         <!-- TAP END -->
         <div
-          class="hatch-v relative h-3 w-2 rounded-b-xs border-r border-b border-l bg-surface-200"
+          class="hatch-v relative h-3 w-2 overflow-hidden rounded-b-xs border-r border-b border-l bg-surface-200"
         ></div>
       </div>
     {/each}
@@ -146,16 +152,23 @@
   <div class="relative">
     <!-- MIDDLE POLE -->
     <div
-      class="hatch-v absolute -bottom-2 left-1/2 z-10 h-20 w-[calc(var(--dispenser-thickness)+5px)] -translate-x-1/2 rounded-t-xs border-2 bg-surface-200"
+      class="hatch-v absolute -bottom-2 left-1/2 z-10 h-20 w-[calc(var(--dispenser-thickness)+5px)] -translate-x-1/2 overflow-hidden rounded-t-lg border-2 bg-surface-200"
     ></div>
 
     <div class="flex gap-(--dispenser-thickness)">
-      {@render tapList(leftBeers, handleHover, 1, randomiser.current.id)}
+      {@render tapList(
+        leftBeers,
+        handleHover,
+        1,
+        randomiser.current.id,
+        "left",
+      )}
       {@render tapList(
         rightBeers,
         handleHover,
         menu.beers.length / 2 + 1,
         randomiser.current.id,
+        "right",
       )}
     </div>
   </div>
