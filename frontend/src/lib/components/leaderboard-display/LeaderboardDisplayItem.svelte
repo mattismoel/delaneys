@@ -12,7 +12,7 @@
 
 <li
   class={[
-    "group flex w-full max-w-64 flex-col items-center justify-center",
+    "group flex w-full flex-col items-center justify-center",
     isHighlight ? "overflow-visible" : "overflow-hidden",
     rest.class,
   ]}
@@ -29,7 +29,7 @@
 
     <div class="flex flex-col items-center text-text-dark-muted">
       <span class="text-center">{beer.brewery}</span>
-      <span>{beer.style} / {beer.abv.toFixed(1)}%</span>
+      <span class="text-center">{beer.style}&nbsp;/&nbsp;{beer.abv.toFixed(1)}%</span>
     </div>
   </a>
 </li>
