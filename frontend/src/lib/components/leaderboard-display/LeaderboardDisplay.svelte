@@ -38,7 +38,7 @@
         Ugens mest populære
       </h1>
 
-      <ul class="mb-6 flex justify-center gap-32">
+      <ul class="mb-6 flex justify-between gap-12">
         <LeaderboardDisplayItem
           beer={highlightBeers[1]}
           class="hidden @6xl:flex"
