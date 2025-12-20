@@ -6,10 +6,11 @@
   let isMenuShown = $state(false);
 </script>
 
-{#snippet navItem(title: string, href: string)}
+{#snippet navItem(title: string, href: string, preload: boolean = true)}
   {@const isCurrent = page.url.pathname === href}
   <li class="inline-block">
     <a
+      data-sveltekit-preload-data={preload ? "hover" : "off"}
       {href}
       onclick={() => (isMenuShown = false)}
       {title}
@@ -49,7 +50,7 @@
 
   <nav class="hidden sm:flex">
     <ul class="flex">
-      {@render navItem("Ølmenu", "/menu")}
+      {@render navItem("Ølmenu", "/menu", false)}
       {@render navItem("Om os", "/om-os")}
       {@render navItem("Kontakt os", "/kontakt")}
     </ul>

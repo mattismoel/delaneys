@@ -1,5 +1,5 @@
 <script lang="ts">
-  import TapMenu from "$lib/components/TapMenu.svelte";
+  import TapMenu from "$lib/components/tap-menu/TapMenu.svelte";
   import { getMenu } from "$lib/features/location/location.remote.js";
 
   const menu = $derived(await getMenu());

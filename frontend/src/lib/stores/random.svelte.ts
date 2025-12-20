@@ -1,50 +1,51 @@
-import { randomIndex } from "../random"
+import { randomIndex } from "../random";
 
 type OverrideProps<T> = {
-	newValue: T | null
-	findFn?: (v: T) => boolean
-}
+  newValue: T | null;
+  findFn?: (v: T) => boolean;
+};
 
 export class Randomiser<T> {
-	choices = $state<T[]>([])
+  choices = $state<T[]>([]);
 
-	currentIdx = $state<number>(randomIndex(this.choices))
-	current = $derived(this.choices[this.currentIdx])
+  currentIdx = $state<number>();
 
-	constructor(choices: T[]) {
-		this.choices = choices
-	}
+  current = $derived.by(() => {
+    if (this.currentIdx === undefined) return;
+    return this.choices.at(this.currentIdx);
+  });
 
-	override = (props: OverrideProps<T>) => {
-		if (!props.newValue) {
-			// this.currentIdx = null
-			return
-		}
+  constructor(choices: T[]) {
+    this.choices = choices;
+    if (choices.length > 0) {
+      this.currentIdx = randomIndex(choices);
+    }
+  }
 
-		if (!props.findFn) return
+  override = (props: OverrideProps<T>) => {
+    if (!props.newValue || !props.findFn) return;
 
-		const newIdx = this.choices.findIndex(props.findFn)
+    const newIdx = this.choices.findIndex(props.findFn);
 
-		if (newIdx === -1) {
-			// this.currentIdx = null
-			return
-		}
+    if (newIdx === -1) {
+      return;
+    }
 
-		this.currentIdx = newIdx
-	}
+    this.currentIdx = newIdx;
+  };
 
-	randomise = () => {
-		if (this.choices.length === 0) return null
-		if (this.choices.length === 1) {
-			this.currentIdx = 0
-			return
-		}
+  randomise = () => {
+    if (this.choices.length === 0) return;
+    if (this.choices.length === 1) {
+      this.currentIdx = 0;
+      return;
+    }
 
-		let newIdx = randomIndex(this.choices)
-		while (newIdx === this.currentIdx) {
-			newIdx = randomIndex(this.choices)
-		}
+    let newIdx = randomIndex(this.choices);
+    while (newIdx === this.currentIdx) {
+      newIdx = randomIndex(this.choices);
+    }
 
-		this.currentIdx = newIdx
-	}
+    this.currentIdx = newIdx;
+  };
 }
