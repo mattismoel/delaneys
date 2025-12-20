@@ -2,7 +2,8 @@
   import type { PropsWithClass } from "$lib/types";
   import type { Beer, Menu } from "$lib/features/location/location";
   import { Randomiser } from "$lib/stores/random.svelte";
-  import InlineLink from "./InlineLink.svelte";
+  import TapList from "./TapList.svelte";
+  import InlineLink from "../InlineLink.svelte";
 
   const MIN_EXCLUSIVE_RATING = 3.71;
 
@@ -53,68 +54,7 @@
   </div>
 {/snippet}
 
-{#snippet tapList(
-  beers: Beer[],
-  onHover: (id: number | null) => void,
-  startIdx: number = 0,
-  activeId: number,
-	side: "left" | "right"
-)}
-  <ul class="flex justify-between">
-    {#each beers as beer, i}
-      <div
-        role="listitem"
-        class="group pointer-events-auto isolate flex flex-col items-center"
-        onmouseover={() => onHover(beer.id)}
-        onmouseleave={() => onHover(null)}
-        onfocus={() => onHover(beer.id)}
-      >
-        <!--  HANDLE -->
-        <div
-          class={[
-            "left-1/2",
-            "h-12 w-4 rounded-sm border bg-text-dark transition-transform",
-            activeId === beer.id ? "translate-y-[20%]" : "translate-y-1/2",
-          ]}
-        ></div>
-
-        <a
-          href={beer.url}
-          class={[
-            "peer group z-50 flex aspect-square h-14 flex-col items-center justify-center rounded-full border bg-background outline outline-transparent transition-colors",
-            "group-hover:border-background-100 group-hover:border-2 group-hover:border-solid group-hover:bg-text-dark group-hover:font-extrabold group-hover:text-text-light group-hover:outline-text-dark",
-            activeId === beer.id
-              ? "border-2 border-solid font-extrabold"
-              : "font-medium",
-          ]}
-        >
-          {startIdx + i}
-        </a>
-
-        <!-- LABEL HOLDER -->
-        <div
-          class="hatch-v relative h-2 w-2.5 border-r border-l bg-surface-200"
-        ></div>
-
-        <div
-          class={[
-            "hatch-h relative aspect-square h-(--dispenser-thickness) w-16 overflow-hidden border-t-2 border-b-2 bg-surface-200",
-            side === "right"
-              ? "group-last:rounded-r-lg group-last:border-r-2"
-              : "group-first:rounded-l-lg group-first:border-l-2",
-          ]}
-        ></div>
-
-        <!-- TAP END -->
-        <div
-          class="hatch-v relative h-3 w-2 overflow-hidden rounded-b-xs border-r border-b border-l bg-surface-200"
-        ></div>
-      </div>
-    {/each}
-  </ul>
-{/snippet}
-
-{#snippet beerDescriptor(beers: Beer[], activeId: number)}
+{#snippet beerDescriptor(beers: Beer[], activeId: number | undefined)}
   <div class="relative h-32 w-full">
     {#each beers as beer}
       <div
@@ -146,7 +86,7 @@
 
 <!-- CONTAINER -->
 <div class={["relative isolate flex w-fit flex-col gap-8 pb-2", rest.class]}>
-  {@render beerDescriptor(menu.beers, randomiser.current.id)}
+  {@render beerDescriptor(menu.beers, randomiser.current?.id)}
 
   <div class="relative">
     <!-- MIDDLE POLE -->
@@ -155,20 +95,29 @@
     ></div>
 
     <div class="flex gap-(--dispenser-thickness)">
-      {@render tapList(
-        leftBeers,
-        handleHover,
-        1,
-        randomiser.current.id,
-        "left",
-      )}
-      {@render tapList(
-        rightBeers,
-        handleHover,
-        menu.beers.length / 2 + 1,
-        randomiser.current.id,
-        "right",
-      )}
+      <TapList
+        beers={leftBeers}
+        onHover={handleHover}
+        activeBeer={randomiser.current}
+        startIdx={1}
+        side="left"
+      />
+
+      <TapList
+        beers={rightBeers}
+        onHover={handleHover}
+        activeBeer={randomiser.current}
+        startIdx={menu.beers.length / 2 + 1}
+        side="right"
+      />
+
+      <!-- {@render tapList(leftBeers, handleHover, 1, "left")} -->
+      <!-- {@render tapList( -->
+      <!--   rightBeers, -->
+      <!--   handleHover, -->
+      <!--   menu.beers.length / 2 + 1, -->
+      <!--   "right", -->
+      <!-- )} -->
     </div>
   </div>
   <div class="absolute bottom-0 w-full border-t"></div>
