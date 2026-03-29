@@ -67,7 +67,7 @@
 
         <div class="action-container">
           <p
-            class="mb-12 max-w-xl leading-relaxed text-text-dark-muted sm:text-text-light-muted"
+            class="mb-12 max-w-xl text-center leading-relaxed text-text-dark-muted sm:text-left sm:text-text-light-muted"
           >
             En hjemmelig specialøl-bar i hjertet af Skibhuskvarteret. Kom og nyd
             en lækker øl med dine venner og bekendte.

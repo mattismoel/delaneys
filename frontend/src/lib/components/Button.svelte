@@ -29,7 +29,7 @@
   class={[
     "flex items-center justify-center gap-2 rounded-lg border px-6 py-2 text-center transition-[background,border-color,filter] duration-100",
     variant === "primary" &&
-      "border-border bg-primary font-medium text-text-dark hover:not-disabled:brightness-80 disabled:text-text-dark/50",
+      "border-border bg-primary font-medium text-text-dark hover:not-disabled:bg-primary-400 disabled:text-text-dark/50",
     variant === "ghost" &&
       "border-primary/15 bg-primary/10 text-text-light hover:bg-primary/15",
     variant === "outline-dark" &&
