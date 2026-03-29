@@ -73,7 +73,7 @@
 
     <div class="flex w-full flex-col items-center">
       <Button href="/menu" variant="outline-dark">
-        Gå til ølmenu
+        Se ølmenu
         <span
           class="icon-[lucide--arrow-right] transition-transform group-hover:translate-x-1/2"
         ></span>
