@@ -41,8 +41,8 @@
     class={[
       "hatch-h relative aspect-square h-(--dispenser-thickness) w-16 overflow-hidden border-t-2 border-b-2 bg-surface-200",
       side === "right"
-        ? "group-last:rounded-r-lg group-last:border-r-2"
-        : "group-first:rounded-l-lg group-first:border-l-2",
+        ? "group-last:rounded-r-border group-last:border-r-2"
+        : "group-first:rounded-l-border group-first:border-l-2",
     ]}
   ></div>
 {/snippet}

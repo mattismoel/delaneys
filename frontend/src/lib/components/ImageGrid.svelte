@@ -20,7 +20,7 @@
         loading="lazy"
         {src}
         {alt}
-        class="h-full w-full min-w-52 rounded-lg object-cover"
+        class="h-full w-full min-w-52 rounded-border object-cover"
       />
       <div
         class="border-black absolute top-0 left-0 h-full w-full border border-[black]/25 mix-blend-overlay"

@@ -8,7 +8,10 @@
 
 <textarea
   {...rest}
-  class={["rounded-sm border border-border p-4 focus:outline-none", rest.class]}
+  class={[
+    "rounded-border border border-border p-4 focus:outline-none",
+    rest.class,
+  ]}
   {@attach autoGrow}
 >
 </textarea>

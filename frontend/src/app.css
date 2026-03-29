@@ -6,6 +6,11 @@
 :root {
 	--heading-duration: 1.6s;
 
+  --max-width: 50em;
+  --content-padding: 2rem;
+
+  --content-width: min(var(--max-width), 100% - (var(--content-padding) * 2));
+
 	--check-spacing: 3px;
 	--check-thickness: 2px;
 	--checked-gradient: repeating-linear-gradient(-45deg,
@@ -31,6 +36,8 @@
 
 	--color-border: hsl(from var(--color-primary) calc(h - 15) calc(s - 30) calc(l - 15));
 
+  --radius-border: 0.75rem;
+
 	--color-text-dark: hsl(from var(--color-primary) calc(h - 40) s calc(l - 83));
 	--color-text-dark-muted: hsl(from var(--color-text-dark) calc(h + 15) calc(s - 35) calc(l + 12));
 
@@ -39,7 +46,6 @@
 
 	--font-sans: "Poppins", sans-serif;
 	--font-serif: "Literata", serif;
-
 
 	@keyframes fade-out {
 		from {
@@ -73,11 +79,8 @@
 }
 
 @utility mx-responsive {
-	--max-content-width: 55em;
-	--min-padding: 3rem;
-
-	max-width: min(var(--max-content-width), 100% - var(--min-padding));
-	margin: 0 auto;
+	width: var(--content-width);
+	margin-inline: auto;
 }
 
 @utility fade-in-* {
