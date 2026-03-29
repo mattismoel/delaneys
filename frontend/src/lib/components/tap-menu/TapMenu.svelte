@@ -91,7 +91,7 @@
   <div class="relative">
     <!-- MIDDLE POLE -->
     <div
-      class="hatch-v absolute -bottom-2 left-1/2 z-10 h-20 w-[calc(var(--dispenser-thickness)+5px)] -translate-x-1/2 overflow-hidden rounded-t-lg border-2 bg-surface-200"
+      class="hatch-v absolute -bottom-2 left-1/2 z-10 h-20 w-[calc(var(--dispenser-thickness)+5px)] -translate-x-1/2 overflow-hidden rounded-t-border border-2 bg-surface-200"
     ></div>
 
     <div class="flex gap-(--dispenser-thickness)">

@@ -58,7 +58,7 @@
             <a
               href={beer.url}
               target="_blank"
-              class="flex flex-col items-center rounded-sm px-8 py-2 transition-colors hover:bg-surface-200"
+              class="flex flex-col items-center rounded-border px-8 py-2 transition-colors hover:bg-surface-200"
             >
               <span class="text-base font-medium text-text-dark"
                 >{beer.name}</span

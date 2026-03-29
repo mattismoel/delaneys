@@ -27,7 +27,7 @@
   this={rest.href !== undefined ? "a" : "button"}
   {...rest}
   class={[
-    "flex items-center justify-center gap-2 rounded-lg border px-6 py-2 text-center transition-[background,border-color,filter] duration-100",
+    "flex items-center justify-center gap-2 rounded-border border px-8 py-2 text-center transition-[background,border-color,filter] duration-100",
     variant === "primary" &&
       "border-border bg-primary font-medium text-text-dark hover:not-disabled:bg-primary-400 disabled:text-text-dark/50",
     variant === "ghost" &&

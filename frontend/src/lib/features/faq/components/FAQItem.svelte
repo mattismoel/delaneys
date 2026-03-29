@@ -29,7 +29,7 @@
 
 <div transition:fade={{ duration: 100 }} class="@container">
   <li
-    class="flex flex-col items-center gap-8 rounded-lg border border-border bg-surface-100 p-8 @xl:flex-row"
+    class="flex flex-col items-center gap-8 rounded-border border border-border bg-surface-100 p-8 @xl:flex-row"
   >
     <form
       {...form}

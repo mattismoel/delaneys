@@ -21,7 +21,7 @@
 {#snippet entry(employee: Employee, idx: number)}
   <li
     transition:fade={{ duration: 100 }}
-    class="group flex w-full items-center rounded-lg border border-border/75 bg-surface-100 hover:bg-surface-200"
+    class="group flex w-full items-center rounded-border border border-border/75 bg-surface-100 hover:bg-surface-200"
   >
     <a
       href="/admin/employees/{employee.id}"

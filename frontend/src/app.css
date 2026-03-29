@@ -31,6 +31,8 @@
 
 	--color-border: hsl(from var(--color-primary) calc(h - 15) calc(s - 30) calc(l - 15));
 
+  --radius-border: 0.75rem;
+
 	--color-text-dark: hsl(from var(--color-primary) calc(h - 40) s calc(l - 83));
 	--color-text-dark-muted: hsl(from var(--color-text-dark) calc(h + 15) calc(s - 35) calc(l + 12));
 
@@ -39,7 +41,6 @@
 
 	--font-sans: "Poppins", sans-serif;
 	--font-serif: "Literata", serif;
-
 
 	@keyframes fade-out {
 		from {
