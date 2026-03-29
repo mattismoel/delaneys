@@ -53,10 +53,17 @@
     <div class="mb-12">
       <Slider class="divide-x divide-border/60">
         {#each otherBeers as beer}
-          <div class="flex flex-col items-center px-8">
-            <span class="text-base font-medium text-text-dark">{beer.name}</span
+          <div class="px-2">
+            <a
+              href={beer.url}
+              target="_blank"
+              class="flex flex-col items-center rounded-sm px-8 py-2 transition-colors hover:bg-surface-200"
             >
-            <span class="text-sm text-text-dark-muted">{beer.brewery}</span>
+              <span class="text-base font-medium text-text-dark"
+                >{beer.name}</span
+              >
+              <span class="text-sm text-text-dark-muted">{beer.brewery}</span>
+            </a>
           </div>
         {/each}
         <div></div>
