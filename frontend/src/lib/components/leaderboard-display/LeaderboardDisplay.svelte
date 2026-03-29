@@ -47,6 +47,7 @@
     >
       <span class="icon-[lucide--star]"></span>
       <span class="icon-[lucide--star] translate-y-1/2"></span>
+      <span class="icon-[lucide--star] translate-y-2/3"></span>
       <span class="icon-[lucide--star] translate-y-1/2"></span>
       <span class="icon-[lucide--star]"></span>
     </div>
