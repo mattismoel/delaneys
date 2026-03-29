@@ -9,8 +9,6 @@
   import EventDisplay from "$lib/components/event-display/EventDisplay.svelte";
   import { getMenu } from "$lib/features/location/location.remote";
 
-  const MIN_LEADERBOARD_RATING = 3.7;
-
   let prevScrollY = $state(0);
 
   let scrollDirection: 0 | 1 | -1 = $state(0);
@@ -108,7 +106,7 @@
   </section>
 
   {#await getMenu() then { beers }}
-    <LeaderboardDisplay {beers} minRating={MIN_LEADERBOARD_RATING} />
+    <LeaderboardDisplay {beers} />
   {/await}
 
   <section>
