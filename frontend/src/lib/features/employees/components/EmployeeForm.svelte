@@ -2,11 +2,10 @@
   import type { ChangeEventHandler } from "svelte/elements";
   import { type Employee } from "../employee";
   import Input from "$lib/components/Input.svelte";
-  import Button from "$lib/components/Button.svelte";
   import AvatarSelector from "$lib/components/AvatarSelector.svelte";
   import FormField from "$lib/components/FormField.svelte";
   import type { createEmployee, updateEmployee } from "../employees.remote";
-  import ErrorList from "$lib/components/ErrorList.svelte";
+  import Form from "$lib/components/Form.svelte";
 
   type CreateProps = {
     variant: "create";
@@ -40,16 +39,24 @@
   });
 </script>
 
-<form
-  {...rest.form}
+<Form
+  title={rest.variant === "update" ? "Opdatér ansat" : "Tilføj ansat"}
+  description={rest.variant === "update"
+    ? "Her kan du opdatere den ansatte. Den ansatte vil være synlig på diverse offentlige sider"
+    : "Her kan du tilføje en ny ansat. Den ansatte vil blive synlig på diverse offentlige sider."}
+  btnText={{
+    default: rest.variant === "update" ? "Opdatér" : "Tilføj",
+    submitting: rest.variant === "update" ? "Opdaterer..." : "Tilføjer...",
+  }}
+  form={rest.form}
   enctype="multipart/form-data"
-  class="flex w-full max-w-sm flex-col gap-6"
+  class="max-w-sm"
 >
   {#if rest.variant === "update"}
     <input {...rest.form.fields.employeeId.as("hidden", rest.employee.id)} />
   {/if}
 
-  <FormField errors={src.issues()?.map((i) => i.message)}>
+  <FormField issues={src.issues()} class="mb-8">
     <AvatarSelector
       {...src.as("file")}
       src={rest.variant === "update" ? rest.employee.src : undefined}
@@ -58,23 +65,11 @@
   </FormField>
 
   <fieldset class="flex flex-col gap-2">
-    <FormField errors={name.issues()?.map((i) => i.message)}>
+    <FormField issues={name.issues()}>
       <Input {...name.as("text")} placeholder="Navn" />
     </FormField>
-    <FormField errors={role.issues()?.map((i) => i.message)}>
-      <Input {...role.as("text")} placeholder="Rolle" />
+    <FormField issues={role.issues()}>
+      <Input {...role.as("text")} placeholder="Rolle (valgfri)" />
     </FormField>
   </fieldset>
-
-  <ErrorList errors={rest.form.fields.issues()?.map((i) => i.message)} />
-
-  <Button>
-    <span class="icon-[lucide--upload]"></span>
-
-    {#if rest.variant === "update"}
-      Opdatér
-    {:else}
-      Tilføj
-    {/if}
-  </Button>
-</form>
+</Form>

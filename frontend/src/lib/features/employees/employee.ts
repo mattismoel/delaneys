@@ -1,8 +1,9 @@
+import { createFileUrl } from "$lib/pocketbase";
 import { z } from "zod";
 
 const id = z.string().nonempty();
 
-export const employee = z.object({
+export const employeeSchema = z.object({
   id: id,
   name: z.string().nonempty(),
   src: z.url().optional(),
@@ -10,6 +11,15 @@ export const employee = z.object({
   archived: z.boolean(),
   orderIdx: z.int().nonnegative(),
 });
+
+const pbEmployee = z.object({
+  id: id,
+  name: z.string().nonempty(),
+  src: z.string(),
+  role: z.string().optional(),
+  archived: z.boolean(),
+  orderIdx: z.int().nonnegative(),
+})
 
 const baseEmployeeForm = z.object({
   name: z.string().nonempty("Navn på ansat skal defineres"),
@@ -32,112 +42,17 @@ export const updateEmployeeForm = z.object({
   src: avatarImage.optional(),
 });
 
-type ID = z.infer<typeof id>;
-
-export type Employee = z.infer<typeof employee>;
+export type Employee = z.infer<typeof employeeSchema>;
+export type PBEmployee = z.infer<typeof pbEmployee>
 
 export type CreateEmployeeForm = z.infer<typeof createEmployeeForm>;
 export type UpdateEmployeeForm = z.infer<typeof updateEmployeeForm>;
 
-export type GetEmployeesHandler = () => Promise<Employee[]>;
-export type GetEmployeeByIDHandler = (id: ID) => Promise<Employee | null>;
-
-export type CreateEmployeeHandler = (
-  load: CreateEmployeeForm,
-) => Promise<Employee>;
-export type UpdateEmployeeHandler = (
-  id: ID,
-  load: UpdateEmployeeForm,
-) => Promise<Employee | null>;
-export type DeleteEmployeeHandler = (id: ID) => Promise<void>;
-
-export type ArchiveEmployeeHandler = (id: ID) => Promise<void>;
-export type RestoreEmployeeHandler = (id: ID) => Promise<void>;
-
-/**
- * @description Moves the employee of the given ID up (-1) or down (1). The ordering is ascending.
- */
-export type MoveHandler = (id: ID, direction: 1 | -1) => Promise<void>;
-
-export type EmployeeProvider = {
-  getEmployees: GetEmployeesHandler;
-  getEmployeeById: GetEmployeeByIDHandler;
-  insertEmployee: CreateEmployeeHandler;
-  updateEmployee: UpdateEmployeeHandler;
-  deleteEmployee: DeleteEmployeeHandler;
-
-  archiveEmployee: ArchiveEmployeeHandler;
-  restoreEmployee: RestoreEmployeeHandler;
-
-  move: MoveHandler;
-};
-
-// export const createEmployee = async (data: z.infer<typeof employeeForm>) => {
-// 	let imageSrc: string | undefined = undefined;
-//
-// 	if (data.image) {
-// 		const formData = new FormData()
-// 		formData.set("file", data.image)
-//
-// 		imageSrc = await fetchBackend("/employees/image", z.url(), {
-// 			method: "POST",
-// 			body: formData,
-// 			credentials: "include",
-// 		})
-// 	}
-//
-//
-// 	const createdEmployee = await fetchBackend("/employees", employee, {
-// 		method: "POST",
-// 		body: JSON.stringify({ ...data, imageSrc }),
-// 		headers: { "Content-Type": "application/json" },
-// 		credentials: "include"
-// 	})
-//
-// 	return createdEmployee
-// }
-//
-// export const deleteEmployee = async (id: number) => {
-// 	await fetchBackend(`/employees/${id}`, null, {
-// 		method: "DELETE",
-// 		credentials: "include"
-// 	})
-// }
-//
-// export const updateEmployee = async (id: number, data: z.infer<typeof employeeForm>) => {
-// 	let imageSrc: string | undefined = undefined
-//
-// 	if (data.image) {
-// 		const formData = new FormData()
-// 		formData.set("file", data.image)
-//
-// 		imageSrc = await fetchBackend(`/employees/${id}/image`, z.url(), {
-// 			method: "POST",
-// 			body: formData,
-// 			credentials: "include"
-// 		})
-// 	}
-//
-// 	const result = await fetchBackend(`/employees/${id}`, employee, {
-// 		method: "POST",
-// 		body: JSON.stringify({ ...data, imageSrc }),
-// 		headers: { "Content-Type": "application/json" },
-// 		credentials: "include"
-// 	})
-//
-// 	return result
-// }
-//
-// export const archiveEmployee = async (id: number) => {
-// 	await fetchBackend(`/employees/archive/${id}?archive=true`, null, {
-// 		method: "POST",
-// 		credentials: "include"
-// 	})
-// }
-//
-// export const restoreEmployee = async (id: number) => {
-// 	await fetchBackend(`/employees/archive/${id}?archive=false`, null, {
-// 		method: "POST",
-// 		credentials: "include"
-// 	})
-// }
+export const mapPBEmployee = (record: PBEmployee): Employee => {
+  return employeeSchema.parse({
+    ...record,
+    src: record.src
+      ? createFileUrl("employees", record.id, record.src, { thumb: "512x0" })
+      : undefined,
+  })
+}

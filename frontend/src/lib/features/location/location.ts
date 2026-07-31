@@ -1,64 +1,62 @@
 import z from "zod";
 
-const beer = z.object({
-	id: z.int().positive(),
-	name: z.string().nonempty(),
-	brewery: z.string().nonempty(),
-	style: z.string().nonempty(),
-	abv: z.number().nonnegative(),
-	url: z.url().nonempty(),
-	rating: z.number(),
+export const UNTAPPD_BASE = "https://business.untappd.com/api/v1"
+
+export const daySchema = z.enum([
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
+])
+
+
+type Day = z.infer<typeof daySchema>
+
+const dayNames: Record<Day, string> = {
+  monday: "Mandag",
+  tuesday: "Tirsdag",
+  wednesday: "Onsdag",
+  thursday: "Torsdag",
+  friday: "Freddag",
+  saturday: "Lørdag",
+  sunday: "Søndag",
+}
+
+export const beerSchema = z.object({
+  id: z.int().positive(),
+  name: z.string().nonempty(),
+  brewery: z.string().nonempty(),
+  style: z.string().nonempty(),
+  abv: z.number().nonnegative(),
+  url: z.url().nonempty(),
+  rating: z.number(),
 })
 
 const menu = z.object({
-	beers: beer.array()
+  beers: beerSchema.array()
 })
 
-const day = z.union([
-	z.literal("monday"),
-	z.literal("tuesday"),
-	z.literal("wednesday"),
-	z.literal("thursday"),
-	z.literal("friday"),
-	z.literal("saturday"),
-	z.literal("sunday"),
-])
-
-type Day = z.infer<typeof day>
-
-export const openingHour = z.union([
-	z.object({
-		day: day,
-		closed: z.literal(true),
-		from: z.never().optional(),
-		to: z.never().optional()
-	}),
-	z.object({
-		day: day,
-		closed: z.literal(false),
-		from: z.iso.time(),
-		to: z.iso.time(),
-	}),
+export const openingHour = z.discriminatedUnion("closed", [
+  z.object({
+    day: daySchema,
+    closed: z.literal(true),
+  }),
+  z.object({
+    day: daySchema,
+    closed: z.literal(false),
+    from: z.iso.time(),
+    to: z.iso.time(),
+  }),
 ])
 
 
 export const dayName = (day: Day) => {
-	switch (day) {
-		case "monday": return "Mandag"
-		case "tuesday": return "Tirsdag"
-		case "wednesday": return "Onsdag"
-		case "thursday": return "Torsdag"
-		case "friday": return "Fredag"
-		case "saturday": return "Lørdag"
-		case "sunday": return "Søndag"
-	}
+  return dayNames[day]
 }
 
 export type OpeningHour = z.infer<typeof openingHour>
 export type Menu = z.infer<typeof menu>
-export type Beer = z.infer<typeof beer>
-
-export type LocationProvider = {
-	getMenu: () => Promise<Menu>
-	getHours: () => Promise<OpeningHour[]>
-}
+export type Beer = z.infer<typeof beerSchema>

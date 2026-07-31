@@ -1,26 +1,44 @@
-import { command, form, getRequestEvent, query } from "$app/server";
+import { command, form, query } from "$app/server";
 import z from "zod";
-import { createQuestionForm, updateQuestionForm } from "./faq";
+import { createQuestionForm, mapPBQuestion, updateQuestionForm, type PBQuestion } from "./faq";
+import { getLocalsPocketBase } from "$lib/pocketbase";
+import { formWrapper } from "$lib/form";
 
 export const getQuestions = query(async () => {
-  const { locals } = getRequestEvent();
-  const questions = await locals.faqProvider.listQuestions();
-  return questions;
+  const pb = getLocalsPocketBase()
+
+  const records = await pb
+    .collection("questions")
+    .getFullList<PBQuestion>({
+      sort: "-created"
+    })
+
+  return records.map(record => mapPBQuestion(record))
 });
 
 export const createQuestion = form(createQuestionForm, async (data) => {
-  const { locals } = getRequestEvent();
-  await locals.faqProvider.createQuestion(data);
+  formWrapper(async () => {
+    const pb = getLocalsPocketBase()
+    await pb.collection("questions").create(data)
+  })
+
+  getQuestions().refresh()
 });
 
-export const updateQuestion = form(updateQuestionForm, async (data) => {
-  const { locals } = getRequestEvent();
-  await locals.faqProvider.updateQuestion(data.questionId, data);
+export const updateQuestion = form(updateQuestionForm, async ({ questionId, ...data }) => {
+  await formWrapper(async () => {
+    const pb = getLocalsPocketBase()
+    await pb.collection("questions").update(questionId, data)
+  })
+
+  getQuestions().refresh()
 });
 
 export const deleteQuestion = command(z.string(), async (id) => {
-  const { locals } = getRequestEvent();
-  await locals.faqProvider.deleteQuestion(id);
+  await formWrapper(async () => {
+    const pb = getLocalsPocketBase()
+    await pb.collection("questions").delete(id)
+  })
 
   getQuestions().refresh();
 });
