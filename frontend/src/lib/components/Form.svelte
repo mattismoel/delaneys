@@ -64,7 +64,7 @@
     </div>
   {/if}
 
-  <Button type="submit">
+  <Button type="submit" disabled={isSubmitting}>
     {#if isSubmitting}
       {btnText.submitting}
     {:else}
