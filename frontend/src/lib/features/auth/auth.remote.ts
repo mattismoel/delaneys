@@ -1,9 +1,10 @@
 import { command, form, query } from "$app/server";
-import { redirect } from "@sveltejs/kit";
+import { invalid, redirect } from "@sveltejs/kit";
 import z from "zod";
 import { getLocalsPocketBase } from "$lib/pocketbase";
 import { mapPBUser, userSchema, type PBUser } from "../users/user";
 import { loginForm, registerForm } from "./auth";
+import { ClientResponseError } from "pocketbase";
 
 export const isAuthenticated = query(async () => {
   const pb = getLocalsPocketBase()
@@ -22,8 +23,16 @@ export const isAuthenticated = query(async () => {
 export const register = form(registerForm, async (data) => {
   const pb = getLocalsPocketBase()
 
-  await pb.collection("users").create({ ...data, emailVisibility: true });
-  await pb.collection("users").requestVerification(data.email);
+  try {
+    await pb.collection("users").create({ ...data, emailVisibility: true });
+    await pb.collection("users").requestVerification(data.email);
+  } catch (e) {
+    if (e instanceof ClientResponseError) {
+      invalid(`Could not register user: ${e.message}`)
+    } else {
+      invalid("Something went wrong")
+    }
+  }
 
   redirect(303, `/auth/verification?email=${data.email}`);
 });
