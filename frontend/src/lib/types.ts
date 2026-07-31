@@ -1,13 +1,15 @@
+import { type ClassValue } from "svelte/elements"
+
 export type PropsWithClass<T = never> = T & {
-	class?: string;
+  class?: ClassValue;
 }
 
 type FieldErrors<T> = { [K in keyof T]: (string[] | undefined) }
 
 export type Form<T = never> = {
-	form: {
-		data: Partial<T> | undefined
-		fieldErrors: FieldErrors<Partial<T>> | undefined
-		formErrors: string[] | undefined
-	}
+  form: {
+    data: Partial<T> | undefined
+    fieldErrors: FieldErrors<Partial<T>> | undefined
+    formErrors: string[] | undefined
+  }
 }

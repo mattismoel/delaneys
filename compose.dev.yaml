@@ -12,22 +12,25 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
-    volumes:
-      - ./frontend:/usr/src/app
-      - node_modules:/usr/src/app/node_modules
-    command: sh -c "npm install && npm run dev"
-    depends_on:
-      - backend
-      - caddy
+    env_file: .env.development
+    develop:
+      watch:
+        - path: ./frontend
+          target: /app
+          action: sync
+          ignore:
+            - node_modules/
+            - .svelte-kit/
+            - build/
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     volumes:
-      - ./backend/pb/pb_data:/pb/pb_data
-      - ./backend/pb/pb_migrations:/pb/pb_migrations
+      - pb_data:/pb/pb_data
+      - pb_migrations:/pb/pb_migrations
 
 volumes:
   pb_data:
-  node_modules:
+  pb_migrations:
