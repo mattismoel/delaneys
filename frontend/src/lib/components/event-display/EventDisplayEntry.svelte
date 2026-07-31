@@ -28,8 +28,6 @@
 
     observer.observe(element);
   };
-
-  $inspect(isVisible);
 </script>
 
 <div
