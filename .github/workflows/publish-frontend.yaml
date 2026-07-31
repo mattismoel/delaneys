@@ -31,7 +31,7 @@ jobs:
           context: ./frontend
           github_token: ${{ secrets.GITHUB_TOKEN }}
           package_name: frontend
-          build-args: |
+          build_args: |
             UNTAPPD_ENCODED_ACCESS_KEY=${{ secrets.UNTAPPD_ENCODED_ACCESS_KEY }}
             DATABASE_URL=${{ vars.DATABASE_URL }}
             UNTAPPD_LOCATION_ID=${{ vars.UNTAPPD_LOCATION_ID }}
