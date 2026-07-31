@@ -1,4 +1,4 @@
-name: Publish frontend
+name: Publish Frontend
 
 env:
   REGISTRY: ghcr.io
