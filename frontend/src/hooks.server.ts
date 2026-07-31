@@ -6,6 +6,12 @@ import { env } from "$env/dynamic/private"
 import { userSchema } from "$lib/features/users/user"
 
 export const handle: Handle = async ({ event, resolve }) => {
+  console.log({
+    locationId: env.UNTAPPD_LOCATION_ID,
+    menuId: env.UNTAPPD_MENU_ID,
+    access: env.UNTAPPD_ENCODED_ACCESS_KEY
+  })
+
   event.locals.pocketbase = new PocketBase(env.DATABASE_URL)
   event.locals.pocketbase.authStore.loadFromCookie(event.request.headers.get("cookie") || "")
 
