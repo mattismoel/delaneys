@@ -1,18 +1,19 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
   import ErrorList from "./ErrorList.svelte";
+  import type { RemoteFormIssue } from "@sveltejs/kit";
 
   type Props = {
     children: Snippet;
-    errors: string[] | undefined;
+    issues?: RemoteFormIssue[] | undefined;
   };
 
-  let { children, errors }: Props = $props();
+  let { children, issues }: Props = $props();
 </script>
 
 <div class="flex w-full flex-col">
   {@render children()}
-  <div class="shrink-0 overflow-hidden">
-    <ErrorList {errors} />
-  </div>
+  {#if issues && issues.length}
+    <ErrorList {issues} />
+  {/if}
 </div>

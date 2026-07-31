@@ -22,10 +22,10 @@
   <h1 class="font-serif text-3xl font-bold">Log ind</h1>
 
   <fieldset class="flex flex-col gap-2">
-    <FormField errors={email.issues()?.map((i) => i.message)}>
+    <FormField issues={email.issues()}>
       <Input {...email.as("email")} placeholder="Email" class="w-full" />
     </FormField>
-    <FormField errors={password.issues()?.map((i) => i.message)}>
+    <FormField issues={password.issues()}>
       <Input
         {...password.as("password")}
         placeholder="Adgangskode"
@@ -37,7 +37,9 @@
     </InlineLink>
   </fieldset>
 
-  <ErrorList errors={login.fields.issues()?.map((i) => i.message)} />
+  {#if login.fields.issues}
+    <ErrorList issues={login.fields.issues() ?? []} />
+  {/if}
   <Button type="submit" disabled={isSubmitting}>
     {#if isSubmitting}
       Logger ind...

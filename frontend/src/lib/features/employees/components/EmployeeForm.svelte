@@ -49,7 +49,7 @@
     <input {...rest.form.fields.employeeId.as("hidden", rest.employee.id)} />
   {/if}
 
-  <FormField errors={src.issues()?.map((i) => i.message)}>
+  <FormField issues={src.issues()}>
     <AvatarSelector
       {...src.as("file")}
       src={rest.variant === "update" ? rest.employee.src : undefined}
@@ -58,15 +58,17 @@
   </FormField>
 
   <fieldset class="flex flex-col gap-2">
-    <FormField errors={name.issues()?.map((i) => i.message)}>
+    <FormField issues={name.issues()}>
       <Input {...name.as("text")} placeholder="Navn" />
     </FormField>
-    <FormField errors={role.issues()?.map((i) => i.message)}>
+    <FormField issues={role.issues()}>
       <Input {...role.as("text")} placeholder="Rolle" />
     </FormField>
   </fieldset>
 
-  <ErrorList errors={rest.form.fields.issues()?.map((i) => i.message)} />
+  {#if rest.form.fields.issues()}
+    <ErrorList issues={rest.form.fields.issues() ?? []} />
+  {/if}
 
   <Button>
     <span class="icon-[lucide--upload]"></span>

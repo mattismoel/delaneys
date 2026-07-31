@@ -1,14 +1,15 @@
 <script lang="ts">
+  import type { RemoteFormIssue } from "@sveltejs/kit";
+
   type Props = {
-    errors: string[] | undefined;
+    issues: RemoteFormIssue[];
   };
-  let { errors }: Props = $props();
+
+  let { issues }: Props = $props();
 </script>
 
-{#if errors}
-  <ul class="grow-0 list-inside list-disc text-sm text-[red]">
-    {#each errors as error}
-      <li>{error}</li>
-    {/each}
-  </ul>
-{/if}
+<ul class="grow-0 list-inside list-disc text-sm text-[red]">
+  {#each issues as { message }}
+    <li>{message}</li>
+  {/each}
+</ul>

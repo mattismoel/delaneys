@@ -8,9 +8,9 @@
 </script>
 
 <form
-  {...createQuestion.enhance(async ({ form, submit }) => {
-    await submit();
-    form.reset();
+  {...createQuestion.enhance(async (form) => {
+    await form.submit();
+    form.element.reset();
     titleInput?.focus();
   })}
   class="flex flex-col gap-2"
