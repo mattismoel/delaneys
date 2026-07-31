@@ -9,12 +9,9 @@ export const handle: Handle = async ({ event, resolve }) => {
   console.log({
     locationId: env.UNTAPPD_LOCATION_ID,
     menuId: env.UNTAPPD_MENU_ID,
-    // UNTAPPD_ENCODED_ACCESS_KEY=${{ secrets.UNTAPPD_ENCODED_ACCESS_KEY }}
-    // DATABASE_URL=${{ vars.DATABASE_URL }}
-    // UNTAPPD_LOCATION_ID=${{ vars.UNTAPPD_LOCATION_ID }}
-    // UNTAPPD_MENU_ID=${{ vars.UNTAPPD_MENU_ID }}
-
+    access: env.UNTAPPD_ENCODED_ACCESS_KEY
   })
+
   event.locals.pocketbase = new PocketBase(env.DATABASE_URL)
   event.locals.pocketbase.authStore.loadFromCookie(event.request.headers.get("cookie") || "")
 
