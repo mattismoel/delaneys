@@ -6,6 +6,7 @@ import { env } from "$env/dynamic/private"
 import { userSchema } from "$lib/features/users/user"
 
 export const handle: Handle = async ({ event, resolve }) => {
+  console.log("database url", env.DATABASE_URL)
   event.locals.pocketbase = new PocketBase(env.DATABASE_URL)
   event.locals.pocketbase.authStore.loadFromCookie(event.request.headers.get("cookie") || "")
 
