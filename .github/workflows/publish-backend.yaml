@@ -4,10 +4,17 @@ env:
   REGISTRY: ghcr.io
   PACKAGE_NAME: backend
 on:
+  pull_request:
+    branches: ["main", "dev", "edge"]
+    paths:
+      - "backend/**"
+      - "./github/workflows/publish-frontend.yaml"
+
   push:
     branches: ["main", "dev", "edge"]
     paths:
       - "backend/**"
+      - "./github/workflows/publish-frontend.yaml"
 
 jobs:
   publish-backend:
