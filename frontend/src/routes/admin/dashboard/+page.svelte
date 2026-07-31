@@ -23,8 +23,8 @@
   let showQuestionForm = $state(false);
 </script>
 
-<main class="flex flex-col gap-32 py-32">
-  <section class="mx-responsive w-full">
+<main class="mx-responsive flex flex-col gap-32 py-32">
+  <section class="">
     <div class="@container">
       <div class="grid grid-cols-1 gap-32 @4xl:grid-cols-2">
         <section class="">
