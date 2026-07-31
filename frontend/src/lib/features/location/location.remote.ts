@@ -1,13 +1,28 @@
-import { getRequestEvent, query } from "$app/server";
+import { query } from "$app/server";
+import { env } from "$env/dynamic/private";
+import { mapUntappdHoursResponse, mapUntappdMenuResponse, untappdFetch, untappdHoursResponse, untappdMenuResponse } from "./untappd";
 
 export const getMenu = query(async () => {
-  const { locals } = getRequestEvent();
-  const menu = await locals.locationProvider.getMenu();
-  return menu;
+  const menuResponse = await untappdFetch(`/menus/${env.UNTAPPD_MENU_ID}?full=true`)
+  const menu = untappdMenuResponse.parse(menuResponse)
+
+  return mapUntappdMenuResponse(menu)
 });
 
 export const getHours = query(async () => {
-  const { locals } = getRequestEvent();
-  const hours = await locals.locationProvider.getHours();
-  return hours;
+  const apiResponse = await untappdFetch(`/locations/${env.UNTAPPD_LOCATION_ID}/hours`)
+  const response = untappdHoursResponse.parse(apiResponse)
+
+  return mapUntappdHoursResponse(response)
+
+  // return hours
+  //   .map(hour => (hour.closed ? {
+  //     day: hour.day,
+  //     closed: true
+  //   } : {
+  //     day: hour.day,
+  //     closed: false,
+  //     from: format(hour.open_at, "HH:mm"),
+  //     to: format(hour.close_at, "HH:mm")
+  //   }))
 });

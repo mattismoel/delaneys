@@ -13,14 +13,17 @@
 
 {#snippet openingHours()}
   <ul class="flex flex-col gap-1">
-    {#each hours as { from, to, day, closed }}
+    {#each hours as hour}
       <li class="grid grid-cols-2 text-text-dark-muted">
-        <span>{dayName(day)}</span>
-        {#if closed}
-          <span class="text-right italic">Lukket</span>
-        {:else}
-          <span class="text-right">{from}&nbsp;&mdash;&nbsp;{to}</span>
-        {/if}
+        <span>{dayName(hour.day)}</span>
+
+        <span class="text-right">
+          {#if hour.closed}
+            <i>Lukket</i>
+          {:else}
+            {hour.from}&nbsp;&mdash;&nbsp;{hour.to}
+          {/if}
+        </span>
       </li>
     {/each}
   </ul>
