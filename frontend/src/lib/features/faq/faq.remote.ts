@@ -2,6 +2,7 @@ import { command, form, query } from "$app/server";
 import z from "zod";
 import { createQuestionForm, mapPBQuestion, updateQuestionForm, type PBQuestion } from "./faq";
 import { getLocalsPocketBase } from "$lib/pocketbase";
+import { formWrapper } from "$lib/form";
 
 export const getQuestions = query(async () => {
   const pb = getLocalsPocketBase()
@@ -16,17 +17,28 @@ export const getQuestions = query(async () => {
 });
 
 export const createQuestion = form(createQuestionForm, async (data) => {
-  const pb = getLocalsPocketBase()
-  await pb.collection("questions").create(data)
+  formWrapper(async () => {
+    const pb = getLocalsPocketBase()
+    await pb.collection("questions").create(data)
+  })
+
+  getQuestions().refresh()
 });
 
 export const updateQuestion = form(updateQuestionForm, async ({ questionId, ...data }) => {
-  const pb = getLocalsPocketBase()
-  await pb.collection("questions").update(questionId, data)
+  await formWrapper(async () => {
+    const pb = getLocalsPocketBase()
+    await pb.collection("questions").update(questionId, data)
+  })
+
+  getQuestions().refresh()
 });
 
 export const deleteQuestion = command(z.string(), async (id) => {
-  const pb = getLocalsPocketBase()
-  await pb.collection("questions").delete(id)
+  await formWrapper(async () => {
+    const pb = getLocalsPocketBase()
+    await pb.collection("questions").delete(id)
+  })
+
   getQuestions().refresh();
 });

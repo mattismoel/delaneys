@@ -3,6 +3,7 @@ import z from "zod";
 import { createEmployeeForm, mapPBEmployee, updateEmployeeForm, type PBEmployee } from "./employee";
 import { redirect } from "@sveltejs/kit";
 import { getLocalsPocketBase } from "$lib/pocketbase";
+import { formWrapper } from "$lib/form";
 
 export const getEmployees = query(async () => {
   const pb = getLocalsPocketBase()
@@ -25,27 +26,26 @@ export const getEmployee = query(z.string(), async (id) => {
 });
 
 export const createEmployee = form(createEmployeeForm, async (data) => {
-  const pb = getLocalsPocketBase()
+  await formWrapper(async () => {
+    const pb = getLocalsPocketBase()
+    const { length: employeeCount } = await pb
+      .collection("employees")
+      .getFullList();
 
-  const { length: employeeCount } = await pb
-    .collection("employees")
-    .getFullList();
-
-  await pb
-    .collection("employees")
-    .create<PBEmployee>({ ...data, orderIdx: employeeCount });
+    await pb
+      .collection("employees")
+      .create<PBEmployee>({ ...data, orderIdx: employeeCount });
+  })
 });
 
 export const updateEmployee = form(updateEmployeeForm, async ({ employeeId, ...data }) => {
-  const pb = getLocalsPocketBase()
-
-  await pb
-    .collection("employees")
-    .update(employeeId, data);
+  await formWrapper(async () => {
+    const pb = getLocalsPocketBase()
+    await pb.collection("employees").update(employeeId, data);
+  })
 
   getEmployees().refresh()
   getEmployee(employeeId).refresh()
-
   redirect(302, "/admin/dashboard");
 });
 

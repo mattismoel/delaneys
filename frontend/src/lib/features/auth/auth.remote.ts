@@ -1,10 +1,10 @@
 import { command, form, query } from "$app/server";
-import { invalid, redirect } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 import z from "zod";
 import { getLocalsPocketBase } from "$lib/pocketbase";
 import { mapPBUser, userSchema, type PBUser } from "../users/user";
 import { loginForm, registerForm } from "./auth";
-import { ClientResponseError } from "pocketbase";
+import { formWrapper } from "$lib/form";
 
 export const isAuthenticated = query(async () => {
   const pb = getLocalsPocketBase()
@@ -21,25 +21,20 @@ export const isAuthenticated = query(async () => {
 });
 
 export const register = form(registerForm, async (data) => {
-  const pb = getLocalsPocketBase()
-
-  try {
+  await formWrapper(async () => {
+    const pb = getLocalsPocketBase()
     await pb.collection("users").create({ ...data, emailVisibility: true });
     await pb.collection("users").requestVerification(data.email);
-  } catch (e) {
-    if (e instanceof ClientResponseError) {
-      invalid(`Could not register user: ${e.message}`)
-    } else {
-      invalid("Something went wrong")
-    }
-  }
+  })
 
   redirect(303, `/auth/verification?email=${data.email}`);
 });
 
 export const login = form(loginForm, async (data) => {
-  const pb = getLocalsPocketBase()
-  await pb.collection("users").authWithPassword(data.email, data.password);
+  await formWrapper(async () => {
+    const pb = getLocalsPocketBase()
+    await pb.collection("users").authWithPassword(data.email, data.password);
+  })
 
   redirect(303, "/admin/dashboard");
 });
@@ -47,8 +42,12 @@ export const login = form(loginForm, async (data) => {
 export const requestPasswordReset = form(
   z.object({ email: z.email() }),
   async ({ email }) => {
-    const pb = getLocalsPocketBase()
-    const sent = await pb.collection("users").requestPasswordReset(email);
+    let sent: boolean = false;
+
+    await formWrapper(async () => {
+      const pb = getLocalsPocketBase()
+      sent = await pb.collection("users").requestPasswordReset(email);
+    })
 
     return { success: sent }
   },
