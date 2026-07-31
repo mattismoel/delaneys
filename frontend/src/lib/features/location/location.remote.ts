@@ -14,15 +14,4 @@ export const getHours = query(async () => {
   const response = untappdHoursResponse.parse(apiResponse)
 
   return mapUntappdHoursResponse(response)
-
-  // return hours
-  //   .map(hour => (hour.closed ? {
-  //     day: hour.day,
-  //     closed: true
-  //   } : {
-  //     day: hour.day,
-  //     closed: false,
-  //     from: format(hour.open_at, "HH:mm"),
-  //     to: format(hour.close_at, "HH:mm")
-  //   }))
 });
