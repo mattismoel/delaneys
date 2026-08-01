@@ -1,6 +1,7 @@
 <script lang="ts">
-  import type { Attachment } from "svelte/attachments";
+  import { onMount } from "svelte";
   import type { SVGAttributes } from "svelte/elements";
+  import { draw } from "svelte/transition";
 
   type Variant = "light" | "dark";
 
@@ -15,22 +16,25 @@
   };
 
   let { variant = "dark", trace, ...rest }: Props = $props();
+  let svgElement = $state<SVGSVGElement>();
 
-  const tracer: Attachment<SVGPathElement> = (element) => {
-    if (!trace) {
-      return;
+  let shouldAnimate = $state(false);
+
+  onMount(() => {
+    if (!svgElement) return;
+
+    if (trace) {
+      shouldAnimate = true;
     }
-
-    element.style.strokeDasharray = element.getTotalLength().toString();
-    element.style.strokeDashoffset = element.getTotalLength().toString();
-  };
+  });
 </script>
 
 <svg
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 476.7 124.76"
   {...rest}
-  class={["-translate-x-[12%]", rest.class]}
+  bind:this={svgElement}
+  class={["translate-x-[-12%]", rest.class]}
 >
   <g id="clip-paths">
     <clipPath id="cp-1">
@@ -55,104 +59,41 @@
     </clipPath>
   </g>
 
-  <g
-    class={["strokes", variantClasses[variant]]}
-    fill="none"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    stroke-width="10px"
-  >
-    <!-- "D-line" -->
-    <path
-      class="p1"
-      clip-path="url(#cp-1)"
-      d="M47.41,32.14c.21,16.33,16.23,55.37,21.74,55.37,1.48,0,3.21-3.52,6.05-8.43"
-      {@attach tracer}
-    />
+  {#if !trace || shouldAnimate}
+    <g
+      class={["", variantClasses[variant]]}
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="10px"
+    >
+      <!-- "D-line" -->
+      <path
+        transition:draw={trace ? { duration: 300 } : undefined}
+        clip-path="url(#cp-1)"
+        d="M47.41,32.14c.21,16.33,16.23,55.37,21.74,55.37,1.48,0,3.21-3.52,6.05-8.43"
+      />
 
-    <!-- "DELANEY" -->
-    <path
-      class="p2"
-      clip-path="url(#cp-2)"
-      d="M4.11,4.81C61.52-1.91,94.56,25.76,94.56,51.83c0,27.75-19.29,53.55-38.04,53.55-13.46,0-15.57-4.73.5-4.73,19.72,0,56.53-3.07,68.53-3.07,7.58,0,25.5-8.55,25.5-22.72,0-11.99-9.38-26.1-21.68-26.1-9.97,0-22.28,10.14-22.28,21.9,0,13.35,17.4,33.38,39.3,33.38,18.3,0,47.31-16.13,47.31-52.43,0-21.13-16.11-41.09-21.94-41.09-4.35,0-6.3,17.49-6.3,32.35,0,20.59,14.02,56.45,31.03,56.45,7.1,0,18-5.35,18-7.05,0-2.55-8.95-6.02-8.95-20.57,0-12,3.35-21.86,26.07-20.63-25.33,0-25.75,11.31-25.75,20.76s6.64,24.76,20.31,24.92c9,.1,16.05-8.55,16.05-19.95,0-9.81-8.37-16.15-12.12-16.15s3.95,30.02,23,30.02c8.07,0,18.19-9.61,18.19-12.61s-1.35-5.64-2.79-7.09c-2.5-2.5-3.52-.97-1.39,1.35,9.02,9.82,14.37,22.88,17.26,22.89,1.96,0,3.21-2.75,3.21-8.24,0-11.46-6.29-18.41-6.29-23.34,0-1.04,1.17-2.57,3.57-2.57,10.42,0,15.9,31.95,44.12,31.95,7.03,0,17.21-10.29,17.21-18.84,0-10.32-4.75-22.17-17.12-22.17-7.8,0-15.55,8.48-15.55,18.08s7.27,25.8,32.33,25.8c18.36,0,29.17-14.59,29.17-27.34,0-10.52-2.7-14.44-4.31-14.44s-2.95,4.72-2.95,12.25,6.4,18.39,16.82,18.39c9.21,0,17.32-9.83,17.32-18.03,0-1.58-1.48-6.9-2.42-8.54-6.03-10.58-6.01-7.07-2.18,2.86,4.07,10.56,17.34,33.44,23.24,41.29,6.14,8.16,9.62,12.37,18.36,17.41"
-      {@attach tracer}
-    />
+      <!-- "DELANEY" -->
+      <path
+        transition:draw={trace ? { delay: 200, duration: 900 } : undefined}
+        clip-path="url(#cp-2)"
+        d="M4.11,4.81C61.52-1.91,94.56,25.76,94.56,51.83c0,27.75-19.29,53.55-38.04,53.55-13.46,0-15.57-4.73.5-4.73,19.72,0,56.53-3.07,68.53-3.07,7.58,0,25.5-8.55,25.5-22.72,0-11.99-9.38-26.1-21.68-26.1-9.97,0-22.28,10.14-22.28,21.9,0,13.35,17.4,33.38,39.3,33.38,18.3,0,47.31-16.13,47.31-52.43,0-21.13-16.11-41.09-21.94-41.09-4.35,0-6.3,17.49-6.3,32.35,0,20.59,14.02,56.45,31.03,56.45,7.1,0,18-5.35,18-7.05,0-2.55-8.95-6.02-8.95-20.57,0-12,3.35-21.86,26.07-20.63-25.33,0-25.75,11.31-25.75,20.76s6.64,24.76,20.31,24.92c9,.1,16.05-8.55,16.05-19.95,0-9.81-8.37-16.15-12.12-16.15s3.95,30.02,23,30.02c8.07,0,18.19-9.61,18.19-12.61s-1.35-5.64-2.79-7.09c-2.5-2.5-3.52-.97-1.39,1.35,9.02,9.82,14.37,22.88,17.26,22.89,1.96,0,3.21-2.75,3.21-8.24,0-11.46-6.29-18.41-6.29-23.34,0-1.04,1.17-2.57,3.57-2.57,10.42,0,15.9,31.95,44.12,31.95,7.03,0,17.21-10.29,17.21-18.84,0-10.32-4.75-22.17-17.12-22.17-7.8,0-15.55,8.48-15.55,18.08s7.27,25.8,32.33,25.8c18.36,0,29.17-14.59,29.17-27.34,0-10.52-2.7-14.44-4.31-14.44s-2.95,4.72-2.95,12.25,6.4,18.39,16.82,18.39c9.21,0,17.32-9.83,17.32-18.03,0-1.58-1.48-6.9-2.42-8.54-6.03-10.58-6.01-7.07-2.18,2.86,4.07,10.56,17.34,33.44,23.24,41.29,6.14,8.16,9.62,12.37,18.36,17.41"
+      />
 
-    <!-- "S" -->
-    <path
-      class="p3"
-      clip-path="url(#cp-3)"
-      d="M431.91,86.83c-6.64-15.25-6.19-36.01,7.82-36.01,16.01,0,34.07,24.78,34.07,34.66,0,3.82-2.92,6.89-6.42,6.89-8.64,0-21.05-7.42-21.05-29.27"
-      {@attach tracer}
-    />
+      <!-- "S" -->
+      <path
+        transition:draw={trace ? { delay: 900, duration: 500 } : undefined}
+        clip-path="url(#cp-3)"
+        d="M431.91,86.83c-6.64-15.25-6.19-36.01,7.82-36.01,16.01,0,34.07,24.78,34.07,34.66,0,3.82-2.92,6.89-6.42,6.89-8.64,0-21.05-7.42-21.05-29.27"
+      />
 
-    <!-- "S-mark" -->
-    <path
-      class="p4"
-      clip-path="url(#cp-4)"
-      d="M405.01,20.25c6.83,9.3,7.65,15.75,6.15,27.6"
-      {@attach tracer}
-    />
-  </g>
+      <!-- "S-mark" -->
+      <path
+        transition:draw={trace ? { delay: 1100, duration: 500 } : undefined}
+        clip-path="url(#cp-4)"
+        d="M405.01,20.25c6.83,9.3,7.65,15.75,6.15,27.6"
+      />
+    </g>
+  {/if}
 </svg>
-
-<style>
-  .strokes {
-    --heading-duration: 1.8s;
-    /* D-line */
-    --duration-fraction-1: 0.1;
-
-    /* "DELAYNE" */
-    --duration-fraction-2: 0.6;
-
-    /* "S" */
-    --duration-fraction-3: 0.1;
-
-    /* S mark */
-    --duration-fraction-4: 0.1;
-
-    --duration-1: calc(var(--heading-duration) * var(--duration-fraction-1));
-    --duration-2: calc(var(--heading-duration) * var(--duration-fraction-2));
-    --duration-3: calc(var(--heading-duration) * var(--duration-fraction-3));
-    --duration-4: calc(var(--heading-duration) * var(--duration-fraction-4));
-
-    --delay-1: 0s;
-    --delay-2: calc(var(--heading-duration) * var(--duration-fraction-1));
-    --delay-3: calc(
-      var(--heading-duration) *
-        (var(--duration-fraction-1) + var(--duration-fraction-2))
-    );
-    --delay-4: calc(
-      var(--heading-duration) *
-        (
-          var(--duration-fraction-1) + var(--duration-fraction-2) +
-            var(--duration-fraction-3)
-        )
-    );
-  }
-
-  .p1 {
-    animation: var(--duration-1) ease-out var(--delay-1) dash-move forwards;
-  }
-
-  .p2 {
-    animation: var(--duration-2) ease-in-out var(--delay-2) dash-move forwards;
-  }
-
-  .p3 {
-    animation: var(--duration-3) ease-in-out var(--delay-3) dash-move forwards;
-  }
-
-  .p4 {
-    animation: var(--duration-4) ease-out var(--delay-4) dash-move forwards;
-  }
-
-  @keyframes dash-move {
-    0% {
-      opacity: 100%;
-    }
-    100% {
-      stroke-dashoffset: 0;
-    }
-  }
-</style>
