@@ -20,7 +20,7 @@ const dayNames: Record<Day, string> = {
   tuesday: "Tirsdag",
   wednesday: "Onsdag",
   thursday: "Torsdag",
-  friday: "Freddag",
+  friday: "Fredag",
   saturday: "Lørdag",
   sunday: "Søndag",
 }
