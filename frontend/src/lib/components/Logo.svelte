@@ -34,7 +34,7 @@
   viewBox="0 0 476.7 124.76"
   {...rest}
   bind:this={svgElement}
-  class={["translate-x-[-12%]", rest.class]}
+  class={["", rest.class]}
 >
   <g id="clip-paths">
     <clipPath id="cp-1">
