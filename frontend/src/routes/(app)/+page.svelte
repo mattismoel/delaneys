@@ -51,7 +51,6 @@
 
             <Logo
               trace
-              height="12rem"
               variant="dark"
               class="translate-x-0 sm:hidden lg:translate-x-[-12%]"
             />
