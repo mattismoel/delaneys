@@ -46,14 +46,14 @@
             <Logo
               trace
               variant="light"
-              class="hidden h-full w-full translate-x-0 drop-shadow-xl drop-shadow-[black]/25 sm:block lg:-translate-x-[12%]"
+              class="hidden h-full w-full translate-x-0 drop-shadow-xl drop-shadow-[black]/25 sm:block lg:translate-x-[-12%]"
             />
 
             <Logo
               trace
               height="12rem"
               variant="dark"
-              class="translate-x-0 sm:hidden lg:-translate-x-[12%]"
+              class="translate-x-0 sm:hidden lg:translate-x-[-12%]"
             />
           </div>
           <div
