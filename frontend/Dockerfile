@@ -7,10 +7,6 @@ COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
 
-# ARG UNTAPPD_ENCODED_ACCESS_KEY
-# ENV UNTAPPD_ENCODED_ACCESS_KEY=$UNTAPPD_ENCODED_ACCESS_KEY
-# ENV PUBLIC_API_BASE_URL=https://api.delaneys.dk
-
 RUN npm run build
 
 FROM base AS release

@@ -1,150 +1,91 @@
 <script lang="ts">
-  import type { PropsWithClass } from "$lib/types";
-  import type { Beer, Menu } from "$lib/features/location/location";
+  import type { Menu } from "$lib/features/location/location";
   import { Randomiser } from "$lib/stores/random.svelte";
   import TapList from "./TapList.svelte";
-  import InlineLink from "../InlineLink.svelte";
+  import BeerDescriptor from "./BeerDescriptor.svelte";
 
-  const MIN_EXCLUSIVE_RATING = 3.71;
-
-  type Props = PropsWithClass<{
+  type Props = {
     menu: Menu;
-  }>;
-
-  let { menu, ...rest }: Props = $props();
-
-  let isHovered = $state(false);
-
-  const randomiser = $derived(new Randomiser(menu.beers));
-
-  const handleHover = (id: number | null) => {
-    isHovered = id !== null;
-
-    if (id === null) return;
-
-    const newBeer = menu.beers.find((beer) => beer.id === id);
-    if (!newBeer) {
-      randomiser.override({ newValue: null });
-      return;
-    }
-
-    randomiser.override({
-      newValue: newBeer,
-      findFn: (beer) => beer.id === newBeer.id,
-    });
   };
 
-  $effect(() => {
-    const interval = isHovered
-      ? undefined
-      : setInterval(randomiser.randomise, 3000);
-    return () => clearInterval(interval);
+  let { menu }: Props = $props();
+
+  const randomiser = $derived(new Randomiser(menu.beers, (beer) => beer.id));
+
+  const handleHover = (id: number) => {
+    isHovered = true;
+    randomiser.selectByKey(id);
+  };
+
+  const handleLeave = () => {
+    isHovered = false;
+  };
+
+  let activeBeer = $derived(randomiser.current);
+  let isHovered = $state(false);
+
+  const { left, right, mid } = $derived.by(() => {
+    const mid = Math.ceil(menu.beers.length / 2);
+
+    return {
+      left: menu.beers.slice(0, mid),
+      right: menu.beers.slice(mid),
+      mid,
+    };
   });
 
-  const leftBeers = $derived(menu.beers.slice(0, menu.beers.length / 2));
-  const rightBeers = $derived(menu.beers.slice(menu.beers.length / 2));
+  $effect(() => {
+    if (isHovered) return;
+
+    const interval = setInterval(randomiser.randomise, 3000);
+    return () => clearInterval(interval);
+  });
 </script>
 
-{#snippet popularBadge()}
-  <div
-    class="flex w-fit items-center gap-1 rounded-full border border-border bg-surface-200 px-2 py-1 font-sans text-xs font-medium"
-  >
-    <span class="icon-[lucide--star]"></span>
-    <span>Populær blandt gæster</span>
-  </div>
-{/snippet}
-
-{#snippet beerDescriptor(beers: Beer[], activeId: number | undefined)}
-  <div class="relative h-32 w-full">
-    {#each beers as beer}
-      <div
-        class={[
-          "text-zinc-950 absolute top-0 left-0 flex w-full flex-col",
-          beer.id === activeId ? "fade-in" : "fade-out",
-        ]}
-      >
-        <InlineLink href={beer.url} class="mb-2 w-fit">
-          <h1 class="flex min-h-[1em] max-w-sm gap-4 text-2xl font-semibold">
-            {beer?.name}
-          </h1>
-        </InlineLink>
-
-        <div class="mb-2 text-text-dark-muted">
-          <p>{beer.brewery}</p>
-          <span>{beer.style} / {beer.abv.toFixed(1)}%</span>
-        </div>
-
-        {#if beer.rating > MIN_EXCLUSIVE_RATING}
-          <div class="absolute top-0 right-0">
-            {@render popularBadge()}
-          </div>
-        {/if}
-      </div>
-    {/each}
-  </div>
-{/snippet}
-
 <!-- CONTAINER -->
-<div class={["relative isolate flex w-fit flex-col gap-8 pb-2", rest.class]}>
-  {@render beerDescriptor(menu.beers, randomiser.current?.id)}
+<div class={"relative grid w-fit"}>
+  <header class="mb-4">
+    {#if activeBeer}
+      {#key activeBeer.id}
+        <div class="absolute top-0 left-0 w-full -translate-y-full">
+          <BeerDescriptor beer={activeBeer} />
+        </div>
+      {/key}
+    {/if}
+  </header>
 
   <div class="relative">
     <!-- MIDDLE POLE -->
     <div
-      class="hatch-v absolute -bottom-2 left-1/2 z-10 h-20 w-[calc(var(--dispenser-thickness)+5px)] -translate-x-1/2 overflow-hidden rounded-t-border border-2 bg-surface-200"
+      class="hatch-v absolute -bottom-4 left-1/2 z-10 h-24 w-[calc(var(--dispenser-thickness)+5px)] -translate-x-1/2 overflow-hidden rounded-t-border border-2 bg-surface-200"
     ></div>
 
     <div class="flex gap-(--dispenser-thickness)">
       <TapList
-        beers={leftBeers}
+        {activeBeer}
+        beers={left}
         onHover={handleHover}
-        activeBeer={randomiser.current}
+        onLeave={handleLeave}
         startIdx={1}
         side="left"
       />
 
       <TapList
-        beers={rightBeers}
+        {activeBeer}
+        beers={right}
         onHover={handleHover}
-        activeBeer={randomiser.current}
-        startIdx={menu.beers.length / 2 + 1}
+        onLeave={handleLeave}
+        startIdx={mid + 1}
         side="right"
       />
-
-      <!-- {@render tapList(leftBeers, handleHover, 1, "left")} -->
-      <!-- {@render tapList( -->
-      <!--   rightBeers, -->
-      <!--   handleHover, -->
-      <!--   menu.beers.length / 2 + 1, -->
-      <!--   "right", -->
-      <!-- )} -->
     </div>
   </div>
-  <div class="absolute bottom-0 w-full border-t"></div>
+
+  <div class="absolute -bottom-4 w-full border-t border-text-dark/20"></div>
 </div>
 
 <style>
   :root {
     --dispenser-thickness: 3rem;
-    --fade-duration: 100ms;
-  }
-
-  .fade-in {
-    visibility: visible;
-    opacity: 1;
-    transform: scaleY(100%);
-    transition:
-      opacity var(--fade-duration) linear,
-      transform var(--fade-duration) linear;
-  }
-
-  .fade-out {
-    visibility: hidden;
-    opacity: 0;
-    transform: scaleY(95%);
-    transition:
-      visibility 0s var(--fade-duration),
-      opacity var(--fade-duration) linear,
-      transform var(--fade-duration) linear;
   }
 </style>
