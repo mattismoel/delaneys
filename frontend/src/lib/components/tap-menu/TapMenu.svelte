@@ -35,9 +35,9 @@
   });
 
   $effect(() => {
-    const interval = isHovered
-      ? undefined
-      : setInterval(randomiser.randomise, 3000);
+    if (isHovered) return;
+
+    const interval = setInterval(randomiser.randomise, 3000);
     return () => clearInterval(interval);
   });
 </script>
