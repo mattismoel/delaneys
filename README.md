@@ -55,26 +55,26 @@ GitHub Conatainer Registry of this repository:
 Whenever the image deployment workflows have finished, you are ready to deploy
 to the remote host server.
 
-Assuming you are in the project working directory, where the *compose.yaml* file
+Assuming you are in the project working directory, where the [compose.prod.yaml](compose.prod.yaml)
 exists, simply run:
 
 ```
-docker stack deploy -c ./compose.yaml <service_name> --with-registry-auth
+./deploy.sh
 ```
 
 This deploys the Docker Compose orchestration as a Docker service to the remote 
-machine, using the local *compose.yaml* file.
+machine, using the local *compose.prod.yaml* file.
 
 
 # Development
 
-The development setup is as easy as running:
+The development setup is as easy as running the following command from the project root:
 
 ```
-docker compose -f ./compose.dev.yaml up
+./run.sh
 ```
 
-> The development Docker commands are assumed to be run in the "default" Docker 
+> The development Docker command are assumed to be run in the "default" Docker 
 > context, which can be used running `docker context use default`.
 
 Now the dev website can be opened on *https://localhost*. The PocketBase API
