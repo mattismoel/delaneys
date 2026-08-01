@@ -3,12 +3,14 @@
   import { Randomiser } from "$lib/stores/random.svelte";
   import TapList from "./TapList.svelte";
   import BeerDescriptor from "./BeerDescriptor.svelte";
+  import type { ClassValue } from "svelte/elements";
 
   type Props = {
     menu: Menu;
+    class?: ClassValue;
   };
 
-  let { menu }: Props = $props();
+  let { menu, ...rest }: Props = $props();
 
   const randomiser = $derived(new Randomiser(menu.beers, (beer) => beer.id));
 
@@ -43,7 +45,7 @@
 </script>
 
 <!-- CONTAINER -->
-<div class={"relative grid w-fit"}>
+<div class={["relative grid w-fit", rest.class]}>
   <header class="mb-4">
     {#if activeBeer}
       {#key activeBeer.id}
