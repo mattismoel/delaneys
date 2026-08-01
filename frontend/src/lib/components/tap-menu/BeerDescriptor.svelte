@@ -45,7 +45,7 @@
   </div>
 
   {#if beer.rating > MIN_EXCLUSIVE_RATING}
-    <div class="absolute top-0 right-0">
+    <div class="pointer-events-none absolute top-0 right-0">
       <div
         class="flex w-fit items-center gap-1 rounded-full border border-border bg-surface-200 px-2 py-1 font-sans text-xs font-medium"
       >
