@@ -10,23 +10,11 @@
 
   let { menu }: Props = $props();
 
-  const randomiser = $derived(new Randomiser(menu.beers));
-  const beersById = $derived(new Map(menu.beers.map((b) => [b.id, b])));
+  const randomiser = $derived(new Randomiser(menu.beers, (beer) => beer.id));
 
   const handleHover = (id: number) => {
     isHovered = true;
-
-    const beer = beersById.get(id);
-
-    if (!beer) {
-      randomiser.override({ newValue: null });
-      return;
-    }
-
-    randomiser.override({
-      newValue: beer,
-      findFn: (b) => b.id === beer.id,
-    });
+    randomiser.selectByKey(id);
   };
 
   const handleLeave = () => {
