@@ -1,5 +1,5 @@
 www.delaneys.dk {
-	redir https://delaneys.dk{url}
+	redir https://delaneys.dk{uri}
 }
 
 delaneys.dk {
