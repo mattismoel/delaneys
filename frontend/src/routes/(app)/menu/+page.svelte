@@ -2,8 +2,7 @@
   import MobileTapMenu from "$lib/components/tap-menu/MobileTapMenu.svelte";
   import TapMenu from "$lib/components/tap-menu/TapMenu.svelte";
   import { getMenu } from "$lib/features/location/location.remote.js";
-
-  const menu = $derived(await getMenu());
+  import { fly } from "svelte/transition";
 </script>
 
 <svelte:head>
@@ -17,6 +16,10 @@
 <main
   class="@container mx-responsive flex min-h-svh flex-col items-center justify-center py-20 pt-28"
 >
-  <TapMenu {menu} class="hidden @4xl:flex" />
-  <MobileTapMenu {menu} class="@4xl:hidden" />
+  {#await getMenu() then menu}
+    <div transition:fly={{ y: "20px" }}>
+      <TapMenu {menu} class="hidden @4xl:flex" />
+      <MobileTapMenu {menu} class="@4xl:hidden" />
+    </div>
+  {/await}
 </main>
