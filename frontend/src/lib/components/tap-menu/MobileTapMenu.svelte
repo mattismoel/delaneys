@@ -16,7 +16,7 @@
 
   <ul class="flex w-full flex-col divide-y divide-border/50 sm:divide-y-0">
     {#each menu.beers as beer, i}
-      <li class="group">
+      <li class="group item">
         <div>
           <a
             href={beer.url}
@@ -38,3 +38,20 @@
     {/each}
   </ul>
 </div>
+
+<style>
+  @keyframes slide {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .item {
+    opacity: 0;
+    animation: slide 300ms ease calc(100ms + sibling-index() * 30ms) forwards;
+  }
+</style>
