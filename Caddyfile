@@ -1,11 +1,19 @@
+(common) {
+  log
+  encode
+}
+
 www.delaneys.dk {
+  import common
 	redir https://delaneys.dk{uri}
 }
 
 delaneys.dk {
+  import common
 	reverse_proxy frontend:3000
 }
 
 api.delaneys.dk {
+  import common
 	reverse_proxy backend:8080
 }

@@ -1,11 +1,14 @@
 services:
   caddy:
     image: caddy:latest
-    restart: unless-stopped
     ports:
       - 80:80
       - 443:443
       - 443:443/udp
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
     volumes:
       - caddy_data:/data
       - caddy_config:/config
@@ -15,12 +18,18 @@ services:
 
   frontend:
     image: ghcr.io/mattismoel/delaneys/frontend:main
-    restart: unless-stopped
     env_file: .env.production
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
 
   backend:
     image: ghcr.io/mattismoel/delaneys/backend:main
-    restart: unless-stopped
+    deploy:
+      restart_policy:
+        condition: any
+        delay: 5s
     volumes:
       - pb_data:/pb/pb_data
 
